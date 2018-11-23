@@ -4,9 +4,29 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:JustTag2"
+        xmlns:tfb="clr-namespace:TabbedFileBrowser;assembly=TabbedFileBrowser"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow"
+        Height="450"
+        Width="800" 
+        SnapsToDevicePixels="True">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+        <tfb:TabbedFileBrowserControl
+            x:Name="browser"
+            Grid.Column="0"/>
+        
+        <GridSplitter 
+            Grid.Column="0"
+            Width="5"/>
+
+        <MediaElement
+            Grid.Column="1"
+            Source="{Binding ElementName=browser, Path=DataContext.SelectedFile.FullName}"/>
         
     </Grid>
 </Window>
