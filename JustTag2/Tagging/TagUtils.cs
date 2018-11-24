@@ -53,8 +53,14 @@ namespace JustTag2.Tagging
 
         private static string[] GetTags(DirectoryInfo folder)
         {
-            // TODO: Actually implement this.
-            return new string[] { };
+            // If no .jtfoldertags exists, then there are no tags.
+            string jtfoldertagsPath = Path.Combine(folder.FullName, ".jtfoldertags");
+            if (!File.Exists(jtfoldertagsPath))
+                return new string[] { };
+
+            // All of the folder's tags are stored in its .jtfoldertags file.
+            // They are separated by newlines.
+            return File.ReadAllLines(jtfoldertagsPath);
         }
 
         /// <summary>
