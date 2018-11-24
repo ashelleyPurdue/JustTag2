@@ -38,5 +38,12 @@ namespace TaggingTests
         [TestMethod] public void JustFooFile()  => AssertFileTags("file[foo].txt", "foo");
         [TestMethod] public void JustBarFile()  => AssertFileTags("file[bar].txt", "bar");
         [TestMethod] public void FooBarFile()   => AssertFileTags("file[foo bar].txt", "foo", "bar");
+
+        [TestMethod] public void UntaggedFolder() => AssertFolderTags("no_tags");
+        [TestMethod] public void JustFooFolder() => AssertFolderTags("just_foo", "foo");
+        [TestMethod] public void JustBarFolder() => AssertFolderTags("just_bar", "bar");
+        [TestMethod] public void FooBarFolder() => AssertFolderTags("foo_bar", "foo", "bar");
+        [TestMethod] public void BarFooFolder() => AssertFolderTags("bar_foo", "foo", "bar");
+
     }
 }
