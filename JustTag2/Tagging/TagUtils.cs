@@ -73,12 +73,16 @@ namespace JustTag2.Tagging
             if (filterString == null)
                 return (f => true);
 
+            // HACK: Show only untagged files if the string is ":untagged:"
+            if (filterString == ":untagged:")
+                return (f => GetTags(f).Length == 0);
+
             // Build a list of tags that are required/forbidden.
             // Forbidden tags have a '-' in front of them.
             string[] terms = filterString.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-            var requiredTags  = new HashSet<string>();
-            var forbiddenTags = new HashSet<string>();
+            var requiredTags  = new List<string>();
+            var forbiddenTags = new List<string>();
 
             foreach (string s in terms)
             {
@@ -90,14 +94,19 @@ namespace JustTag2.Tagging
 
             return (FileSystemInfo f) =>
             {
-                // Fail if any of the required tags are missing,
-                // or if any of the forbidden tags are present.
-                foreach (string tag in GetTags(f))
-                {
-                    if (!requiredTags.Contains(tag))
-                        return false;
+                string[] tags = GetTags(f);
 
-                    if (forbiddenTags.Contains(tag))
+                // Fail if any of the required tags are missing,
+                foreach (string t in requiredTags)
+                {
+                    if (!tags.Contains(t))
+                        return false;
+                }
+
+                // Fail if any of the forbidden tags are present
+                foreach (string t in tags)
+                {
+                    if (forbiddenTags.Contains(t))
                         return false;
                 }
 
