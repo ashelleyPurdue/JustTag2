@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TabbedFileBrowser;
 using System.IO;
@@ -26,7 +25,17 @@ namespace JustTag2.Tagging
 
         private static string[] GetTags(FileInfo file)
         {
-            return new string[] { };
+            string fname = file.Name;
+
+            // Find the tag area
+            int tagAreaStart = fname.IndexOf('[');
+            int tagAreaEnd = fname.IndexOf(']');
+            int tagAreaLen = tagAreaEnd - tagAreaStart;
+
+            string tagArea = fname.Substring(tagAreaStart, tagAreaLen);
+
+            // Extract the tags from the tag area.
+            return tagArea.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
         }
 
         private static string[] GetTags(DirectoryInfo folder)
