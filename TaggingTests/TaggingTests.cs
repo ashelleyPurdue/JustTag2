@@ -9,9 +9,8 @@ namespace TaggingTests
     [TestClass]
     public class TaggingTests
     {
-        public static void AssertFileTags(string fileName, params string[] expectedTags)
+        public static void AssertTags(FileSystemInfo file, string[] expectedTags)
         {
-            var file = new FileInfo(fileName);
             var actualTags = TagUtils.GetTags(file);
 
             var expectedSorted = expectedTags.OrderBy(f => f);
@@ -19,6 +18,21 @@ namespace TaggingTests
 
             Assert.IsTrue(actualSorted.SequenceEqual(expectedSorted));
         }
+
+        public static void AssertFileTags(string fileName, params string[] expectedTags)
+        {
+            var file = new FileInfo(fileName);
+            AssertTags(file, expectedTags);
+        }
+
+        public static void AssertFolderTags(string folderName, params string[] expectedTags)
+        {
+            string path = "../../TestFolderTemplate/tagged_folders/" + folderName;
+            var dir = new DirectoryInfo(path);
+
+            AssertTags(dir, expectedTags);
+        }
+
 
         [TestMethod] public void Untagged() => AssertFileTags("no_tags.txt");
         [TestMethod] public void JustFoo()  => AssertFileTags("file[foo].txt", "foo");
