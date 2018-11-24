@@ -24,6 +24,7 @@ namespace JustTag2
         public MainWindow()
         {
             InitializeComponent();
+            browser.ViewModel.ParseFilterString = Tagging.TagUtils.ParseFilterString;
         }
     }
 }
