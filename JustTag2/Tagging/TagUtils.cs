@@ -56,6 +56,12 @@ namespace JustTag2.Tagging
         /// </summary>
         public static FilterCondition ParseFilterString(string filterString)
         {
+            // HACK: If no filter string is present, don't filter at all.
+            if (filterString == null)
+                return (f => true);
+
+            // Build a list of tags that are required/forbidden.
+            // Forbidden tags have a '-' in front of them.
             string[] terms = filterString.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
             var requiredTags  = new HashSet<string>();
@@ -64,7 +70,7 @@ namespace JustTag2.Tagging
             foreach (string s in terms)
             {
                 if (s[0] == '-')
-                    forbiddenTags.Add(s);
+                    forbiddenTags.Add(s.TrimStart('-'));
                 else
                     requiredTags.Add(s);
             }
