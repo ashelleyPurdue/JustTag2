@@ -48,8 +48,12 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="TabbedFileBrowser, Version=0.0.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\TabbedFileBrowser.0.0.0.3\lib\net471\TabbedFileBrowser.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FilterTests.cs" />
     <Compile Include="TaggingTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
