@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TabbedFileBrowser;
 using System.IO;
@@ -13,7 +14,26 @@ namespace JustTag2.Tagging
         /// <summary>
         /// Returns the tags on the given file or folder
         /// </summary>
-        public static string[] GetTags(FileSystemInfo file) => throw new NotImplementedException();
+        public static string[] GetTags(FileSystemInfo file)
+        {
+            if (file is DirectoryInfo d)
+                return GetTags(d);
+            else if (file is FileInfo f)
+                return GetTags(f);
+            else
+                throw new Exception("Received a FileSystemInfo that is neither a directory nor a file.  WTF?");
+        }
+
+        private static string[] GetTags(FileInfo file)
+        {
+            return new string[] { };
+        }
+
+        private static string[] GetTags(DirectoryInfo folder)
+        {
+            // TODO: Actually implement this.
+            return new string[] { };
+        }
 
         /// <summary>
         /// Sets the tags on the given file or folder.
