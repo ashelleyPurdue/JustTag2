@@ -32,9 +32,19 @@ namespace JustTag2.Tagging
             int tagAreaEnd = fname.IndexOf(']');
             int tagAreaLen = tagAreaEnd - tagAreaStart;
 
-            string tagArea = fname.Substring(tagAreaStart, tagAreaLen);
+            // If no tag area was found, then there are no tags.
+            if (tagAreaStart < 0)
+                return new string[] { };
+
+            // Error handling
+            if (tagAreaEnd < 0)
+                throw new Exception("Could not find ending ']'");
+
+            if (tagAreaLen < 0)
+                throw new Exception("ending ']' came before opening '['");
 
             // Extract the tags from the tag area.
+            string tagArea = fname.Substring(tagAreaStart, tagAreaLen);
             return tagArea.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
         }
 
