@@ -44,7 +44,10 @@ namespace JustTag2.Tagging
                 throw new Exception("ending ']' came before opening '['");
 
             // Extract the tags from the tag area.
-            string tagArea = fname.Substring(tagAreaStart, tagAreaLen);
+            string tagArea = fname.Substring(tagAreaStart, tagAreaLen)
+                                  .TrimStart('[')
+                                  .TrimEnd(']');
+
             return tagArea.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
         }
 
