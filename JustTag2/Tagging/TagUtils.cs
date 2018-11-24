@@ -32,9 +32,22 @@ namespace JustTag2.Tagging
             int tagAreaEnd = fname.IndexOf(']');
             int tagAreaLen = tagAreaEnd - tagAreaStart;
 
-            string tagArea = fname.Substring(tagAreaStart, tagAreaLen);
+            // If no tag area was found, then there are no tags.
+            if (tagAreaStart < 0)
+                return new string[] { };
+
+            // Error handling
+            if (tagAreaEnd < 0)
+                throw new Exception("Could not find ending ']'");
+
+            if (tagAreaLen < 0)
+                throw new Exception("ending ']' came before opening '['");
 
             // Extract the tags from the tag area.
+            string tagArea = fname.Substring(tagAreaStart, tagAreaLen)
+                                  .TrimStart('[')
+                                  .TrimEnd(']');
+
             return tagArea.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
         }
 
@@ -56,6 +69,12 @@ namespace JustTag2.Tagging
         /// </summary>
         public static FilterCondition ParseFilterString(string filterString)
         {
+            // HACK: If no filter string is present, don't filter at all.
+            if (filterString == null)
+                return (f => true);
+
+            // Build a list of tags that are required/forbidden.
+            // Forbidden tags have a '-' in front of them.
             string[] terms = filterString.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
             var requiredTags  = new HashSet<string>();
@@ -64,7 +83,7 @@ namespace JustTag2.Tagging
             foreach (string s in terms)
             {
                 if (s[0] == '-')
-                    forbiddenTags.Add(s);
+                    forbiddenTags.Add(s.TrimStart('-'));
                 else
                     requiredTags.Add(s);
             }
