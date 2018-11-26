@@ -68,6 +68,7 @@
     <Compile Include="EditTagsWindow.xaml.cs">
       <DependentUpon>EditTagsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FileSystemInfoExtensions.cs" />
     <Compile Include="Tagging\TagUtils.cs" />
     <Page Include="EditTagsWindow.xaml">
       <SubType>Designer</SubType>
