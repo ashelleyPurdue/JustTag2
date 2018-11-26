@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.IO;
 using JustTag2;
 using JustTag2.Tagging;
@@ -12,6 +13,23 @@ namespace TaggingTests
         private const string TEMPLATE_PATH = "../../TestFolderTemplate";
         private const string TEST_PATH = "./TestFolder";
 
+        private static void AssertTagsChanged(string path, string expectedFileName, params string[] tags)
+        {
+            path = Path.Combine(TEST_PATH, path);
+
+            FileSystemInfo file = FileSystemInfoExtensions.FromPath(path);
+            file = TagUtils.SetTags(file, tags);
+
+            // Assert that the name is changed
+            Assert.AreEqual(expectedFileName, file.Name);
+
+            // Assert that the tags are correct.
+            string[] expectedTags = tags;
+            string[] actualTags = TagUtils.GetTags(file);
+
+            Assert.IsTrue(expectedTags.SequenceEqual(actualTags));
+        }
+
         [TestInitialize]
         public void RestoreTemplateFolder()
         {
@@ -22,12 +40,6 @@ namespace TaggingTests
             // Restore it.
             FileSystemInfo dir = new DirectoryInfo(TEMPLATE_PATH);
             dir.Copy(TEST_PATH);
-        }
-
-        [TestMethod]
-        public void MyTestMethod()
-        {
-
         }
     }
 }
