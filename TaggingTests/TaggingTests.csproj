@@ -54,8 +54,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FilterTests.cs" />
-    <Compile Include="TaggingTests.cs" />
+    <Compile Include="GetTagsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SetTagsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
