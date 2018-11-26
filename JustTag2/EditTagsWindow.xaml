@@ -39,6 +39,7 @@
                 Text="This file's tags:"/>
 
             <TextBox
+                x:Name="tagsTextbox"
                 DockPanel.Dock="Top"
                 Margin="5"/>
 

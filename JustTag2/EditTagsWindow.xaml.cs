@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.IO;
+using JustTag2.Tagging;
 
 namespace JustTag2
 {
@@ -19,9 +21,20 @@ namespace JustTag2
     /// </summary>
     public partial class EditTagsWindow : Window
     {
-        public EditTagsWindow()
+        private FileSystemInfo file;
+
+        public EditTagsWindow(FileSystemInfo file)
         {
             InitializeComponent();
+
+            this.file = file;
+
+            // Populate the tags textbox
+            string[] tags = TagUtils.GetTags(file);
+            foreach (string t in tags)
+                tagsTextbox.AppendText(t + "\n");
         }
+
+
     }
 }
