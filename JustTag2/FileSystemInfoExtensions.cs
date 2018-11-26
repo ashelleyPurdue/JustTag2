@@ -46,7 +46,25 @@ namespace JustTag2
 
         // Helper methods
 
-        private static void DirectoryCopy(string sourceDirName, string destDirName)
+        /// <summary>
+        /// Creates a new FileSystemInfo from the specified path.
+        /// If it's a file, it'll be a FileInfo.  If it's a directory,
+        /// it'll be a DirectoryInfo.  No surprise there.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static FileSystemInfo FromPath(string path)
+        {
+            if (File.Exists(path))
+                return new FileInfo(path);
+
+            if (Directory.Exists(path))
+                return new DirectoryInfo(path);
+
+            throw new FileNotFoundException("The file or directory " + path + " could not be found.");
+        }
+
+        public static void DirectoryCopy(string sourceDirName, string destDirName)
         {
             // Copied from https://docs.microsoft.com/en-us/dotnet/standard/io/how-to-copy-directories
             // Though I shouldn't *have* to copy it.  This shit should be built in!
