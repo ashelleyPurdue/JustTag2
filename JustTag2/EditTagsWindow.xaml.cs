@@ -35,6 +35,23 @@ namespace JustTag2
                 tagsTextbox.AppendText(t + "\n");
         }
 
+        private void OK_Click(object sender, RoutedEventArgs e)
+        {
+            // Split the text into tags
+            string[] tags = tagsTextbox.Text.Split
+            (
+                ' ',
+                '\r',
+                '\n',
+                '\t'
+            );
 
+            // TODO: Validate the input
+
+            TagUtils.SetTags(file, tags);
+        }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+            => this.Close();
     }
 }
