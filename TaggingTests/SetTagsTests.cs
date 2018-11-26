@@ -41,5 +41,21 @@ namespace TaggingTests
             FileSystemInfo dir = new DirectoryInfo(TEMPLATE_PATH);
             dir.Copy(TEST_PATH);
         }
+
+        [TestMethod]
+        public void FirstTagsOnFile() => AssertTagsChanged
+        (
+            "tagged_files/no_tags.txt",
+            "no_tags[foo].txt",
+            "foo"
+        );
+
+        [TestMethod]
+        public void FirstTagsOnFolder() => AssertTagsChanged
+        (
+            "tagged_folders/no_tags",
+            "no_tags",
+            "foo"
+        );
     }
 }
