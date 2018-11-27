@@ -67,7 +67,26 @@ namespace JustTag2.Tagging
         /// Sets the tags on the given file or folder.
         /// Returns a new FileSystemInfo with the updated tags.
         /// </summary>
-        public static FileSystemInfo SetTags(FileSystemInfo file, string[] tags) => throw new NotImplementedException();
+        public static FileSystemInfo SetTags(FileSystemInfo file, string[] tags)
+        {
+            if (file is FileInfo f)
+                return SetTags(f, tags);
+
+            if (file is DirectoryInfo d)
+                return SetTags(d, tags);
+
+            throw new Exception("Did you create a new class that derives from FileSystemInfo?  WHY WOULD YOU DO THAT???");
+        }
+
+        private static FileSystemInfo SetTags(FileInfo file, string[] tags) => throw new NotImplementedException();
+
+        private static FileSystemInfo SetTags(DirectoryInfo dir, string[] tags)
+        {
+            string jtfoldertags = Path.Combine(dir.FullName, ".jtfoldertags");
+            File.WriteAllLines(jtfoldertags, tags);
+
+            return dir;
+        }
 
         /// <summary>
         /// Produces a function that returns true if a file matches the given filter string,
