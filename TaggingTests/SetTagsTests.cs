@@ -51,6 +51,14 @@ namespace TaggingTests
         );
 
         [TestMethod]
+        public void ReplaceBarWithFooFile() => AssertTagsChanged
+        (
+            "tagged_files/just_bar[bar].txt",
+            "just_bar[foo].txt",
+            "foo"
+        );
+
+        [TestMethod]
         public void FirstTagsOnFolder() => AssertTagsChanged
         (
             "tagged_folders/no_tags",

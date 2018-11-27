@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TabbedFileBrowser;
 using System.IO;
@@ -10,6 +11,18 @@ namespace JustTag2.Tagging
 {
     public static class TagUtils
     {
+        private static Regex tagAreaRegex;
+        static TagUtils()
+        {
+            const string STUFF_INSIDE_BRACKETS = @"\[.*\]";
+            const string FILE_EXTENSION = @"\..*$";
+            tagAreaRegex = new Regex
+            (
+                STUFF_INSIDE_BRACKETS +
+                "(?=(" + FILE_EXTENSION + "))"
+            );
+        }
+
         /// <summary>
         /// Returns the tags on the given file or folder
         /// </summary>
@@ -78,7 +91,44 @@ namespace JustTag2.Tagging
             throw new Exception("Did you create a new class that derives from FileSystemInfo?  WHY WOULD YOU DO THAT???");
         }
 
-        private static FileSystemInfo SetTags(FileInfo file, string[] tags) => throw new NotImplementedException();
+        private static FileSystemInfo SetTags(FileInfo file, string[] tags)
+        {
+            // TODO: Find a nicer way to do this.
+
+            // Get just the name, stripping off the tags and the extension
+            string removedTags = tagAreaRegex.Replace(file.Name, "");
+            string removedExt = new string
+            (
+                removedTags
+                .Reverse()
+                .SkipWhile(c => c != '.')
+                .Skip(1)
+                .Reverse()
+                .ToArray()
+            );
+
+            // Create the tag area
+            var tagArea = new StringBuilder();
+            tagArea.Append('[');
+
+            for (int i = 0; i < tags.Length; i++)
+            {
+                tagArea.Append(tags[i]);
+
+                // Add a space, if it isn't the last tag
+                if (i + 1 < tags.Length)
+                    tagArea.Append(' ');
+            }
+
+            tagArea.Append(']');
+
+            // Put 'em all together to get the new file name
+            string finalName = removedExt + tagArea.ToString() + file.Extension;
+            string finalPath = Path.Combine(file.DirectoryName, finalName);
+
+            file.MoveTo(finalPath);
+            return file;
+        }
 
         private static FileSystemInfo SetTags(DirectoryInfo dir, string[] tags)
         {
