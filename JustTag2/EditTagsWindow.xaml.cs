@@ -49,6 +49,7 @@ namespace JustTag2
             // TODO: Validate the input
 
             TagUtils.SetTags(file, tags);
+            Close();
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)

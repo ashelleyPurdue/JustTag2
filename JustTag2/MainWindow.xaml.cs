@@ -29,8 +29,10 @@ namespace JustTag2
 
         private void EditTagsMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: Tell it which file to edit
-            new EditTagsWindow(browser.ViewModel.SelectedFile).ShowDialog();
+            var window = new EditTagsWindow(browser.ViewModel.SelectedFile);
+
+            window.ShowDialog();
+            browser.ViewModel.CurrentTab.Refresh();
         }
     }
 }
