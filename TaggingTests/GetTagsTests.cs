@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace TaggingTests
 {
     [TestClass]
-    public class TaggingTests
+    public class GetTagsTests
     {
         public static void AssertTags(FileSystemInfo file, string[] expectedTags)
         {

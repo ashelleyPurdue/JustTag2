@@ -65,7 +65,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="EditTagsWindow.xaml.cs">
+      <DependentUpon>EditTagsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FileSystemInfoExtensions.cs" />
     <Compile Include="Tagging\TagUtils.cs" />
+    <Page Include="EditTagsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

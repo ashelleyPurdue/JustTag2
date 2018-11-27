@@ -26,5 +26,13 @@ namespace JustTag2
             InitializeComponent();
             browser.ViewModel.ParseFilterString = Tagging.TagUtils.ParseFilterString;
         }
+
+        private void EditTagsMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new EditTagsWindow(browser.ViewModel.SelectedFile);
+
+            window.ShowDialog();
+            browser.ViewModel.CurrentTab.Refresh();
+        }
     }
 }
