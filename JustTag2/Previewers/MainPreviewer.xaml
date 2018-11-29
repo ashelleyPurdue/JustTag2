@@ -6,7 +6,5 @@
              xmlns:local="clr-namespace:JustTag2.Previewers"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        
-    </Grid>
+    <Grid x:Name="grid"/>
 </UserControl>

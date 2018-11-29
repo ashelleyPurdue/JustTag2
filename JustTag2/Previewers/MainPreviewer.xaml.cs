@@ -45,7 +45,7 @@ namespace JustTag2.Previewers
             foreach (var p in previewers)
             {
                 p.Control.Visibility = Visibility.Collapsed;
-                AddChild(p.Control);
+                grid.Children.Add(p.Control);
             }
         }
 
