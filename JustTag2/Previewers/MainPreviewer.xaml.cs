@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
+using System.ComponentModel;
 
 namespace JustTag2.Previewers
 {
@@ -21,11 +22,19 @@ namespace JustTag2.Previewers
     /// </summary>
     public partial class MainPreviewer : UserControl
     {
-        private IPreviewer[] previewers = new IPreviewer[]
+        private static IPreviewer[] previewers = new IPreviewer[]
         {
             new ImagePreviewer(),
             new FallbackPreviewer()
         };
+
+        public FileSystemInfo Source
+        {
+            get => currentFile;
+            set => Open(value);
+        }
+        private FileSystemInfo currentFile;
+
         private IPreviewer currentPreviewer;
 
         public MainPreviewer()
@@ -38,6 +47,23 @@ namespace JustTag2.Previewers
                 p.Control.Visibility = Visibility.Collapsed;
                 AddChild(p.Control);
             }
+        }
+
+        private void Open(FileSystemInfo file)
+        {
+            currentFile = file;
+
+            // Close the old previewer
+            if (currentPreviewer != null)
+            {
+                currentPreviewer.Close();
+                currentPreviewer.Control.Visibility = Visibility.Hidden;
+            }
+
+            // Open the new one
+            currentPreviewer = GetPreviewer(file);
+            currentPreviewer.Open(file);
+            currentPreviewer.Control.Visibility = Visibility.Visible;
         }
 
         /// <summary>
