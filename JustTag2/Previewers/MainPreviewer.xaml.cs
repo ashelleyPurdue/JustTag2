@@ -22,18 +22,31 @@ namespace JustTag2.Previewers
     /// </summary>
     public partial class MainPreviewer : UserControl
     {
+        public static readonly DependencyProperty sourceProperty = DependencyProperty.Register
+        (
+            "Source",
+            typeof(FileSystemInfo),
+            typeof(MainPreviewer),
+            new PropertyMetadata((s, a) =>
+            {
+                ((MainPreviewer)s).Source = (FileSystemInfo)a.NewValue;
+            })
+        );
+        public FileSystemInfo Source
+        {
+            get => (FileSystemInfo)GetValue(sourceProperty);
+            set
+            {
+                SetValue(sourceProperty, value);
+                Open(value);
+            }
+        }
+
         private static IPreviewer[] previewers = new IPreviewer[]
         {
             new ImagePreviewer(),
             new FallbackPreviewer()
         };
-
-        public FileSystemInfo Source
-        {
-            get => currentFile;
-            set => Open(value);
-        }
-        private FileSystemInfo currentFile;
 
         private IPreviewer currentPreviewer;
 
@@ -51,14 +64,16 @@ namespace JustTag2.Previewers
 
         private void Open(FileSystemInfo file)
         {
-            currentFile = file;
-
             // Close the old previewer
             if (currentPreviewer != null)
             {
                 currentPreviewer.Close();
                 currentPreviewer.Control.Visibility = Visibility.Hidden;
             }
+
+            // Don't open new one if it's null
+            if (file == null)
+                return;
 
             // Open the new one
             currentPreviewer = GetPreviewer(file);

@@ -25,6 +25,10 @@ namespace JustTag2
         {
             InitializeComponent();
             browser.ViewModel.ParseFilterString = Tagging.TagUtils.ParseFilterString;
+
+            // TODO: replace this with a databinding in XAML
+            browser.ViewModel.PropertyChanged += (s, a) =>
+                previewer.Source = browser.ViewModel.SelectedFile;
         }
 
         private void EditTagsMenuItem_Click(object sender, RoutedEventArgs e)
