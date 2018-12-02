@@ -36,8 +36,8 @@
             Width="5"/>
 
         <previewers:MainPreviewer
-            Grid.Column="1"
-            Source="{Binding ElementName=browser, Path=DataContext.SelectedFile}"/>
+            x:Name="previewer"
+            Grid.Column="1"/>
         
     </Grid>
 </Window>
