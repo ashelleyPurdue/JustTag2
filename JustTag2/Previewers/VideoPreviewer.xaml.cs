@@ -59,6 +59,11 @@ namespace JustTag2.Previewers
         {
             player.Source = new Uri(file.FullName);
         }
+
+        private void PlayButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 
     public class VideoPlayerViewModel : INotifyPropertyChanged
