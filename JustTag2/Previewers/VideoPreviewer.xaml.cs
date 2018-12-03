@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -21,9 +22,12 @@ namespace JustTag2.Previewers
     /// </summary>
     public partial class VideoPreviewer : UserControl, IPreviewer
     {
+        public VideoPlayerViewModel viewModel = new VideoPlayerViewModel();
+
         public VideoPreviewer()
         {
             InitializeComponent();
+            DataContext = viewModel;
         }
 
         public UserControl Control => this;
@@ -55,5 +59,13 @@ namespace JustTag2.Previewers
         {
             player.Source = new Uri(file.FullName);
         }
+    }
+
+    public class VideoPlayerViewModel : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public double Length { get; set; }
+        public double Position { get; set; }
     }
 }
