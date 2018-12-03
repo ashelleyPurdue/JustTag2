@@ -11,6 +11,12 @@
             x:Name="player"
             DockPanel.Dock="Top"
             UnloadedBehavior="Manual"/>
+        
         <!-- TODO: Video controls -->
+        
+        <Slider
+            Maximum="{Binding Length}"
+            Value="{Binding Position}"/>
+        
     </DockPanel>
 </UserControl>

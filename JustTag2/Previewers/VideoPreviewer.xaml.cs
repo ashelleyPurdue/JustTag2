@@ -58,6 +58,7 @@ namespace JustTag2.Previewers
         public void Open(FileSystemInfo file)
         {
             player.Source = new Uri(file.FullName);
+            viewModel.Length = player.NaturalDuration.TimeSpan.TotalMilliseconds;
         }
     }
 
