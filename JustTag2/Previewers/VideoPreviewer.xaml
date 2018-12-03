@@ -7,16 +7,29 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <DockPanel>
+
+        <!-- Video controls -->
+        <DockPanel
+            DockPanel.Dock="Bottom"
+            Height="Auto">
+
+            <Button
+                DockPanel.Dock="Left"
+                Content="Play"
+                Height="Auto"/>
+
+            <Slider
+                DockPanel.Dock="Left"
+                Maximum="{Binding Length}"
+                Value="{Binding Position}"/>
+
+        </DockPanel>
+
+        <!-- Video player -->
         <MediaElement
             x:Name="player"
-            DockPanel.Dock="Top"
+            DockPanel.Dock="Bottom"
             UnloadedBehavior="Manual"/>
-        
-        <!-- TODO: Video controls -->
-        
-        <Slider
-            Maximum="{Binding Length}"
-            Value="{Binding Position}"/>
-        
+
     </DockPanel>
 </UserControl>
