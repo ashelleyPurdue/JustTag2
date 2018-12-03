@@ -7,10 +7,49 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <DockPanel>
+
+        <!-- Video controls -->
+        <DockPanel
+            DockPanel.Dock="Bottom"
+            Height="Auto">
+
+            <Button
+                DockPanel.Dock="Left"
+                Content="Play"
+                Height="Auto"
+                Click="PlayButton_Click">
+
+                <Button.Style>
+                    <Style>
+                        <Style.Triggers>
+                            
+                            <DataTrigger Binding="{Binding IsPlaying}" Value="False">
+                                <Setter Property="Button.Content" Value="Play"/>
+                            </DataTrigger>
+
+                            <DataTrigger Binding="{Binding IsPlaying}" Value="True">
+                                <Setter Property="Button.Content" Value="Pause"/>
+                            </DataTrigger>
+
+                        </Style.Triggers>
+                    </Style>
+
+                </Button.Style>
+                
+            </Button>
+
+            <Slider
+                DockPanel.Dock="Left"
+                Maximum="{Binding Length}"
+                Value="{Binding Position}"/>
+
+        </DockPanel>
+
+        <!-- Video player -->
         <MediaElement
             x:Name="player"
-            DockPanel.Dock="Top"
+            DockPanel.Dock="Bottom"
             UnloadedBehavior="Manual"/>
-        <!-- TODO: Video controls -->
+
     </DockPanel>
 </UserControl>
