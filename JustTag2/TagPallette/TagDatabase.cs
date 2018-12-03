@@ -1,14 +1,18 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace JustTag2.TagPallette
 {
-    public class TagDatabase
+    public class TagDatabase : INotifyPropertyChanged
     {
-        public List<TagCategory> categories;
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public ObservableCollection<TagCategory> Categories { get; set; }
 
         public TagDatabase(string filePath) => throw new NotImplementedException();
 
@@ -16,17 +20,21 @@ namespace JustTag2.TagPallette
         public void Load(string filePath) => throw new NotImplementedException();
     }
 
-    public class TagCategory
+    public class TagCategory : INotifyPropertyChanged
     {
-        public string name;
-        public string desc;
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        public List<Tag> tags;
+        public string Name { get; set; }
+        public string Desc { get; set; }
+
+        public ObservableCollection<Tag> Tags { get; set; }
     }
 
-    public class Tag
+    public class Tag : INotifyPropertyChanged
     {
-        public string name;
-        public string desc;
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public string Name { get; set; }
+        public string Desc { get; set; }
     }
 }
