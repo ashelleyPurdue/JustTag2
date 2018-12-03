@@ -9,7 +9,8 @@
     <DockPanel>
         <MediaElement
             x:Name="player"
-            DockPanel.Dock="Top"/>
+            DockPanel.Dock="Top"
+            UnloadedBehavior="Manual"/>
         <!-- TODO: Video controls -->
     </DockPanel>
 </UserControl>

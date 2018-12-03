@@ -48,12 +48,12 @@ namespace JustTag2.Previewers
 
         public void Close()
         {
-            throw new NotImplementedException();
+            player.Close();
         }
 
         public void Open(FileSystemInfo file)
         {
-            throw new NotImplementedException();
+            player.Source = new Uri(file.FullName);
         }
     }
 }
