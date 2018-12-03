@@ -79,6 +79,7 @@
     <Compile Include="Previewers\MainPreviewer.xaml.cs">
       <DependentUpon>MainPreviewer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TagPallette\TagDatabase.cs" />
     <Compile Include="Tagging\TagUtils.cs" />
     <Page Include="EditTagsWindow.xaml">
       <SubType>Designer</SubType>
