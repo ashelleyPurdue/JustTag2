@@ -81,6 +81,9 @@
     </Compile>
     <Compile Include="TagPallette\TagDatabase.cs" />
     <Compile Include="Tagging\TagUtils.cs" />
+    <Compile Include="TagPallette\TagPalletteView.xaml.cs">
+      <DependentUpon>TagPalletteView.xaml</DependentUpon>
+    </Compile>
     <Page Include="EditTagsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -106,6 +109,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Previewers\MainPreviewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TagPallette\TagPalletteView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
