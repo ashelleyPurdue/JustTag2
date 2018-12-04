@@ -29,6 +29,8 @@ namespace JustTag2.TagPallette
         public string Desc { get; set; }
 
         public ObservableCollection<Tag> Tags { get; set; }
+
+        public override string ToString() => Name;
     }
 
     public class Tag : INotifyPropertyChanged
@@ -37,6 +39,8 @@ namespace JustTag2.TagPallette
 
         public string Name { get; set; }
         public string Desc { get; set; }
+
+        public override string ToString() => Name;
     }
 
     public static class PlaceholderTagDatabase

@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:tp="clr-namespace:JustTag2.TagPallette"
         xmlns:local="clr-namespace:JustTag2"
         mc:Ignorable="d"
         Title="EditTagsWindow" Height="311.157" Width="589.256">
@@ -45,13 +46,10 @@
 
         </DockPanel>
         
-        <!-- IDK what to put in this panel yet -->
-        <TextBlock
+        <!-- Tag Pallette -->
+        <tp:TagPalletteView
             Grid.Column="1"
-            Grid.Row="0"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Text="IDK what to put here yet."/>
+            Grid.Row="0"/>
 
         <!-- OK/Cancel buttons -->
         <Button 
