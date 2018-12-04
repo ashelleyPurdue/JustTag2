@@ -14,6 +14,7 @@ namespace JustTag2.TagPallette
 
         public ObservableCollection<TagCategory> Categories { get; set; }
 
+        public TagDatabase() { }
         public TagDatabase(string filePath) => throw new NotImplementedException();
 
         public void Save(string filePath) => throw new NotImplementedException();
@@ -36,5 +37,38 @@ namespace JustTag2.TagPallette
 
         public string Name { get; set; }
         public string Desc { get; set; }
+    }
+
+    public static class PlaceholderTagDatabase
+    {
+        public static TagDatabase instance = new TagDatabase()
+        {
+            Categories = new ObservableCollection<TagCategory>()
+            {
+                new TagCategory()
+                {
+                    Name = "File Type",
+                    Desc = "The type of file this is",
+                    Tags = new ObservableCollection<Tag>()
+                    {
+                        new Tag() {Name = "image", Desc = "A picture from the interwebz" },
+                        new Tag() {Name = "video", Desc = ""},
+                        new Tag() {Name = "text"}
+                    }
+                },
+
+                new TagCategory()
+                {
+                    Name = "Franchise",
+                    Desc = "",
+                    Tags = new ObservableCollection<Tag>()
+                    {
+                        new Tag() {Name = "overwatch" },
+                        new Tag() {Name = "mario" },
+                        new Tag() {Name = "minecraft" }
+                    }
+                }
+            }
+        };
     }
 }
