@@ -10,16 +10,23 @@
     <Grid>
         <TreeView ItemsSource="{Binding Categories}">
 
-            <TreeView.ItemTemplate>
+            <TreeView.Resources>
 
                 <HierarchicalDataTemplate
                     DataType="{x:Type local:TagCategory}"
                     ItemsSource="{Binding Tags}">
-
+                    
                     <lc:EditableLabel Text="{Binding Name}"/>
 
                 </HierarchicalDataTemplate>
-            </TreeView.ItemTemplate>
+
+                <DataTemplate DataType="{x:Type local:Tag}">
+                    <!-- TODO: Add a delete button -->
+                    <!-- TODO: Make it drag-and-drop-able into a textbox -->
+                    <lc:EditableLabel Text="{Binding Name}"/>
+                </DataTemplate>
+                    
+            </TreeView.Resources>
             
         </TreeView>
     </Grid>
