@@ -7,7 +7,19 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TreeView
-            ItemsSource="{Binding Categories}"/>
+        <TreeView ItemsSource="{Binding Categories}">
+
+            <TreeView.ItemTemplate>
+
+                <HierarchicalDataTemplate
+                    DataType="{x:Type local:TagCategory}"
+                    ItemsSource="{Binding Tags}">
+
+                    <TextBlock Text="{Binding Name}"/>
+
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+            
+        </TreeView>
     </Grid>
 </UserControl>
