@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:lc="clr-namespace:IllusoryStudios.Wpf.LostControls;assembly=IllusoryStudios.Wpf.LostControls"
              xmlns:local="clr-namespace:JustTag2.TagPallette"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -15,7 +16,7 @@
                     DataType="{x:Type local:TagCategory}"
                     ItemsSource="{Binding Tags}">
 
-                    <TextBlock Text="{Binding Name}"/>
+                    <lc:EditableLabel Text="{Binding Name}"/>
 
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
