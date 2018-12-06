@@ -23,7 +23,11 @@
                 <DataTemplate DataType="{x:Type local:Tag}">
                     <!-- TODO: Add a delete button -->
                     <!-- TODO: Make it drag-and-drop-able into a textbox -->
-                    <lc:EditableLabel Text="{Binding Name}"/>
+                    <lc:EditableLabel 
+                        Text="{Binding Name}"
+                        Tag="{Binding Name}"
+                        
+                        MouseMove="Tag_MouseMove"/>
                 </DataTemplate>
                     
             </TreeView.Resources>

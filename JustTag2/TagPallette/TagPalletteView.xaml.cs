@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using IllusoryStudios.Wpf.LostControls;
 
 namespace JustTag2.TagPallette
 {
@@ -26,6 +27,18 @@ namespace JustTag2.TagPallette
         {
             InitializeComponent();
             DataContext = viewModel;
+        }
+
+        private void Tag_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton != MouseButtonState.Pressed)
+                return;
+
+            // Start dragging the tag
+            var s = sender as Control;
+            string tag = s.Tag as string;
+
+            DragDrop.DoDragDrop(s, tag + " ", DragDropEffects.Copy);
         }
     }
 }
