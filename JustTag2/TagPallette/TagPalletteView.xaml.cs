@@ -29,6 +29,19 @@ namespace JustTag2.TagPallette
             DataContext = viewModel;
         }
 
+
+        // Misc methods
+
+        /// <summary>
+        /// Shorthand for (T)(sender as Control).DataContext
+        /// </summary>
+        /// <param name="sender"></param>
+        private T GetData<T>(object sender)
+            => (T)(sender as Control).DataContext;
+
+
+        // Event handlers
+
         private void Tag_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton != MouseButtonState.Pressed)
@@ -43,7 +56,13 @@ namespace JustTag2.TagPallette
 
         private void AddTag_Click(object sender, RoutedEventArgs e)
         {
+            var category = GetData<TagCategory>(sender);
 
+            category.Tags.Add(new TagPallette.Tag()
+            {
+                Name = $"Tag {category.Tags.Count}",
+                Desc = ""
+            });
         }
 
         private void DeleteTag_Click(object sender, RoutedEventArgs e)

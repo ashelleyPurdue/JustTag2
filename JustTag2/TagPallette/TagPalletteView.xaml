@@ -16,9 +16,7 @@
                     DataType="{x:Type local:TagCategory}"
                     ItemsSource="{Binding Tags}">
 
-                    <lc:EditableLabel 
-                        Text="{Binding Name}"
-                        Tag="{Binding Name}">
+                    <lc:EditableLabel Text="{Binding Name}">
 
                         <lc:EditableLabel.ContextMenu>
                             <ContextMenu>
