@@ -28,7 +28,7 @@ namespace JustTag2.TagPallette
         public string Name { get; set; }
         public string Desc { get; set; }
 
-        public ObservableCollection<Tag> Tags { get; set; }
+        public ObservableCollection<Tag> Tags { get; set; } = new ObservableCollection<Tag>();
 
         public override string ToString() => Name;
     }

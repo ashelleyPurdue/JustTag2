@@ -65,19 +65,17 @@ namespace JustTag2.TagPallette
             });
         }
 
-        private void DeleteTag_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+        private void DeleteTag_Click(object sender, RoutedEventArgs e) => throw new NotImplementedException();
 
         private void AddCategory_Click(object sender, RoutedEventArgs e)
         {
-
+            viewModel.Categories.Add(new TagCategory()
+            {
+                Name = $"Category {viewModel.Categories.Count}",
+                Desc = ""
+            });
         }
 
-        private void DeleteCategory_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+        private void DeleteCategory_Click(object sender, RoutedEventArgs e) => throw new NotImplementedException();
     }
 }
