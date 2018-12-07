@@ -40,5 +40,25 @@ namespace JustTag2.TagPallette
 
             DragDrop.DoDragDrop(s, tag + " ", DragDropEffects.Copy);
         }
+
+        private void AddTag_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DeleteTag_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AddCategory_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DeleteCategory_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

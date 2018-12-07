@@ -15,22 +15,61 @@
                 <HierarchicalDataTemplate
                     DataType="{x:Type local:TagCategory}"
                     ItemsSource="{Binding Tags}">
-                    
-                    <lc:EditableLabel Text="{Binding Name}"/>
+
+                    <lc:EditableLabel 
+                        Text="{Binding Name}"
+                        Tag="{Binding Name}">
+
+                        <lc:EditableLabel.ContextMenu>
+                            <ContextMenu>
+                                
+                                <MenuItem
+                                    Header="Add Tag"
+                                    Click="AddTag_Click"/>
+                                
+                                <MenuItem
+                                    Header="Delete Category"
+                                    Click="DeleteCategory_Click"/>
+                                
+                            </ContextMenu>
+                        </lc:EditableLabel.ContextMenu>
+                        
+                    </lc:EditableLabel>
 
                 </HierarchicalDataTemplate>
 
                 <DataTemplate DataType="{x:Type local:Tag}">
                     <!-- TODO: Add a delete button -->
-                    <!-- TODO: Make it drag-and-drop-able into a textbox -->
                     <lc:EditableLabel 
                         Text="{Binding Name}"
                         Tag="{Binding Name}"
                         
-                        MouseMove="Tag_MouseMove"/>
+                        MouseMove="Tag_MouseMove">
+
+                        <lc:EditableLabel.ContextMenu>
+                            <ContextMenu>
+
+                                <MenuItem
+                                    Header="Delete Tag"
+                                    Click="DeleteTag_Click"/>
+
+                            </ContextMenu>
+                        </lc:EditableLabel.ContextMenu>
+                        
+                    </lc:EditableLabel>
                 </DataTemplate>
                     
             </TreeView.Resources>
+
+            <TreeView.ContextMenu>
+                <ContextMenu>
+
+                    <MenuItem
+                        Header="Add Category"
+                        Click="AddCategory_Click"/>
+
+                </ContextMenu>
+            </TreeView.ContextMenu>
             
         </TreeView>
     </Grid>
