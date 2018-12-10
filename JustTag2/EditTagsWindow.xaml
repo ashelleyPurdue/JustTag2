@@ -6,7 +6,7 @@
         xmlns:tp="clr-namespace:JustTag2.TagPallette"
         xmlns:local="clr-namespace:JustTag2"
         mc:Ignorable="d"
-        Title="EditTagsWindow" Height="311.157" Width="589.256">
+        Title="EditTagsWindow" Height="311.157" Width="589.256" Closed="Window_Closed">
     <Grid>
 
         <Grid.ColumnDefinitions>
@@ -48,6 +48,7 @@
         
         <!-- Tag Pallette -->
         <tp:TagPalletteView
+            x:Name="tagPallette"
             Grid.Column="1"
             Grid.Row="0"/>
 

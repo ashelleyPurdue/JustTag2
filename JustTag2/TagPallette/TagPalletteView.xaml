@@ -38,15 +38,15 @@
 
                 <DataTemplate DataType="{x:Type local:Tag}">
                     <!-- TODO: Add a delete button -->
-                    <Label 
-                        Content="{Binding Name}"
+                    <lc:EditableLabel 
+                        Text="{Binding Name}"
                         Tag="{Binding Name}"
                         
                         MouseDown="Tag_DragStart"
                         TouchDown="Tag_DragStart"
                         StylusDown="Tag_DragStart">
 
-                        <Label.ContextMenu>
+                        <lc:EditableLabel.ContextMenu>
                             <ContextMenu>
 
                                 <MenuItem
@@ -54,9 +54,9 @@
                                     Click="DeleteTag_Click"/>
 
                             </ContextMenu>
-                        </Label.ContextMenu>
+                        </lc:EditableLabel.ContextMenu>
                         
-                    </Label>
+                    </lc:EditableLabel>
                 </DataTemplate>
                     
             </TreeView.Resources>

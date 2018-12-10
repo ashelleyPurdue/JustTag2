@@ -5,20 +5,46 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Script.Serialization;
+using System.IO;
 
 namespace JustTag2.TagPallette
 {
     public class TagDatabase : INotifyPropertyChanged
     {
+        private static JavaScriptSerializer serializer = new JavaScriptSerializer();
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ObservableCollection<TagCategory> Categories { get; set; }
 
         public TagDatabase() { }
-        public TagDatabase(string filePath) => throw new NotImplementedException();
 
-        public void Save(string filePath) => throw new NotImplementedException();
-        public void Load(string filePath) => throw new NotImplementedException();
+        public void Save(string filePath)
+        {
+            string output = serializer.Serialize(this);
+            File.WriteAllText(filePath, output);
+        }
+
+        /// <summary>
+        /// Loads a database from the given path.
+        /// If the path doesn't exist, returns a blank database(!!!)
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        public static TagDatabase Load(string filePath)
+        {
+            if (!File.Exists(filePath))
+            {
+                return new TagDatabase()
+                {
+                    Categories = new ObservableCollection<TagCategory>()
+                };
+            }
+
+            string contents = File.ReadAllText(filePath);
+            return serializer.Deserialize<TagDatabase>(contents);
+        }
     }
 
     public class TagCategory : INotifyPropertyChanged
