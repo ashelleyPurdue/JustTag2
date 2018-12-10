@@ -10,8 +10,9 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.IO;
+using System.Reflection;
+using JustTag2.TagPallette;
 using JustTag2.Tagging;
 
 namespace JustTag2
@@ -21,6 +22,9 @@ namespace JustTag2
     /// </summary>
     public partial class EditTagsWindow : Window
     {
+        private static string exeFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        private static string dbPath = Path.Combine(exeFolder, "tag_pallet.json");
+
         private FileSystemInfo file;
 
         public EditTagsWindow(FileSystemInfo file)
@@ -28,6 +32,9 @@ namespace JustTag2
             InitializeComponent();
 
             this.file = file;
+
+            // Load the tag pallet
+            tagPallette.DataContext = TagDatabase.Load(dbPath);
 
             // Populate the tags textbox
             string[] tags = TagUtils.GetTags(file);
@@ -54,5 +61,10 @@ namespace JustTag2
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
             => this.Close();
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            tagPallette.ViewModel.Save(dbPath);
+        }
     }
 }

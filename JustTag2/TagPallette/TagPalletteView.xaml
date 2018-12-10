@@ -1,0 +1,76 @@
+﻿<UserControl x:Class="JustTag2.TagPallette.TagPalletteView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:lc="clr-namespace:IllusoryStudios.Wpf.LostControls;assembly=IllusoryStudios.Wpf.LostControls"
+             xmlns:local="clr-namespace:JustTag2.TagPallette"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <TreeView ItemsSource="{Binding Categories}">
+
+            <TreeView.Resources>
+
+                <HierarchicalDataTemplate
+                    DataType="{x:Type local:TagCategory}"
+                    ItemsSource="{Binding Tags}">
+
+                    <lc:EditableLabel Text="{Binding Name}">
+
+                        <lc:EditableLabel.ContextMenu>
+                            <ContextMenu>
+                                
+                                <MenuItem
+                                    Header="Add Tag"
+                                    Click="AddTag_Click"/>
+                                
+                                <MenuItem
+                                    Header="Delete Category"
+                                    Click="DeleteCategory_Click"/>
+                                
+                            </ContextMenu>
+                        </lc:EditableLabel.ContextMenu>
+                        
+                    </lc:EditableLabel>
+
+                </HierarchicalDataTemplate>
+
+                <DataTemplate DataType="{x:Type local:Tag}">
+                    <!-- TODO: Add a delete button -->
+                    <lc:EditableLabel 
+                        Text="{Binding Name}"
+                        Tag="{Binding Name}"
+                        
+                        MouseMove="Tag_MouseMove"
+                        TouchDown="Tag_DragStart"
+                        StylusDown="Tag_DragStart">
+
+                        <lc:EditableLabel.ContextMenu>
+                            <ContextMenu>
+
+                                <MenuItem
+                                    Header="Delete Tag"
+                                    Click="DeleteTag_Click"/>
+
+                            </ContextMenu>
+                        </lc:EditableLabel.ContextMenu>
+                        
+                    </lc:EditableLabel>
+                </DataTemplate>
+                    
+            </TreeView.Resources>
+
+            <TreeView.ContextMenu>
+                <ContextMenu>
+
+                    <MenuItem
+                        Header="Add Category"
+                        Click="AddCategory_Click"/>
+
+                </ContextMenu>
+            </TreeView.ContextMenu>
+            
+        </TreeView>
+    </Grid>
+</UserControl>
