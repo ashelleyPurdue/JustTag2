@@ -11,7 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.IO;
+using System.Reflection;
 using IllusoryStudios.Wpf.LostControls;
 
 namespace JustTag2.TagPallette
@@ -21,7 +22,10 @@ namespace JustTag2.TagPallette
     /// </summary>
     public partial class TagPalletteView : UserControl
     {
-        public TagDatabase viewModel = PlaceholderTagDatabase.instance;
+        private static string exeFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        private static string dbPath = Path.Combine(exeFolder, "tag_pallet.json");
+
+        public TagDatabase viewModel = TagDatabase.Load(dbPath);
 
         public TagPalletteView()
         {

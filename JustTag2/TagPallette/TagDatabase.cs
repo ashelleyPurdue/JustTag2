@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
+using System.IO;
 
 namespace JustTag2.TagPallette
 {
@@ -25,8 +26,24 @@ namespace JustTag2.TagPallette
             System.IO.File.WriteAllText(filePath, output);
         }
 
-        public static TagDatabase Load(string filePath) 
-            => serializer.Deserialize<TagDatabase>(filePath);
+        /// <summary>
+        /// Loads a database from the given path.
+        /// If the path doesn't exist, returns a blank database(!!!)
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        public static TagDatabase Load(string filePath)
+        {
+            if (!File.Exists(filePath))
+            {
+                return new TagDatabase()
+                {
+                    Categories = new ObservableCollection<TagCategory>()
+                };
+            }
+
+            return serializer.Deserialize<TagDatabase>(filePath);
+        }
     }
 
     public class TagCategory : INotifyPropertyChanged
