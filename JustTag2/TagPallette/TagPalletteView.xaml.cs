@@ -41,7 +41,7 @@ namespace JustTag2.TagPallette
 
         // Event handlers
 
-        private void Tag_DragStart(object sender, object e)
+        private void Tag_DragStart(object sender, RoutedEventArgs e)
         {
             // Start dragging the tag
             var s = sender as Control;
