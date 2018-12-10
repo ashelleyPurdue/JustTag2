@@ -23,7 +23,7 @@ namespace JustTag2.TagPallette
         public void Save(string filePath)
         {
             string output = serializer.Serialize(this);
-            System.IO.File.WriteAllText(filePath, output);
+            File.WriteAllText(filePath, output);
         }
 
         /// <summary>
@@ -42,7 +42,8 @@ namespace JustTag2.TagPallette
                 };
             }
 
-            return serializer.Deserialize<TagDatabase>(filePath);
+            string contents = File.ReadAllText(filePath);
+            return serializer.Deserialize<TagDatabase>(contents);
         }
     }
 

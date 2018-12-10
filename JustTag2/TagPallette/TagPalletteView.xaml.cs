@@ -11,8 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.IO;
-using System.Reflection;
+using System.ComponentModel;
 using IllusoryStudios.Wpf.LostControls;
 
 namespace JustTag2.TagPallette
@@ -22,15 +21,11 @@ namespace JustTag2.TagPallette
     /// </summary>
     public partial class TagPalletteView : UserControl
     {
-        private static string exeFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-        private static string dbPath = Path.Combine(exeFolder, "tag_pallet.json");
-
-        public TagDatabase viewModel = TagDatabase.Load(dbPath);
+        public TagDatabase ViewModel => (TagDatabase)DataContext;
 
         public TagPalletteView()
         {
             InitializeComponent();
-            DataContext = viewModel;
         }
 
 
@@ -70,9 +65,9 @@ namespace JustTag2.TagPallette
 
         private void AddCategory_Click(object sender, RoutedEventArgs e)
         {
-            viewModel.Categories.Add(new TagCategory()
+            ViewModel.Categories.Add(new TagCategory()
             {
-                Name = $"Category {viewModel.Categories.Count}",
+                Name = $"Category {ViewModel.Categories.Count}",
                 Desc = ""
             });
         }
