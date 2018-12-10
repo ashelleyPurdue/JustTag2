@@ -42,7 +42,7 @@
                         Text="{Binding Name}"
                         Tag="{Binding Name}"
                         
-                        MouseMove="Tag_MouseMove">
+                        MouseDown="Tag_MouseDown">
 
                         <lc:EditableLabel.ContextMenu>
                             <ContextMenu>
