@@ -42,7 +42,7 @@
                         Text="{Binding Name}"
                         Tag="{Binding Name}"
                         
-                        MouseDown="Tag_DragStart"
+                        MouseMove="Tag_MouseMove"
                         TouchDown="Tag_DragStart"
                         StylusDown="Tag_DragStart">
 

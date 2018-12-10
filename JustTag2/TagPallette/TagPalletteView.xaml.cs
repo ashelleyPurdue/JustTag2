@@ -41,6 +41,14 @@ namespace JustTag2.TagPallette
 
         // Event handlers
 
+        private void Tag_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton != MouseButtonState.Pressed)
+                return;
+
+            Tag_DragStart(sender, e);
+        }
+
         private void Tag_DragStart(object sender, RoutedEventArgs e)
         {
             // Start dragging the tag
