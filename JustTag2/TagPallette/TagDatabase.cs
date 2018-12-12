@@ -5,15 +5,13 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.Script.Serialization;
+using Newtonsoft.Json;
 using System.IO;
 
 namespace JustTag2.TagPallette
 {
     public class TagDatabase : INotifyPropertyChanged
     {
-        private static JavaScriptSerializer serializer = new JavaScriptSerializer();
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ObservableCollection<TagCategory> Categories { get; set; }
@@ -22,7 +20,7 @@ namespace JustTag2.TagPallette
 
         public void Save(string filePath)
         {
-            string output = serializer.Serialize(this);
+            string output = JsonConvert.SerializeObject(this, Formatting.Indented);
             File.WriteAllText(filePath, output);
         }
 
@@ -43,7 +41,7 @@ namespace JustTag2.TagPallette
             }
 
             string contents = File.ReadAllText(filePath);
-            return serializer.Deserialize<TagDatabase>(contents);
+            return JsonConvert.DeserializeObject<TagDatabase>(contents);
         }
     }
 
