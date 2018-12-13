@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="JustTag2.Previewers.VideoPreviewer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:JustTag2.Previewers"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <DockPanel>
+
+        <!-- Video controls -->
+        <DockPanel
+            DockPanel.Dock="Bottom"
+            Height="Auto">
+
+            <Button
+                DockPanel.Dock="Left"
+                Content="Play"
+                Height="Auto"
+                Click="PlayButton_Click">
+
+                <Button.Style>
+                    <Style>
+                        <Style.Triggers>
+                            
+                            <DataTrigger Binding="{Binding IsPlaying}" Value="False">
+                                <Setter Property="Button.Content" Value="Play"/>
+                            </DataTrigger>
+
+                            <DataTrigger Binding="{Binding IsPlaying}" Value="True">
+                                <Setter Property="Button.Content" Value="Pause"/>
+                            </DataTrigger>
+
+                        </Style.Triggers>
+                    </Style>
+
+                </Button.Style>
+                
+            </Button>
+
+            <Slider
+                DockPanel.Dock="Left"
+                Maximum="{Binding Length}"
+                Value="{Binding Position}"/>
+
+        </DockPanel>
+
+        <!-- Video player -->
+        <MediaElement
+            x:Name="player"
+            DockPanel.Dock="Bottom"
+            UnloadedBehavior="Manual"/>
+
+    </DockPanel>
+</UserControl>
