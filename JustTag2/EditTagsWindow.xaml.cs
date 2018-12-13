@@ -27,6 +27,15 @@ namespace JustTag2
 
         private FileSystemInfo file;
 
+        public Action beforeSaving;
+        public Action afterSaving;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="file"> The file whose tags are being edited.</param>
+        /// <param name="beforeSaving"> Callback to be ran before saving any changes </param>
+        /// <param name="afterSaving"> Callback to be ran after saving any changes </param>
         public EditTagsWindow(FileSystemInfo file)
         {
             InitializeComponent();
@@ -55,7 +64,10 @@ namespace JustTag2
 
             // TODO: Validate the input
 
+            beforeSaving?.Invoke();
             TagUtils.SetTags(file, tags);
+            afterSaving?.Invoke();
+
             Close();
         }
 
