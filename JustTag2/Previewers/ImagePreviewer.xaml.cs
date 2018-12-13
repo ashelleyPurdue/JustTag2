@@ -46,7 +46,14 @@ namespace JustTag2.Previewers
 
         public void Open(FileSystemInfo file)
         {
-            image.Source = new BitmapImage(new Uri(file.FullName));
+            // Load the bitmap image and close the file handle
+            var bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = new Uri(file.FullName);
+            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+            bitmap.EndInit();
+
+            image.Source = bitmap;
         }
 
         public void Close() => image.Source = null;

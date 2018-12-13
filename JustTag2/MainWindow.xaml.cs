@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,7 +34,14 @@ namespace JustTag2
 
         private void EditTagsMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            var window = new EditTagsWindow(browser.ViewModel.SelectedFile);
+            FileSystemInfo file = browser.ViewModel.SelectedFile;
+
+            var window = new EditTagsWindow(file);
+
+            // Make sure the file is temporarily closed while the tags are
+            // saved, so we don't get a file-in-use error.
+            window.beforeSaving = previewer.Close;
+            window.afterSaving  = () => previewer.Source = file;
 
             window.ShowDialog();
             browser.ViewModel.CurrentTab.Refresh();
