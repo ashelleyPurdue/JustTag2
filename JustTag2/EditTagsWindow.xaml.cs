@@ -14,6 +14,7 @@ using System.IO;
 using System.Reflection;
 using JustTag2.TagPallette;
 using JustTag2.Tagging;
+using JustTag2.Pages;
 
 namespace JustTag2
 {
@@ -22,61 +23,26 @@ namespace JustTag2
     /// </summary>
     public partial class EditTagsWindow : Window
     {
-        private static string exeFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-        private static string dbPath = Path.Combine(exeFolder, "tag_pallet.json");
+        public Action beforeSaving
+        {
+            set => page.beforeSaving = value;
+            get => page.beforeSaving;
+        }
 
-        private FileSystemInfo file;
+        public Action afterSaving
+        {
+            set => page.afterSaving = value;
+            get => page.afterSaving;
+        }
 
-        public Action beforeSaving;
-        public Action afterSaving;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="file"> The file whose tags are being edited.</param>
-        /// <param name="beforeSaving"> Callback to be ran before saving any changes </param>
-        /// <param name="afterSaving"> Callback to be ran after saving any changes </param>
+        private EditTagsPage page;
+
         public EditTagsWindow(FileSystemInfo file)
         {
             InitializeComponent();
-
-            this.file = file;
-
-            // Load the tag pallet
-            tagPallette.DataContext = TagDatabase.Load(dbPath);
-
-            // Populate the tags textbox
-            string[] tags = TagUtils.GetTags(file);
-            foreach (string t in tags)
-                tagsTextbox.AppendText(t + "\n");
-        }
-
-        private void OK_Click(object sender, RoutedEventArgs e)
-        {
-            // Split the text into tags
-            string[] tags = tagsTextbox.Text.Split
-            (
-                ' ',
-                '\r',
-                '\n',
-                '\t'
-            );
-
-            // TODO: Validate the input
-
-            beforeSaving?.Invoke();
-            TagUtils.SetTags(file, tags);
-            afterSaving?.Invoke();
-
-            Close();
-        }
-
-        private void Cancel_Click(object sender, RoutedEventArgs e)
-            => this.Close();
-
-        private void Window_Closed(object sender, EventArgs e)
-        {
-            tagPallette.ViewModel.Save(dbPath);
+            page = new EditTagsPage(file);
+            this.Content = page;
         }
     }
 }
