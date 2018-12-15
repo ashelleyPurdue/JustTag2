@@ -35,15 +35,23 @@ namespace JustTag2.Pages
         {
             FileSystemInfo file = browser.ViewModel.SelectedFile;
 
-            var window = new EditTagsWindow(file);
+            var page = new EditTagsPage(file);
 
             // Make sure the file is temporarily closed while the tags are
             // saved, so we don't get a file-in-use error.
-            window.beforeSaving = previewer.Close;
-            window.afterSaving = () => previewer.Source = file;
+            page.beforeSaving = previewer.Close;
+            page.afterSaving = () => previewer.Source = file;
 
-            window.ShowDialog();
-            browser.ViewModel.CurrentTab.Refresh();
+            // Navigate to the page.
+            var window = Window.GetWindow(this);
+
+            page.MovedBack += (s, a) =>
+            {
+                window.Content = this;
+                browser.ViewModel.CurrentTab.Refresh();
+            };
+            window.Content = page;
+            
         }
     }
 }
