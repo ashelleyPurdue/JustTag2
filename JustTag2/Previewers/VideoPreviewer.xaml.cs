@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,7 +14,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace JustTag2.Previewers
 {
@@ -22,12 +22,16 @@ namespace JustTag2.Previewers
     /// </summary>
     public partial class VideoPreviewer : UserControl, IPreviewer
     {
-        public VideoPlayerViewModel viewModel = new VideoPlayerViewModel();
-
         public VideoPreviewer()
         {
             InitializeComponent();
-            DataContext = viewModel;
+
+            // Boilerplate needed to set up the video player
+            var currentAssembly = Assembly.GetEntryAssembly();
+            var currentDirectory = new FileInfo(currentAssembly.Location).DirectoryName;
+            var libDirectory = new DirectoryInfo(Path.Combine(currentDirectory, "libvlc", IntPtr.Size == 4 ? "win-x86" : "win-x64"));
+
+            player.SourceProvider.CreatePlayer(libDirectory);
         }
 
         public UserControl Control => this;
@@ -52,27 +56,18 @@ namespace JustTag2.Previewers
 
         public void Close()
         {
-            player.Close();
+            //player.SourceProvider.MediaPlayer.P
         }
 
         public void Open(FileSystemInfo file)
         {
-            player.Source = new Uri(file.FullName);
+            var uri = new Uri(file.FullName);
+            player.SourceProvider.MediaPlayer.Play(uri);
         }
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
 
         }
-    }
-
-    public class VideoPlayerViewModel : INotifyPropertyChanged
-    {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public double Length { get; set; }
-        public double Position { get; set; }
-
-        public bool IsPlaying { get; set; }
     }
 }
