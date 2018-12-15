@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using TabbedFileBrowser;
+using JustTag2.Pages;
 
 namespace JustTag2
 {
@@ -22,29 +22,12 @@ namespace JustTag2
     /// </summary>
     public partial class MainWindow : Window
     {
+        private MainPage mainPage = new MainPage();
+
         public MainWindow()
         {
             InitializeComponent();
-            browser.ViewModel.ParseFilterString = Tagging.TagUtils.ParseFilterString;
-
-            // TODO: replace this with a databinding in XAML
-            browser.ViewModel.PropertyChanged += (s, a) =>
-                previewer.Source = browser.ViewModel.SelectedFile;
-        }
-
-        private void EditTagsMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            FileSystemInfo file = browser.ViewModel.SelectedFile;
-
-            var window = new EditTagsWindow(file);
-
-            // Make sure the file is temporarily closed while the tags are
-            // saved, so we don't get a file-in-use error.
-            window.beforeSaving = previewer.Close;
-            window.afterSaving  = () => previewer.Source = file;
-
-            window.ShowDialog();
-            browser.ViewModel.CurrentTab.Refresh();
+            this.Content = mainPage;
         }
     }
 }

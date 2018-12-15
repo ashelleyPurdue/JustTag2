@@ -12,32 +12,5 @@
         Width="800" 
         SnapsToDevicePixels="True">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-
-        <tfb:TabbedFileBrowserControl
-            x:Name="browser"
-            Grid.Column="0">
-
-            <tfb:TabbedFileBrowserControl.ExtraContextMenuItems>
-                
-                <MenuItem
-                    Header="Edit tags"
-                    Click="EditTagsMenuItem_Click"/>
-                
-            </tfb:TabbedFileBrowserControl.ExtraContextMenuItems>
-            
-        </tfb:TabbedFileBrowserControl>
-
-        <GridSplitter 
-            Grid.Column="0"
-            Width="5"/>
-
-        <previewers:MainPreviewer
-            x:Name="previewer"
-            Grid.Column="1"/>
-        
     </Grid>
 </Window>
