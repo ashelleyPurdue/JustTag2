@@ -79,7 +79,7 @@ namespace JustTag2.Previewers
                 Dispatcher.Invoke(() => timeSlider.Maximum = mediaPlayer.Length);   // Dispatcher.Invoke is needed because LengthChanged
                                                                                     // doesn't occur on the main thread
 
-            bool timeChanging = false;
+            bool timeChanging = false;  
             mediaPlayer.TimeChanged += (s, a) => Dispatcher.Invoke(() =>
             {
                 timeChanging = true;
@@ -89,8 +89,10 @@ namespace JustTag2.Previewers
 
             timeSlider.ValueChanged += (s, a) =>
             {
+                // We don't want to cause an infinite loop of TimeChanged events 
                 if (timeChanging)
-                    return;
+                    return;     
+
                 mediaPlayer.Time = (long)timeSlider.Value;
             };
         }
