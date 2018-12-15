@@ -41,9 +41,7 @@
 
             <Slider
                 x:Name="timeSlider"
-                DockPanel.Dock="Left"
-                Maximum="{Binding Length}"
-                Value="{Binding Position}"/>
+                DockPanel.Dock="Left"/>
 
         </DockPanel>
 
