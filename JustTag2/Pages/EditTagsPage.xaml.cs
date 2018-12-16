@@ -30,9 +30,6 @@ namespace JustTag2.Pages
 
         private FileSystemInfo file;
 
-        public Action beforeSaving;
-        public Action afterSaving;
-
         /// <summary>
         /// 
         /// </summary>
@@ -69,11 +66,7 @@ namespace JustTag2.Pages
             );
 
             // TODO: Validate the input
-
-            beforeSaving?.Invoke();
             TagUtils.SetTags(file, tags);
-            afterSaving?.Invoke();
-
             MovedBack?.Invoke(this, null);
         }
 

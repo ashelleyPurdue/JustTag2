@@ -34,22 +34,24 @@ namespace JustTag2.Pages
         private void EditTagsMenuItem_Click(object sender, RoutedEventArgs e)
         {
             FileSystemInfo file = browser.ViewModel.SelectedFile;
-
+            
+            var window = Window.GetWindow(this);
             var page = new EditTagsPage(file);
 
             // Make sure the file is temporarily closed while the tags are
-            // saved, so we don't get a file-in-use error.
-            page.beforeSaving = previewer.Close;
-            page.afterSaving = () => previewer.Source = file;
+            // edited, so we don't get a file-in-use error when saving.
+            previewer.Close();
 
-            // Navigate to the page.
-            var window = Window.GetWindow(this);
-
+            // Tell the edit page to return here when the back
+            // button is pressed.
             page.MovedBack += (s, a) =>
             {
                 window.Content = this;
                 browser.ViewModel.CurrentTab.Refresh();
+                previewer.Source = file;    // re-open the same file(even if it no longer appears in the file list)
             };
+
+            // Navigate to the page.
             window.Content = page;
             
         }
