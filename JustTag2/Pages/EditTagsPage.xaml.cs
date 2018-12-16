@@ -39,19 +39,25 @@ namespace JustTag2.Pages
         public EditTagsPage(FileSystemInfo file)
         {
             InitializeComponent();
+            MovedBack += EditTagsPage_MovedBack;
 
+            // Select the file
             this.file = file;
+            previewer.Source = file;
 
             // Load the tag pallet
             tagPallette.DataContext = TagDatabase.Load(dbPath);
-
-            // Make sure the pallete is saved when the page is closed.
-            MovedBack += (s, a) => tagPallette.ViewModel.Save(dbPath);
 
             // Populate the tags textbox
             string[] tags = TagUtils.GetTags(file);
             foreach (string t in tags)
                 tagsTextbox.AppendText(t + "\n");
+        }
+
+        private void EditTagsPage_MovedBack(object sender, EventArgs e)
+        {
+            tagPallette.ViewModel.Save(dbPath);
+            previewer.Close();
         }
 
         private void OK_Click(object sender, RoutedEventArgs e)

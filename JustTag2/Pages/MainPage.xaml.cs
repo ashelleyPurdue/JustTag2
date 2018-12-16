@@ -53,7 +53,6 @@ namespace JustTag2.Pages
 
             // Navigate to the page.
             window.Content = page;
-            
         }
     }
 }

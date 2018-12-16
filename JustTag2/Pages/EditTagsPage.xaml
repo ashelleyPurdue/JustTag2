@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:tp="clr-namespace:JustTag2.TagPallette"
       xmlns:local="clr-namespace:JustTag2.Pages"
+      xmlns:p="clr-namespace:JustTag2.Previewers"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="EditTagsPage">
@@ -12,12 +13,13 @@
     <Grid>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="60*"/>
+            <ColumnDefinition Width="150*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
@@ -31,34 +33,31 @@
         </Grid.Resources>
 
         <!-- Tag list -->
-        <TextBox
-            x:Name="tagsTextbox"
+        <GroupBox
             Grid.Column="0"
             Grid.Row="1"
-            Margin="5"/>
-        
-        <TextBlock
-            HorizontalAlignment="Right"
-            VerticalAlignment="Bottom"
-            Grid.Column="0"
-            Grid.Row="1"
-            Margin="10"
-            Text="This file's tags"/>
+            Header="This file's tags">
+
+            <TextBox x:Name="tagsTextbox"/>
+
+        </GroupBox>
 
         <!-- Tag Pallette -->
-        <tp:TagPalletteView
-            x:Name="tagPallette"
-            Grid.Column="1"
-            Grid.Row="1"
-            Margin="5"/>
+        <GroupBox 
+            Grid.Column="0" 
+            Grid.Row="2"
+            Header="Tag Pallette">
 
-        <TextBlock
-            HorizontalAlignment="Right"
-            VerticalAlignment="Bottom"
+            <tp:TagPalletteView x:Name="tagPallette"/>
+
+        </GroupBox>
+
+        <!-- Previewer -->
+        <p:MainPreviewer
+            x:Name="previewer"
             Grid.Column="1"
             Grid.Row="1"
-            Margin="10"
-            Text="Tag Pallette"/>
+            Grid.RowSpan="2"/>
 
         <!-- OK/Cancel buttons -->
         <Button 
@@ -66,7 +65,7 @@
             HorizontalAlignment="Right"
             Grid.Column="1"
             Grid.Row="0"
-            Click="OK_Click"/>
+            Click="OK_Click" Height="20" Margin="0,0,10,10"/>
 
         <Button 
             Content="Cancel"
@@ -74,7 +73,7 @@
             VerticalAlignment="Top"
             Grid.Column="0"
             Grid.Row="0"
-            Click="Cancel_Click"/>
+            Click="Cancel_Click" Height="20" Margin="10,10,0,0"/>
 
     </Grid>
 </Page>
