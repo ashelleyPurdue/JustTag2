@@ -42,7 +42,7 @@ namespace JustTag2.Previewers
             }
         }
 
-        private static IPreviewer[] previewers = new IPreviewer[]
+        private IPreviewer[] previewers = new IPreviewer[]
         {
             new ImagePreviewer(),
             new VideoPreviewer(),

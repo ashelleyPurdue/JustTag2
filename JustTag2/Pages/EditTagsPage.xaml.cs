@@ -10,25 +10,25 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.IO;
 using System.Reflection;
 using JustTag2.TagPallette;
 using JustTag2.Tagging;
 
-namespace JustTag2
+namespace JustTag2.Pages
 {
     /// <summary>
-    /// Interaction logic for EditTagsWindow.xaml
+    /// Interaction logic for EditTagsPage.xaml
     /// </summary>
-    public partial class EditTagsWindow : Window
+    public partial class EditTagsPage : Page
     {
         private static string exeFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         private static string dbPath = Path.Combine(exeFolder, "tag_pallet.json");
 
-        private FileSystemInfo file;
+        public event EventHandler MovedBack;
 
-        public Action beforeSaving;
-        public Action afterSaving;
+        private FileSystemInfo file;
 
         /// <summary>
         /// 
@@ -36,11 +36,14 @@ namespace JustTag2
         /// <param name="file"> The file whose tags are being edited.</param>
         /// <param name="beforeSaving"> Callback to be ran before saving any changes </param>
         /// <param name="afterSaving"> Callback to be ran after saving any changes </param>
-        public EditTagsWindow(FileSystemInfo file)
+        public EditTagsPage(FileSystemInfo file)
         {
             InitializeComponent();
+            MovedBack += EditTagsPage_MovedBack;
 
+            // Select the file
             this.file = file;
+            previewer.Source = file;
 
             // Load the tag pallet
             tagPallette.DataContext = TagDatabase.Load(dbPath);
@@ -49,6 +52,12 @@ namespace JustTag2
             string[] tags = TagUtils.GetTags(file);
             foreach (string t in tags)
                 tagsTextbox.AppendText(t + "\n");
+        }
+
+        private void EditTagsPage_MovedBack(object sender, EventArgs e)
+        {
+            tagPallette.ViewModel.Save(dbPath);
+            previewer.Close();
         }
 
         private void OK_Click(object sender, RoutedEventArgs e)
@@ -63,20 +72,11 @@ namespace JustTag2
             );
 
             // TODO: Validate the input
-
-            beforeSaving?.Invoke();
             TagUtils.SetTags(file, tags);
-            afterSaving?.Invoke();
-
-            Close();
+            MovedBack?.Invoke(this, null);
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
-            => this.Close();
-
-        private void Window_Closed(object sender, EventArgs e)
-        {
-            tagPallette.ViewModel.Save(dbPath);
-        }
+            => MovedBack?.Invoke(this, null);
     }
 }
