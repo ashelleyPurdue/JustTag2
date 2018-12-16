@@ -17,8 +17,8 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
         <Grid.Resources>
@@ -31,42 +31,49 @@
         </Grid.Resources>
 
         <!-- Tag list -->
-        <DockPanel
+        <TextBox
+            x:Name="tagsTextbox"
             Grid.Column="0"
-            Grid.Row="0">
-
-            <TextBlock
-                DockPanel.Dock="Top"
-                HorizontalAlignment="Left"
-                Margin="5"
-                Text="This file's tags:"/>
-
-            <TextBox
-                x:Name="tagsTextbox"
-                DockPanel.Dock="Top"
-                Margin="5"/>
-
-        </DockPanel>
+            Grid.Row="1"
+            Margin="5"/>
+        
+        <TextBlock
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Grid.Column="0"
+            Grid.Row="1"
+            Margin="10"
+            Text="This file's tags"/>
 
         <!-- Tag Pallette -->
         <tp:TagPalletteView
             x:Name="tagPallette"
             Grid.Column="1"
-            Grid.Row="0"/>
+            Grid.Row="1"
+            Margin="5"/>
+
+        <TextBlock
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Grid.Column="1"
+            Grid.Row="1"
+            Margin="10"
+            Text="Tag Pallette"/>
 
         <!-- OK/Cancel buttons -->
         <Button 
             Content="OK"
             HorizontalAlignment="Right"
-            Grid.Column="0"
-            Grid.Row="1"
+            Grid.Column="1"
+            Grid.Row="0"
             Click="OK_Click"/>
 
         <Button 
             Content="Cancel"
             HorizontalAlignment="Left"
-            Grid.Column="1"
-            Grid.Row="1"
+            VerticalAlignment="Top"
+            Grid.Column="0"
+            Grid.Row="0"
             Click="Cancel_Click"/>
 
     </Grid>
