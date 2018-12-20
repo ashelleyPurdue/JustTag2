@@ -29,12 +29,15 @@ namespace JustTag2.Previewers
             // Boilerplate needed to set up the video player
             var currentAssembly = Assembly.GetEntryAssembly();
             var currentDirectory = new FileInfo(currentAssembly.Location).DirectoryName;
-            var libDirectory = new DirectoryInfo(Path.Combine(currentDirectory, "libvlc", IntPtr.Size == 4 ? "win-x86" : "win-x64"));
+            var libDirectory = Path.Combine(currentDirectory, "ffmpeg");
 
-            player.SourceProvider.CreatePlayer(libDirectory);
+            Unosquare.FFME.MediaElement.FFmpegDirectory = libDirectory;
+
+            // Don't let FFME swallow exceptions.  That's bad juju
+            player.MediaFailed += (s, a) => throw a.ErrorException;
 
             // Because I'm too sleepy to figure out the XAML right now.
-            RedneckDatabindTimeSlider();
+            // RedneckDatabindTimeSlider();
         }
 
         public UserControl Control => this;
@@ -59,21 +62,21 @@ namespace JustTag2.Previewers
 
         public void Close()
         {
-            player.SourceProvider.MediaPlayer.SetMedia("");
+            player.Close();
         }
 
         public void Open(FileSystemInfo file)
         {
-            var uri = new Uri(file.FullName);
-            player.SourceProvider.MediaPlayer.Play(uri);
+            player.Source = new Uri(file.FullName);
         }
 
         private void RedneckDatabindTimeSlider()
         {
+            /*
             // Manually subscribe to time-change events and update
             // the slider.  And vice-versa.
             // Who needs XAML, anyway?
-            var mediaPlayer = player.SourceProvider.MediaPlayer;
+            var mediaPlayer = player;
 
             mediaPlayer.LengthChanged += (s, a) =>
                 Dispatcher.Invoke(() => timeSlider.Maximum = mediaPlayer.Length);   // Dispatcher.Invoke is needed because LengthChanged
@@ -94,7 +97,7 @@ namespace JustTag2.Previewers
                     return;     
 
                 mediaPlayer.Time = (long)timeSlider.Value;
-            };
+            };*/
         }
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
