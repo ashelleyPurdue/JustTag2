@@ -102,7 +102,10 @@ namespace JustTag2.Previewers
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (player.IsPlaying)
+                player.Pause();
+            else if (player.IsPaused)
+                player.Play();
         }
     }
 }
