@@ -47,6 +47,15 @@
   </PropertyGroup>
   <!-- References -->
   <ItemGroup>
+    <Reference Include="ffme.common, Version=4.0.270.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FFME.Windows.4.0.270\lib\net461\ffme.common.dll</HintPath>
+    </Reference>
+    <Reference Include="ffme.win, Version=2018.9.23.40367, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FFME.Windows.4.0.270\lib\net461\ffme.win.dll</HintPath>
+    </Reference>
+    <Reference Include="FFmpeg.AutoGen, Version=4.0.0.4, Culture=neutral, PublicKeyToken=9b7632533a381715, processorArchitecture=MSIL">
+      <HintPath>..\packages\FFmpeg.AutoGen.4.0.0.4\lib\net45\FFmpeg.AutoGen.dll</HintPath>
+    </Reference>
     <Reference Include="IllusoryStudios.Wpf.LostControls, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\IllusoryStudios.Wpf.LostControls.1.3.0\lib\net40\IllusoryStudios.Wpf.LostControls.dll</HintPath>
     </Reference>
@@ -204,6 +213,8 @@
     <Error Condition="!Exists('..\packages\Fody.3.3.2\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.3.3.2\build\Fody.targets'))" />
     <Error Condition="!Exists('..\packages\PropertyChanged.Fody.2.6.0\build\PropertyChanged.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PropertyChanged.Fody.2.6.0\build\PropertyChanged.Fody.props'))" />
     <Error Condition="!Exists('..\packages\VideoLAN.LibVLC.Windows.3.0.4\build\VideoLAN.LibVLC.Windows.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\VideoLAN.LibVLC.Windows.3.0.4\build\VideoLAN.LibVLC.Windows.targets'))" />
+    <Error Condition="!Exists('..\packages\FFmpeg.Win64.Static.3.3.3.1\build\FFmpeg.Win64.Static.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\FFmpeg.Win64.Static.3.3.3.1\build\FFmpeg.Win64.Static.targets'))" />
   </Target>
   <Import Project="..\packages\VideoLAN.LibVLC.Windows.3.0.4\build\VideoLAN.LibVLC.Windows.targets" Condition="Exists('..\packages\VideoLAN.LibVLC.Windows.3.0.4\build\VideoLAN.LibVLC.Windows.targets')" />
+  <Import Project="..\packages\FFmpeg.Win64.Static.3.3.3.1\build\FFmpeg.Win64.Static.targets" Condition="Exists('..\packages\FFmpeg.Win64.Static.3.3.3.1\build\FFmpeg.Win64.Static.targets')" />
 </Project>
