@@ -62,6 +62,14 @@ namespace JustTag2
 
                 RefreshListview();
             }
+
+            // Delete the previous tag when the user hits backspace
+            if (typingBox.Text == "" && e.Key == Key.Back && tags.Count > 0)
+            {
+                tags.RemoveAt(tags.Count - 1);
+                RefreshListview();
+            }
+
         }
     }
 }
