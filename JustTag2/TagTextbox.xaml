@@ -13,7 +13,7 @@
 
         <TextBox
             x:Name="typingBox"
-            KeyDown="TypingBox_KeyDown"/>
+            PreviewKeyDown="TypingBox_PreviewKeyDown"/>
 
 
     </StackPanel>

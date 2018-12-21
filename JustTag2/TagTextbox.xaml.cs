@@ -36,7 +36,13 @@ namespace JustTag2
             InitializeComponent();
         }
 
-        private void TypingBox_KeyDown(object sender, KeyEventArgs e)
+        private void RefreshListview()
+        {
+            tagsList.ItemsSource = null;
+            tagsList.ItemsSource = tags;
+        }
+
+        private void TypingBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             // If the user types whitespace, add the tag they were typing to the list
             var whitespaceKeys = new Key[]
@@ -53,6 +59,8 @@ namespace JustTag2
                 string tag = typingBox.Text;
                 tags.Add(tag);
                 typingBox.Clear();
+
+                RefreshListview();
             }
         }
     }
