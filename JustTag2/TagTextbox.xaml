@@ -6,17 +6,78 @@
              xmlns:local="clr-namespace:JustTag2"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        
+        <DataTemplate x:Key="TagTemplate">
+            <StackPanel 
+                x:Name="tagPanel"
+                Orientation="Horizontal"
+                Background="Transparent">
+
+                <TextBlock 
+                    Text="{Binding}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Margin="0,0,2,0"/>
+
+                <Button 
+                    Tag="{Binding}"
+                    Content="x"
+                    Click="DeleteButton_Click"
+                            
+                    Margin="0"
+                    Width="Auto"
+                    Height="Auto"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center">
+
+                    <!-- Only show the button if the mouse is over the tag-->
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Style.Triggers>
+
+
+                                <DataTrigger 
+                                    Binding="{Binding ElementName=tagPanel, Path=IsMouseOver}"
+                                    Value="True">
+
+                                    <Setter Property="Visibility" Value="Visible"/>
+
+                                </DataTrigger>
+
+                                <DataTrigger 
+                                    Binding="{Binding ElementName=tagPanel, Path=IsMouseOver}"
+                                    Value="False">
+
+                                    <Setter Property="Visibility" Value="Hidden"/>
+
+                                </DataTrigger>
+
+
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+
+                </Button>
+
+            </StackPanel>
+        </DataTemplate>
+        
+    </UserControl.Resources>
+    
     <StackPanel>
 
         <ListView
             x:Name="tagsList"
             ItemsSource="{Binding Tags, Mode=OneWay}"
+            ItemTemplate="{StaticResource TagTemplate}"
             AllowDrop="True"
             DragDrop.Drop="TagsList_Drop">
-            
+
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    
+
                     <WrapPanel 
                         Width=
                         "{
@@ -39,70 +100,9 @@
                             RelativeSource={RelativeSource AncestorType=ListView}
                         }">
                     </WrapPanel>
-                    
-                </ItemsPanelTemplate>   
+
+                </ItemsPanelTemplate>
             </ListView.ItemsPanel>
-
-            <ListView.ItemTemplate>
-                <DataTemplate>
-
-                    <StackPanel 
-                        x:Name="tagPanel"
-                        Orientation="Horizontal"
-                        Background="Transparent">
-                        
-                        <TextBlock 
-                            Text="{Binding}"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Margin="0,0,2,0"/>
-
-                        <Button 
-                            Tag="{Binding}"
-                            Content="x"
-                            Click="DeleteButton_Click"
-                            
-                            Margin="0"
-                            Width="Auto"
-                            Height="Auto"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Center">
-
-                            <!-- Only show the button if the mouse is over the tag-->
-                            <Button.Style>
-                                <Style TargetType="Button">
-                                    <Style.Triggers>
-
-                                        
-                                        <DataTrigger 
-                                            Binding="{Binding ElementName=tagPanel, Path=IsMouseOver}"
-                                            Value="True">
-
-                                            <Setter Property="Visibility" Value="Visible"/>
-
-                                        </DataTrigger>
-
-                                        <DataTrigger 
-                                            Binding="{Binding ElementName=tagPanel, Path=IsMouseOver}"
-                                            Value="False">
-
-                                            <Setter Property="Visibility" Value="Hidden"/>
-
-                                        </DataTrigger>
-
-                                        
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                            
-                        </Button>
-
-                    </StackPanel>
-                    
-
-                </DataTemplate>
-            </ListView.ItemTemplate>
-            
         </ListView>
 
         <TextBox 
