@@ -42,14 +42,16 @@
 
             <Slider
                 x:Name="timeSlider"
-                DockPanel.Dock="Left"/>
+                DockPanel.Dock="Left"
+                Maximum="1"/>
 
         </DockPanel>
 
         <!-- Video player -->
         <ffme:MediaElement
             x:Name="player"
-            DockPanel.Dock="Bottom"/>
+            DockPanel.Dock="Bottom"
+            ScrubbingEnabled="True"/>
 
     </DockPanel>
 </UserControl>

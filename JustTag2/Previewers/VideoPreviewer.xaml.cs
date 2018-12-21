@@ -78,15 +78,6 @@ namespace JustTag2.Previewers
             // the slider.  And vice-versa.
             // Who needs XAML, anyway?
 
-            // Bind the slider's maximum to the video's length
-            player.MediaChanged += (s, a) =>
-            {
-                if (!player.NaturalDuration.HasTimeSpan)
-                    return;
-
-                timeSlider.Maximum = player.NaturalDuration.TimeSpan.TotalMilliseconds;
-            };
-
             // Bind the slider's value to the video's position
             bool skipTimeChangedEvent = false;
             bool skipValueChangedEvent = false;
@@ -97,7 +88,7 @@ namespace JustTag2.Previewers
                     return;
 
                 skipValueChangedEvent = true;
-                timeSlider.Value = player.Position.TotalMilliseconds;
+                timeSlider.Value = player.Position.Ticks;
                 skipValueChangedEvent = false;
             };
             
@@ -107,8 +98,13 @@ namespace JustTag2.Previewers
                     return;
 
                 skipTimeChangedEvent = true;
-                player.Position = new TimeSpan(0, 0, 0, (int)timeSlider.Value);
+                player.Position = new TimeSpan((long)(timeSlider.Value));
                 skipTimeChangedEvent = false;
+            };
+
+            player.MediaOpened += (s, a) =>
+            {
+                timeSlider.Maximum = player.MediaInfo.Duration.Ticks;
             };
         }
 
