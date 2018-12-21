@@ -36,8 +36,10 @@ namespace JustTag2.Previewers
             // Don't let FFME swallow exceptions.  That's bad juju
             player.MediaFailed += (s, a) => throw a.ErrorException;
 
-            // Because I'm too sleepy to figure out the XAML right now.
-            // RedneckDatabindTimeSlider();
+            // Binding the time slider to the video position in XAML
+            // turned out to be more complicated than just doing it in
+            // C#.  Simplicity is king.
+            RedneckDatabindTimeSlider();
         }
 
         public UserControl Control => this;
@@ -72,32 +74,42 @@ namespace JustTag2.Previewers
 
         private void RedneckDatabindTimeSlider()
         {
-            /*
             // Manually subscribe to time-change events and update
             // the slider.  And vice-versa.
             // Who needs XAML, anyway?
-            var mediaPlayer = player;
 
-            mediaPlayer.LengthChanged += (s, a) =>
-                Dispatcher.Invoke(() => timeSlider.Maximum = mediaPlayer.Length);   // Dispatcher.Invoke is needed because LengthChanged
-                                                                                    // doesn't occur on the main thread
-
-            bool timeChanging = false;  
-            mediaPlayer.TimeChanged += (s, a) => Dispatcher.Invoke(() =>
+            // Bind the slider's maximum to the video's length
+            player.MediaChanged += (s, a) =>
             {
-                timeChanging = true;
-                timeSlider.Value = mediaPlayer.Time;
-                timeChanging = false;
-            });
+                if (!player.NaturalDuration.HasTimeSpan)
+                    return;
 
+                timeSlider.Maximum = player.NaturalDuration.TimeSpan.TotalMilliseconds;
+            };
+
+            // Bind the slider's value to the video's position
+            bool skipTimeChangedEvent = false;
+            bool skipValueChangedEvent = false;
+
+            player.PositionChanged += (s, a) =>
+            {
+                if (skipTimeChangedEvent)
+                    return;
+
+                skipValueChangedEvent = true;
+                timeSlider.Value = player.Position.TotalMilliseconds;
+                skipValueChangedEvent = false;
+            };
+            
             timeSlider.ValueChanged += (s, a) =>
             {
-                // We don't want to cause an infinite loop of TimeChanged events 
-                if (timeChanging)
-                    return;     
+                if (skipValueChangedEvent)
+                    return;
 
-                mediaPlayer.Time = (long)timeSlider.Value;
-            };*/
+                skipTimeChangedEvent = true;
+                player.Position = new TimeSpan(0, 0, 0, (int)timeSlider.Value);
+                skipTimeChangedEvent = false;
+            };
         }
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
