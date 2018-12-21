@@ -29,11 +29,16 @@ namespace JustTag2.Previewers
             // Boilerplate needed to set up the video player
             var currentAssembly = Assembly.GetEntryAssembly();
             var currentDirectory = new FileInfo(currentAssembly.Location).DirectoryName;
-            var libDirectory = new DirectoryInfo(Path.Combine(currentDirectory, "libvlc", IntPtr.Size == 4 ? "win-x86" : "win-x64"));
+            var libDirectory = Path.Combine(currentDirectory, "ffmpeg");
 
-            player.SourceProvider.CreatePlayer(libDirectory);
+            Unosquare.FFME.MediaElement.FFmpegDirectory = libDirectory;
 
-            // Because I'm too sleepy to figure out the XAML right now.
+            // Don't let FFME swallow exceptions.  That's bad juju
+            player.MediaFailed += (s, a) => throw a.ErrorException;
+
+            // Binding the time slider to the video position in XAML
+            // turned out to be more complicated than just doing it in
+            // C#.  Simplicity is king.
             RedneckDatabindTimeSlider();
         }
 
@@ -59,13 +64,12 @@ namespace JustTag2.Previewers
 
         public void Close()
         {
-            player.SourceProvider.MediaPlayer.SetMedia("");
+            player.Close();
         }
 
         public void Open(FileSystemInfo file)
         {
-            var uri = new Uri(file.FullName);
-            player.SourceProvider.MediaPlayer.Play(uri);
+            player.Source = new Uri(file.FullName);
         }
 
         private void RedneckDatabindTimeSlider()
@@ -73,33 +77,43 @@ namespace JustTag2.Previewers
             // Manually subscribe to time-change events and update
             // the slider.  And vice-versa.
             // Who needs XAML, anyway?
-            var mediaPlayer = player.SourceProvider.MediaPlayer;
 
-            mediaPlayer.LengthChanged += (s, a) =>
-                Dispatcher.Invoke(() => timeSlider.Maximum = mediaPlayer.Length);   // Dispatcher.Invoke is needed because LengthChanged
-                                                                                    // doesn't occur on the main thread
+            // Bind the slider's value to the video's position
+            bool skipTimeChangedEvent = false;
+            bool skipValueChangedEvent = false;
 
-            bool timeChanging = false;  
-            mediaPlayer.TimeChanged += (s, a) => Dispatcher.Invoke(() =>
+            player.PositionChanged += (s, a) =>
             {
-                timeChanging = true;
-                timeSlider.Value = mediaPlayer.Time;
-                timeChanging = false;
-            });
+                if (skipTimeChangedEvent)
+                    return;
 
+                skipValueChangedEvent = true;
+                timeSlider.Value = player.Position.Ticks;
+                skipValueChangedEvent = false;
+            };
+            
             timeSlider.ValueChanged += (s, a) =>
             {
-                // We don't want to cause an infinite loop of TimeChanged events 
-                if (timeChanging)
-                    return;     
+                if (skipValueChangedEvent)
+                    return;
 
-                mediaPlayer.Time = (long)timeSlider.Value;
+                skipTimeChangedEvent = true;
+                player.Position = new TimeSpan((long)(timeSlider.Value));
+                skipTimeChangedEvent = false;
+            };
+
+            player.MediaOpened += (s, a) =>
+            {
+                timeSlider.Maximum = player.MediaInfo.Duration.Ticks;
             };
         }
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (player.IsPlaying)
+                player.Pause();
+            else if (player.IsPaused)
+                player.Play();
         }
     }
 }
