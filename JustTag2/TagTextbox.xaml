@@ -11,8 +11,10 @@
         <ListView
             x:Name="tagsList"
             ItemsSource="{Binding Tags, Mode=OneWay}">
+            
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
+                    
                     <WrapPanel 
                         Width=
                         "{
@@ -33,15 +35,42 @@
                         "{
                             Binding (ListView.View).ItemHeight, 
                             RelativeSource={RelativeSource AncestorType=ListView}
-                        }" />
+                        }">
+                    </WrapPanel>
+                    
                 </ItemsPanelTemplate>   
             </ListView.ItemsPanel>
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+
+                    <StackPanel Orientation="Horizontal">
+                        
+                        <TextBlock 
+                            Text="{Binding}"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Margin="0,0,2,0"/>
+                        
+                        <Button 
+                            Content="x" 
+                            Width="Auto"
+                            Height="Auto"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Margin="0"/>
+
+                    </StackPanel>
+                    
+
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            
         </ListView>
 
-        <TextBox
+        <TextBox 
             x:Name="typingBox"
             PreviewKeyDown="TypingBox_PreviewKeyDown"/>
-
 
     </StackPanel>
 </UserControl>
