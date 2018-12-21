@@ -68,5 +68,20 @@ namespace JustTag2
             }
 
         }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Delete the tag associated with this button
+            // NOTE: This implementation will delete the
+            // first occurrance of this tag.  This is fine
+            // if all tags are unique, but if the user adds
+            // the same tag more than once, then it will seem
+            // weird to them.
+
+            var button = (Button)sender;
+            Tags.Remove((string)button.Tag);
+
+            RefreshListview();
+        }
     }
 }
