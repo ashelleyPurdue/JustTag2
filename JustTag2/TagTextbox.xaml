@@ -44,21 +44,53 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
 
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel 
+                        x:Name="tagPanel"
+                        Orientation="Horizontal"
+                        Background="Transparent">
                         
                         <TextBlock 
                             Text="{Binding}"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Margin="0,0,2,0"/>
-                        
+
                         <Button 
                             Content="x" 
                             Width="Auto"
                             Height="Auto"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Center"
-                            Margin="0"/>
+                            Margin="0">
+
+                            <!-- Only show the button if the mouse is over the tag-->
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Style.Triggers>
+
+                                        
+                                        <DataTrigger 
+                                            Binding="{Binding ElementName=tagPanel, Path=IsMouseOver}"
+                                            Value="True">
+
+                                            <Setter Property="Visibility" Value="Visible"/>
+
+                                        </DataTrigger>
+
+                                        <DataTrigger 
+                                            Binding="{Binding ElementName=tagPanel, Path=IsMouseOver}"
+                                            Value="False">
+
+                                            <Setter Property="Visibility" Value="Hidden"/>
+
+                                        </DataTrigger>
+
+                                        
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                            
+                        </Button>
 
                     </StackPanel>
                     
