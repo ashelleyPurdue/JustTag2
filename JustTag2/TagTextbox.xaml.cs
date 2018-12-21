@@ -20,6 +20,17 @@ namespace JustTag2
     /// </summary>
     public partial class TagTextbox : UserControl
     {
+        public IEnumerable<string> Tags
+        {
+            get => tags;
+            set
+            {
+                tags = value.ToList();
+                tagsList.ItemsSource = tags;
+            }
+        }
+        private List<string> tags;
+
         public TagTextbox()
         {
             InitializeComponent();
@@ -40,7 +51,7 @@ namespace JustTag2
                 e.Handled = true;
 
                 string tag = typingBox.Text;
-                tagsList.Items.Add(tag);
+                tags.Add(tag);
                 typingBox.Clear();
             }
         }
