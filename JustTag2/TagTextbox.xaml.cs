@@ -66,7 +66,6 @@ namespace JustTag2
                 Tags.RemoveAt(Tags.Count - 1);
                 RefreshListview();
             }
-
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
@@ -81,6 +80,18 @@ namespace JustTag2
             var button = (Button)sender;
             Tags.Remove((string)button.Tag);
 
+            RefreshListview();
+        }
+
+        private void TagsList_Drop(object sender, DragEventArgs e)
+        {
+            // Add the dropped-in tag
+            // TODO: validate input
+
+            string tag = e.Data
+                            .GetData(DataFormats.StringFormat)
+                            .ToString();
+            Tags.Add(tag);
             RefreshListview();
         }
     }

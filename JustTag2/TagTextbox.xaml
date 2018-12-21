@@ -10,7 +10,9 @@
 
         <ListView
             x:Name="tagsList"
-            ItemsSource="{Binding Tags, Mode=OneWay}">
+            ItemsSource="{Binding Tags, Mode=OneWay}"
+            AllowDrop="True"
+            DragDrop.Drop="TagsList_Drop">
             
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
