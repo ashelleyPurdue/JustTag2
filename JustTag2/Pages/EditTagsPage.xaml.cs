@@ -49,7 +49,7 @@ namespace JustTag2.Pages
             tagPallette.DataContext = TagDatabase.Load(dbPath);
 
             // Populate the tags textbox
-            tagsTextbox.Tags = TagUtils.GetTags(file);
+            tagsTextbox.Tags = TagUtils.GetTags(file).ToList();
         }
 
         private void EditTagsPage_MovedBack(object sender, EventArgs e)

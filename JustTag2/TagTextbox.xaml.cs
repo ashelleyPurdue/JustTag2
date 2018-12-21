@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,34 +13,30 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PropertyChanged;
 
 namespace JustTag2
 {
     /// <summary>
     /// Interaction logic for TagTextbox.xaml
     /// </summary>
-    public partial class TagTextbox : UserControl
+    public partial class TagTextbox : UserControl, INotifyPropertyChanged
     {
-        public IEnumerable<string> Tags
-        {
-            get => tags;
-            set
-            {
-                tags = value.ToList();
-                tagsList.ItemsSource = tags;
-            }
-        }
-        private List<string> tags;
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public List<string> Tags { get; set; }
 
         public TagTextbox()
         {
             InitializeComponent();
+            DataContext = this;
         }
 
         private void RefreshListview()
         {
-            tagsList.ItemsSource = null;
-            tagsList.ItemsSource = tags;
+            var old = Tags;
+            Tags = null;
+            Tags = old;
         }
 
         private void TypingBox_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -57,16 +54,16 @@ namespace JustTag2
                 e.Handled = true;
 
                 string tag = typingBox.Text;
-                tags.Add(tag);
+                Tags.Add(tag);
                 typingBox.Clear();
 
                 RefreshListview();
             }
 
             // Delete the previous tag when the user hits backspace
-            if (typingBox.Text == "" && e.Key == Key.Back && tags.Count > 0)
+            if (typingBox.Text == "" && e.Key == Key.Back && Tags.Count > 0)
             {
-                tags.RemoveAt(tags.Count - 1);
+                Tags.RemoveAt(Tags.Count - 1);
                 RefreshListview();
             }
 

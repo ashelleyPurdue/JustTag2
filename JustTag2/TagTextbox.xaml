@@ -9,7 +9,8 @@
     <StackPanel>
         
         <ListView
-            x:Name="tagsList"/>
+            x:Name="tagsList"
+            ItemsSource="{Binding Tags, Mode=OneWay}"/>
 
         <TextBox
             x:Name="typingBox"
