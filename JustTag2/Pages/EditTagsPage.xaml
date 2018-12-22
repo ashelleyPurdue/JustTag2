@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:tp="clr-namespace:JustTag2.TagPallette"
       xmlns:local="clr-namespace:JustTag2.Pages"
+      xmlns:jt="clr-namespace:JustTag2"
       xmlns:p="clr-namespace:JustTag2.Previewers"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
@@ -38,7 +39,7 @@
             Grid.Row="1"
             Header="This file's tags">
 
-            <TextBox x:Name="tagsTextbox"/>
+            <jt:TagTextbox x:Name="tagsTextbox"/>
 
         </GroupBox>
 

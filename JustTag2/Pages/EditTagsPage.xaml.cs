@@ -49,9 +49,7 @@ namespace JustTag2.Pages
             tagPallette.DataContext = TagDatabase.Load(dbPath);
 
             // Populate the tags textbox
-            string[] tags = TagUtils.GetTags(file);
-            foreach (string t in tags)
-                tagsTextbox.AppendText(t + "\n");
+            tagsTextbox.Tags = TagUtils.GetTags(file).ToList();
         }
 
         private void EditTagsPage_MovedBack(object sender, EventArgs e)
@@ -62,17 +60,8 @@ namespace JustTag2.Pages
 
         private void OK_Click(object sender, RoutedEventArgs e)
         {
-            // Split the text into tags
-            string[] tags = tagsTextbox.Text.Split
-            (
-                ' ',
-                '\r',
-                '\n',
-                '\t'
-            );
-
             // TODO: Validate the input
-            TagUtils.SetTags(file, tags);
+            TagUtils.SetTags(file, tagsTextbox.Tags.ToArray());
             MovedBack?.Invoke(this, null);
         }
 
