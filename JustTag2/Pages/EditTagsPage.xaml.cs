@@ -61,6 +61,7 @@ namespace JustTag2.Pages
         private void OK_Click(object sender, RoutedEventArgs e)
         {
             // TODO: Validate the input
+            previewer.Close();
             TagUtils.SetTags(file, tagsTextbox.Tags.ToArray());
             MovedBack?.Invoke(this, null);
         }
