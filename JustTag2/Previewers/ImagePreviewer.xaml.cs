@@ -44,8 +44,10 @@ namespace JustTag2.Previewers
             return imageFormats.Contains(file.Extension.ToLower());
         }
 
-        public void Open(FileSystemInfo file)
+        public async Task Open(FileSystemInfo file)
         {
+            // TODO: Consider doing this in another thread?
+
             // Load the bitmap image and close the file handle
             var bitmap = new BitmapImage();
             bitmap.BeginInit();
@@ -56,6 +58,9 @@ namespace JustTag2.Previewers
             image.Source = bitmap;
         }
 
-        public void Close() => image.Source = null;
+        // The file is loaded completely into memory and then
+        // immediately closed in the "Open" method, so there's
+        // nothing special we need to do to release the file.
+        public async Task Close() => image.Source = null;
     }
 }

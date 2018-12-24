@@ -66,14 +66,14 @@ namespace JustTag2.Previewers
         /// <summary>
         /// Closes the currently open file
         /// </summary>
-        public void Close() => currentPreviewer?.Close();
+        public Task Close() => currentPreviewer?.Close();
 
-        private void Open(FileSystemInfo file)
+        private async Task Open(FileSystemInfo file)
         {
             // Close the old previewer
             if (currentPreviewer != null)
             {
-                currentPreviewer.Close();
+                await currentPreviewer.Close();
                 currentPreviewer.Control.Visibility = Visibility.Hidden;
             }
 
@@ -83,7 +83,7 @@ namespace JustTag2.Previewers
 
             // Open the new one
             currentPreviewer = GetPreviewer(file);
-            currentPreviewer.Open(file);
+            await currentPreviewer.Open(file);
             currentPreviewer.Control.Visibility = Visibility.Visible;
         }
 

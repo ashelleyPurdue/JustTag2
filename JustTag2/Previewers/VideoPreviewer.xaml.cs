@@ -62,15 +62,8 @@ namespace JustTag2.Previewers
             return extensions.Contains(file.Extension.ToLower());
         }
 
-        public void Close()
-        {
-            player.Close();
-        }
-
-        public void Open(FileSystemInfo file)
-        {
-            player.Source = new Uri(file.FullName);
-        }
+        public Task Open(FileSystemInfo file)   => player.Open(new Uri(file.FullName));
+        public Task Close()                     => player.Close();
 
         private void RedneckDatabindTimeSlider()
         {

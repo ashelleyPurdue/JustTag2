@@ -52,16 +52,17 @@ namespace JustTag2.Pages
             tagsTextbox.Tags = TagUtils.GetTags(file).ToList();
         }
 
-        private void EditTagsPage_MovedBack(object sender, EventArgs e)
+        private async void EditTagsPage_MovedBack(object sender, EventArgs e)
         {
             tagPallette.ViewModel.Save(dbPath);
-            previewer.Close();
+            await previewer.Close();
         }
 
-        private void OK_Click(object sender, RoutedEventArgs e)
+        private async void OK_Click(object sender, RoutedEventArgs e)
         {
             // TODO: Validate the input
-            previewer.Close();
+
+            await previewer.Close();
             TagUtils.SetTags(file, tagsTextbox.Tags.ToArray());
             MovedBack?.Invoke(this, null);
         }
