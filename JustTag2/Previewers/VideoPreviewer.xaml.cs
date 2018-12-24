@@ -62,14 +62,57 @@ namespace JustTag2.Previewers
             return extensions.Contains(file.Extension.ToLower());
         }
 
-        public void Close()
+        public Task Open(FileSystemInfo file)
         {
-            player.Close();
+            // Make the task complete after the video finishes
+            // loading, and not a second before.
+            var promise = new TaskCompletionSource<bool>();
+
+            // We can't use lambdas here because we need to
+            // unsubscribe from the event immediaty after it
+            // fires.  
+            // Lambdas don't support that(even when you name them),
+            // but nested methods seem to do the trick.
+            player.MediaChanged += CompleteTask;
+            player.MediaFailed -= ErrorTask;
+
+            void CompleteTask(object sender, EventArgs args)
+            {
+                player.MediaChanged -= CompleteTask;
+                player.MediaFailed -= ErrorTask;
+
+                promise.SetResult(true);
+            }
+
+            void ErrorTask(object sender, ExceptionRoutedEventArgs args)
+            {
+                player.MediaChanged -= CompleteTask;
+                player.MediaFailed -= ErrorTask;
+
+                promise.SetResult(false);
+                promise.SetException(args.ErrorException);
+            }
+
+            // Finally start loading the video
+            player.Source = new Uri(file.FullName);
+            return promise.Task;
         }
 
-        public void Open(FileSystemInfo file)
+        public Task Close()
         {
-            player.Source = new Uri(file.FullName);
+            // Make the task complete after the video finishes
+            // closing and not a second before.
+            var promise = new TaskCompletionSource<bool>();
+            player.MediaClosed += CompleteTask;
+
+            void CompleteTask(object sender, EventArgs args)
+            {
+                player.MediaClosed -= CompleteTask;
+                promise.SetResult(true);
+            }
+
+            player.Close();
+            return promise.Task;
         }
 
         private void RedneckDatabindTimeSlider()

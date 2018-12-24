@@ -66,7 +66,7 @@ namespace JustTag2.Previewers
         /// <summary>
         /// Closes the currently open file
         /// </summary>
-        public void Close() => currentPreviewer?.Close();
+        public Task Close() => currentPreviewer?.Close();
 
         private void Open(FileSystemInfo file)
         {

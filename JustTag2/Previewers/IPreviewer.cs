@@ -27,11 +27,11 @@ namespace JustTag2.Previewers
         /// Opens and displays the given file
         /// </summary>
         /// <param name="file"></param>
-        void Open(FileSystemInfo file);
+        Task Open(FileSystemInfo file);
 
         /// <summary>
         /// Closes the currently-open file
         /// </summary>
-        void Close();
+        Task Close();
     }
 }

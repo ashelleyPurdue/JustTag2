@@ -30,9 +30,9 @@ namespace JustTag2.Previewers
 
         public bool CanPreview(FileSystemInfo file) => true;
 
-        public void Close() { }
+        public async Task Close() { }   // The file was never actually opened to begin with, so nothing to close.
 
-        public void Open(FileSystemInfo file)
+        public async Task Open(FileSystemInfo file)
         {
             fileNameLabel.Text = file.Name;
         }
