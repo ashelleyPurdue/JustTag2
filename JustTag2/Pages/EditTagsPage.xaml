@@ -66,7 +66,7 @@
             HorizontalAlignment="Right"
             Grid.Column="1"
             Grid.Row="0"
-            Click="OK_Click" Height="20" Margin="0,0,10,10"/>
+            Click="OK_Click" Height="20" Margin="10,10,10,10"/>
 
         <Button 
             Content="Cancel"
@@ -74,7 +74,7 @@
             VerticalAlignment="Top"
             Grid.Column="0"
             Grid.Row="0"
-            Click="Cancel_Click" Height="20" Margin="10,10,0,0"/>
+            Click="Cancel_Click" Height="20" Margin="10,10,10,10"/>
 
     </Grid>
 </Page>
