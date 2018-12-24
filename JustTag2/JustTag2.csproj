@@ -108,6 +108,9 @@
     <Compile Include="Previewers\FallbackPreviewer.xaml.cs">
       <DependentUpon>FallbackPreviewer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Previewers\FolderPreviewer.xaml.cs">
+      <DependentUpon>FolderPreviewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Previewers\ImagePreviewer.xaml.cs">
       <DependentUpon>ImagePreviewer.xaml</DependentUpon>
     </Compile>
@@ -148,6 +151,9 @@
     </Page>
     <Page Include="Previewers\FallbackPreviewer.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Previewers\FolderPreviewer.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Previewers\ImagePreviewer.xaml">
