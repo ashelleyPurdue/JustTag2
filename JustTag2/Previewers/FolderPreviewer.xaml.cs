@@ -53,7 +53,32 @@ namespace JustTag2.Previewers
             browsableFiles = folder.EnumerateFileSystemInfos().ToArray();
             currentIndex = 0;
 
+            OpenCurrent();
+        }
+
+        private void OpenCurrent()
+        {
+            // Make sure the index is between 0 and the number of files
+            while (currentIndex < 0)
+                currentIndex += browsableFiles.Length;
+
+            while (currentIndex >= browsableFiles.Length)
+                currentIndex -= browsableFiles.Length;
+
+            // Open it
             core.Open(browsableFiles[currentIndex]);
+        }
+
+        private void prevButton_Click(object sender, RoutedEventArgs e)
+        {
+            currentIndex--;
+            OpenCurrent();
+        }
+
+        private void nextButton_Click(object sender, RoutedEventArgs e)
+        {
+            currentIndex++;
+            OpenCurrent();
         }
     }
 }

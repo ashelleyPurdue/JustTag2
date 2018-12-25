@@ -13,8 +13,16 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <Button Content="&lt;" Grid.Column="0"/>
+        <Button 
+            Content="&lt;" 
+            Grid.Column="0"
+            Click="prevButton_Click"/>
+        
         <Grid x:Name="previewerGrid" Grid.Column="1"/>
-        <Button Content="&gt;" Grid.Column="2"/>
+        
+        <Button 
+            Content="&gt;" 
+            Grid.Column="2"
+            Click="nextButton_Click"/>
     </Grid>
 </UserControl>
