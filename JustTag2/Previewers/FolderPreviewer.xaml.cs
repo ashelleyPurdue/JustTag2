@@ -29,7 +29,9 @@ namespace JustTag2.Previewers
         };
 
         private MainPreviewerCore core;
-        private DirectoryInfo currentFolder;
+
+        private FileSystemInfo[] browsableFiles;
+        private int currentIndex = 0;
 
         public FolderPreviewer()
         {
@@ -43,8 +45,15 @@ namespace JustTag2.Previewers
 
         public async Task Open(FileSystemInfo file)
         {
-            currentFolder = (DirectoryInfo)file;
-            // TODO: Start delegating things to the core
+            // TODO: Handle empty folders somehow
+
+            var folder = (DirectoryInfo)file;
+
+            // Load up a list of all the files in the given folder
+            browsableFiles = folder.EnumerateFileSystemInfos().ToArray();
+            currentIndex = 0;
+
+            core.Open(browsableFiles[currentIndex]);
         }
     }
 }
