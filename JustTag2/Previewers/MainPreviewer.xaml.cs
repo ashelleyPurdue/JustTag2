@@ -44,6 +44,7 @@ namespace JustTag2.Previewers
 
         private IPreviewer[] previewers = new IPreviewer[]
         {
+            new FolderPreviewer(),
             new ImagePreviewer(),
             new VideoPreviewer(),
             new FallbackPreviewer()

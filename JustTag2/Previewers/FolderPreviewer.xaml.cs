@@ -38,15 +38,9 @@ namespace JustTag2.Previewers
 
         public UserControl Control => this;
 
-        public bool CanPreview(FileSystemInfo file)
-        {
-            throw new NotImplementedException();
-        }
+        public bool CanPreview(FileSystemInfo file) => file is DirectoryInfo;
 
-        public Task Close()
-        {
-            throw new NotImplementedException();
-        }
+        public Task Close() => core.Close();
 
         public Task Open(FileSystemInfo file)
         {
