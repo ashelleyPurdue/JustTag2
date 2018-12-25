@@ -38,22 +38,43 @@ namespace JustTag2.Previewers
             set
             {
                 SetValue(sourceProperty, value);
-                Open(value);
+                core.Open(value);
             }
         }
 
         private IPreviewer[] previewers = new IPreviewer[]
         {
+            new FolderPreviewer(),
             new ImagePreviewer(),
             new VideoPreviewer(),
             new FallbackPreviewer()
         };
 
-        private IPreviewer currentPreviewer;
+
+        private MainPreviewerCore core;
 
         public MainPreviewer()
         {
             InitializeComponent();
+            core = new MainPreviewerCore(grid, previewers);
+        }
+
+        public Task Close() => core.Close();
+    }
+
+    /// <summary>
+    /// Why is this logic separated out into a different class?
+    /// Because I need to reuse it in FolderPreviewer, and I want
+    /// to avoid using inheritance for that.
+    /// </summary>
+    public class MainPreviewerCore
+    {
+        private IPreviewer[] previewers;
+        private IPreviewer currentPreviewer;
+
+        public MainPreviewerCore(Grid grid, IPreviewer[] previewers)
+        {
+            this.previewers = previewers;
 
             // Add all of the previewers' controls, but make them hidden.
             foreach (var p in previewers)
@@ -68,7 +89,7 @@ namespace JustTag2.Previewers
         /// </summary>
         public Task Close() => currentPreviewer?.Close();
 
-        private async Task Open(FileSystemInfo file)
+        public async Task Open(FileSystemInfo file)
         {
             // Close the old previewer
             if (currentPreviewer != null)
