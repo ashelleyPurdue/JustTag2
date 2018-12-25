@@ -21,9 +21,19 @@ namespace JustTag2.Previewers
     /// </summary>
     public partial class FolderPreviewer : UserControl, IPreviewer
     {
+        private IPreviewer[] previewers = new IPreviewer[]
+        {
+            new ImagePreviewer(),
+            new VideoPreviewer(),
+            new FallbackPreviewer()
+        };
+
+        private MainPreviewerCore core;
+
         public FolderPreviewer()
         {
             InitializeComponent();
+            core = new MainPreviewerCore(previewerGrid, previewers);
         }
 
         public UserControl Control => this;
