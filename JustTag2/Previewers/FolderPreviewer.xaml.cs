@@ -29,6 +29,7 @@ namespace JustTag2.Previewers
         };
 
         private MainPreviewerCore core;
+        private DirectoryInfo currentFolder;
 
         public FolderPreviewer()
         {
@@ -37,14 +38,13 @@ namespace JustTag2.Previewers
         }
 
         public UserControl Control => this;
-
         public bool CanPreview(FileSystemInfo file) => file is DirectoryInfo;
-
         public Task Close() => core.Close();
 
-        public Task Open(FileSystemInfo file)
+        public async Task Open(FileSystemInfo file)
         {
-            throw new NotImplementedException();
+            currentFolder = (DirectoryInfo)file;
+            // TODO: Start delegating things to the core
         }
     }
 }

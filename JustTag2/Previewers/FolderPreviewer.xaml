@@ -7,6 +7,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Grid x:Name="previewerGrid"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <Button Content="&lt;" Grid.Column="0"/>
+        <Grid x:Name="previewerGrid" Grid.Column="1"/>
+        <Button Content="&gt;" Grid.Column="2"/>
     </Grid>
 </UserControl>
