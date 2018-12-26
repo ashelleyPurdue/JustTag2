@@ -53,10 +53,10 @@ namespace JustTag2.Previewers
             browsableFiles = folder.EnumerateFileSystemInfos().ToArray();
             currentIndex = 0;
 
-            OpenCurrent();
+            await OpenCurrent();
         }
 
-        private void OpenCurrent()
+        private async Task OpenCurrent()
         {
             // Make sure the index is between 0 and the number of files
             while (currentIndex < 0)
@@ -66,19 +66,19 @@ namespace JustTag2.Previewers
                 currentIndex -= browsableFiles.Length;
 
             // Open it
-            core.Open(browsableFiles[currentIndex]);
+            await core.Open(browsableFiles[currentIndex]);
         }
 
-        private void prevButton_Click(object sender, RoutedEventArgs e)
+        private async void prevButton_Click(object sender, RoutedEventArgs e)
         {
             currentIndex--;
-            OpenCurrent();
+            await OpenCurrent();
         }
 
-        private void nextButton_Click(object sender, RoutedEventArgs e)
+        private async void nextButton_Click(object sender, RoutedEventArgs e)
         {
             currentIndex++;
-            OpenCurrent();
+            await OpenCurrent();
         }
     }
 }
