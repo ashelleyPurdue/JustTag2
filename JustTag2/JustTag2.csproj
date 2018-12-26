@@ -76,8 +76,8 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="TabbedFileBrowser, Version=0.0.0.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\TabbedFileBrowser.0.0.0.7\lib\net471\TabbedFileBrowser.dll</HintPath>
+    <Reference Include="TabbedFileBrowser, Version=0.0.0.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\TabbedFileBrowser.0.0.0.8\lib\net471\TabbedFileBrowser.dll</HintPath>
     </Reference>
     <Reference Include="Vlc.DotNet.Core, Version=3.0.0.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=MSIL">
       <HintPath>..\packages\Vlc.DotNet.Core.3.0.0-develop322\lib\net45\Vlc.DotNet.Core.dll</HintPath>

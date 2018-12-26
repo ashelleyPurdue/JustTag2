@@ -48,8 +48,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="TabbedFileBrowser, Version=0.0.0.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\TabbedFileBrowser.0.0.0.6\lib\net471\TabbedFileBrowser.dll</HintPath>
+    <Reference Include="TabbedFileBrowser, Version=0.0.0.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\TabbedFileBrowser.0.0.0.8\lib\net471\TabbedFileBrowser.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
