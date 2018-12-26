@@ -50,7 +50,11 @@ namespace JustTag2.Previewers
             var folder = (DirectoryInfo)file;
 
             // Load up a list of all the files in the given folder
-            browsableFiles = folder.EnumerateFileSystemInfos().ToArray();
+            browsableFiles = folder
+                .EnumerateFileSystemInfos()
+                .Where(f => f.Name != ".jtfoldertags")
+                .ToArray();
+
             currentIndex = 0;
 
             await OpenCurrent();
