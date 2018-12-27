@@ -37,12 +37,21 @@
         <GroupBox
             Grid.Column="0"
             Grid.Row="1"
-            Header="This file's tags">
+            Header="This file's tags"
+            Margin="0,0,0,8">
 
             <jt:TagTextbox x:Name="tagsTextbox"/>
 
         </GroupBox>
 
+        <GridSplitter
+            Grid.Column="0"
+            Grid.Row="1"
+            VerticalAlignment="Bottom"
+            HorizontalAlignment="Stretch"
+            Height="5"
+            Margin="0,0,0,3"/>
+        
         <!-- Tag Pallette -->
         <GroupBox 
             Grid.Column="0" 
