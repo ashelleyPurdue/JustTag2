@@ -58,7 +58,16 @@
             x:Name="previewer"
             Grid.Column="1"
             Grid.Row="1"
-            Grid.RowSpan="2"/>
+            Grid.RowSpan="2"
+            Margin="10"/>
+
+        <GridSplitter
+            Grid.Column="1"
+            Grid.RowSpan="3"
+            VerticalAlignment="Stretch"
+            HorizontalAlignment="Left"
+            Width="5"
+            Margin="5,0,0,0"/>
 
         <!-- OK/Cancel buttons -->
         <Button 
