@@ -8,7 +8,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TreeView ItemsSource="{Binding Categories}">
+        <TreeView 
+            ItemsSource="{Binding Categories}"
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled">
 
             <TreeView.Resources>
 
@@ -20,18 +22,18 @@
 
                         <lc:EditableLabel.ContextMenu>
                             <ContextMenu>
-                                
+
                                 <MenuItem
                                     Header="Add Tag"
                                     Click="AddTag_Click"/>
-                                
+
                                 <MenuItem
                                     Header="Delete Category"
                                     Click="DeleteCategory_Click"/>
-                                
+
                             </ContextMenu>
                         </lc:EditableLabel.ContextMenu>
-                        
+
                     </lc:EditableLabel>
 
                 </HierarchicalDataTemplate>
@@ -41,6 +43,7 @@
                     <lc:EditableLabel 
                         Text="{Binding Name}"
                         Tag="{Binding Name}"
+                        ToolTip="{Binding Desc}"
                         
                         MouseMove="Tag_MouseMove"
                         TouchDown="Tag_DragStart"
@@ -55,10 +58,40 @@
 
                             </ContextMenu>
                         </lc:EditableLabel.ContextMenu>
+
+                        <lc:EditableLabel.Style>
+                            <Style TargetType="lc:EditableLabel">
+
+                                <Style.Triggers>
+                                    <Trigger 
+                                        Property="IsMouseOver"
+                                        Value="True">
+                                        
+                                        <Setter
+                                            Property="Background"
+                                            Value="AliceBlue"/>
+                                        
+                                    </Trigger>
+                                </Style.Triggers>
+                                
+                            </Style>
+                        </lc:EditableLabel.Style>
                         
                     </lc:EditableLabel>
-                </DataTemplate>
                     
+                </DataTemplate>
+
+                <!-- Lay out the tags in a WrapPanel instead of a stack panel-->
+                <ItemsPanelTemplate x:Key="tagsPanel">
+                    <WrapPanel/>
+                </ItemsPanelTemplate>
+                
+                <Style TargetType="TreeViewItem">
+                    <Setter 
+                        Property="ItemsPanel"
+                        Value="{StaticResource tagsPanel}"/>
+                </Style>
+
             </TreeView.Resources>
 
             <TreeView.ContextMenu>

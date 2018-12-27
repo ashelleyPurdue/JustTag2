@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -41,7 +41,13 @@ namespace JustTag2.TagPallette
             }
 
             string contents = File.ReadAllText(filePath);
-            return JsonConvert.DeserializeObject<TagDatabase>(contents);
+            TagDatabase database = JsonConvert.DeserializeObject<TagDatabase>(contents);
+
+            // HACK: Alphabetize all the tags after loading
+            foreach (TagCategory c in database.Categories)
+                c.SortTags();
+
+            return database;
         }
     }
 
@@ -53,6 +59,12 @@ namespace JustTag2.TagPallette
         public string Desc { get; set; }
 
         public ObservableCollection<Tag> Tags { get; set; } = new ObservableCollection<Tag>();
+
+        public void SortTags()
+        {
+            var sorted = Tags.OrderBy(t => t.Name);
+            Tags = new ObservableCollection<Tag>(sorted);
+        }
 
         public override string ToString() => Name;
     }
