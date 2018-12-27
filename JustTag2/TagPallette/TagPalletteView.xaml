@@ -43,6 +43,7 @@
                     <lc:EditableLabel 
                         Text="{Binding Name}"
                         Tag="{Binding Name}"
+                        ToolTip="{Binding Desc}"
                         
                         MouseMove="Tag_MouseMove"
                         TouchDown="Tag_DragStart"
