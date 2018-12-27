@@ -58,8 +58,27 @@
 
                             </ContextMenu>
                         </lc:EditableLabel.ContextMenu>
+
+                        <lc:EditableLabel.Style>
+                            <Style TargetType="lc:EditableLabel">
+
+                                <Style.Triggers>
+                                    <Trigger 
+                                        Property="IsMouseOver"
+                                        Value="True">
+                                        
+                                        <Setter
+                                            Property="Background"
+                                            Value="AliceBlue"/>
+                                        
+                                    </Trigger>
+                                </Style.Triggers>
+                                
+                            </Style>
+                        </lc:EditableLabel.Style>
                         
                     </lc:EditableLabel>
+                    
                 </DataTemplate>
 
                 <!-- Lay out the tags in a WrapPanel instead of a stack panel-->
