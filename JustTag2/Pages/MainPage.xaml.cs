@@ -26,6 +26,15 @@ namespace JustTag2.Pages
             InitializeComponent();
             browser.ViewModel.ParseFilterString = Tagging.TagUtils.ParseFilterString;
 
+            // Set the sorting options
+            var randGen = new Random();
+            browser.ViewModel.SortMethods = new Dictionary<string, TabbedFileBrowser.SortMethod>()
+            {
+                {"Name", f => f.Name },
+                {"Date", f => f.LastWriteTime },
+                {"Shuffle", f => randGen.Next() }
+            };
+
             // TODO: replace this with a databinding in XAML
             browser.ViewModel.PropertyChanged += (s, a) =>
                 previewer.Source = browser.ViewModel.SelectedFile;
