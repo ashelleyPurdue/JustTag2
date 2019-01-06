@@ -7,6 +7,27 @@
              xmlns:local="clr-namespace:JustTag2.TagPallette"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+
+        <ContextMenu x:Key="categoryContextMenu">
+            <MenuItem
+                Header="Add Tag"
+                Click="AddTag_Click"/>
+
+            <MenuItem
+                Header="Delete Category"
+                Click="DeleteCategory_Click"/>
+        </ContextMenu>
+
+        <ContextMenu x:Key="tagContextMenu">
+
+            <MenuItem
+                Header="Delete Tag"
+                Click="DeleteTag_Click"/>
+
+        </ContextMenu>
+
+    </UserControl.Resources>
     <Grid>
         <TreeView 
             ItemsSource="{Binding Categories}"
@@ -18,51 +39,27 @@
                     DataType="{x:Type local:TagCategory}"
                     ItemsSource="{Binding Tags}">
 
-                    <lc:EditableLabel Text="{Binding Name}">
-
-                        <lc:EditableLabel.ContextMenu>
-                            <ContextMenu>
-
-                                <MenuItem
-                                    Header="Add Tag"
-                                    Click="AddTag_Click"/>
-
-                                <MenuItem
-                                    Header="Delete Category"
-                                    Click="DeleteCategory_Click"/>
-
-                            </ContextMenu>
-                        </lc:EditableLabel.ContextMenu>
-
-                    </lc:EditableLabel>
+                    <lc:EditableLabel 
+                        Text="{Binding Name}"
+                        ContextMenu="{StaticResource categoryContextMenu}"/>
 
                 </HierarchicalDataTemplate>
 
                 <DataTemplate DataType="{x:Type local:Tag}">
                     <!-- TODO: Add a delete button -->
-                    
-                    
+
+
                     <lc:EditableLabel
                         x:Name="tagLabel"
                         Text="{Binding Name}"
                         Tag="{Binding Name}"
                         ToolTip="{Binding Desc}"
+                        ContextMenu="{StaticResource tagContextMenu}"
                         
                         MouseMove="Tag_MouseMove"
                         TouchDown="Tag_DragStart"
-                        StylusDown="Tag_DragStart">
+                        StylusDown="Tag_DragStart"/>
 
-                        <lc:EditableLabel.ContextMenu>
-                            <ContextMenu>
-
-                                <MenuItem
-                                    Header="Delete Tag"
-                                    Click="DeleteTag_Click"/>
-
-                            </ContextMenu>
-                        </lc:EditableLabel.ContextMenu>
-                    </lc:EditableLabel>
-                    
                     <DataTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter
