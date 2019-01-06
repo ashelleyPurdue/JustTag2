@@ -69,5 +69,15 @@ namespace JustTag2.Pages
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
             => MovedBack?.Invoke(this, null);
+
+        private void Page_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            // Click "OK" if it's shift-enter
+            bool shiftHeld = Keyboard.IsKeyDown(Key.LeftShift) ||
+                             Keyboard.IsKeyDown(Key.RightShift);
+
+            if (e.Key == Key.Enter && shiftHeld)
+                OK_Click(sender, null);
+        }
     }
 }
