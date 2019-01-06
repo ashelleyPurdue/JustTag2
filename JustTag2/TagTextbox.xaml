@@ -78,7 +78,8 @@
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
 
-                    <WrapPanel 
+                    <WrapPanel
+                        MinHeight="20"
                         Width=
                         "{
                             Binding (FrameworkElement.ActualWidth), 
