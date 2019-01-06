@@ -36,6 +36,27 @@ namespace JustTag2.Previewers
 
             MouseEnter += (s, a) => setVis();
             MouseLeave += (s, a) => setVis();
+
+            // HACK: Change the scroll mode.  This is SO not
+            // using MVVM
+
+            var scrollModes = new Dictionary<string, Action>()
+            {
+                { "stretch",  () => {
+                    image.Stretch = Stretch.Uniform;
+                    scrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden;
+                    scrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
+                }},
+                { "scroll", () => {
+                    image.Stretch = Stretch.UniformToFill;
+                    scrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
+                    scrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+                }}
+            };
+
+        scrollModeBox.ItemsSource = scrollModes.Keys;
+            scrollModeBox.SelectionChanged += (s, a) => 
+                scrollModes[(string)scrollModeBox.SelectedValue]();
         }
 
         public bool CanPreview(FileSystemInfo file)
