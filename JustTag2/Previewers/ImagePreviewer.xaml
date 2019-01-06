@@ -6,6 +6,15 @@
              xmlns:local="clr-namespace:JustTag2.Previewers"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <!-- TODO: Add panning/zooming -->
-    <Image x:Name="image"/>
+    <Grid Background="Transparent">
+        <ScrollViewer x:Name="scrollViewer">
+            <Image x:Name="image"/>
+        </ScrollViewer>
+        
+        <ComboBox
+            x:Name="scrollModeBox"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Bottom"
+            Margin="5"/>
+    </Grid>
 </UserControl>
