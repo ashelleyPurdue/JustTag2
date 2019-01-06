@@ -26,6 +26,16 @@ namespace JustTag2.Previewers
         public ImagePreviewer()
         {
             InitializeComponent();
+
+            // HACK: make the combo box visible when the mouse
+            // is over the entire ImagePreviewer.  This is too
+            // cumbersome to do in XAML.
+            void setVis() => scrollModeBox.Visibility =
+                IsMouseOver ? Visibility.Visible
+                            : Visibility.Hidden;
+
+            MouseEnter += (s, a) => setVis();
+            MouseLeave += (s, a) => setVis();
         }
 
         public bool CanPreview(FileSystemInfo file)
