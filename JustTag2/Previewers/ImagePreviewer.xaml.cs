@@ -98,28 +98,15 @@ namespace JustTag2.Previewers
 
         private void PickScrollDirection()
         {
-            // TODO: Better name for this method
+            ScrollBarVisibility ToVis(bool value) =>
+                value ? ScrollBarVisibility.Visible
+                      : ScrollBarVisibility.Disabled;
 
-            (ScrollBarVisibility h, ScrollBarVisibility v) vis;
+            double width = image.Source.Width;
+            double height = image.Source.Height;
 
-            if (image.Source.Width > image.Source.Height)
-            {
-                vis.h = ScrollBarVisibility.Visible;
-                vis.v = ScrollBarVisibility.Disabled;
-            }
-            else if (image.Source.Width < image.Source.Height)
-            {
-                vis.h = ScrollBarVisibility.Disabled;
-                vis.v = ScrollBarVisibility.Visible;
-            }
-            else
-            {
-                vis.h = ScrollBarVisibility.Visible;
-                vis.v = ScrollBarVisibility.Visible;
-            }
-
-            scrollViewer.HorizontalScrollBarVisibility = vis.h;
-            scrollViewer.VerticalScrollBarVisibility = vis.v;
+            scrollViewer.HorizontalScrollBarVisibility = ToVis(width >= height);
+            scrollViewer.VerticalScrollBarVisibility   = ToVis(width <= height);
         }
     }
 }
