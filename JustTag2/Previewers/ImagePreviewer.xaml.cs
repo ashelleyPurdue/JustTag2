@@ -22,6 +22,7 @@ namespace JustTag2.Previewers
     public partial class ImagePreviewer : UserControl, IPreviewer
     {
         public UserControl Control => this;
+        public enum ScrollMode { Stretch, Scroll };
 
         public ImagePreviewer()
         {
@@ -40,22 +41,24 @@ namespace JustTag2.Previewers
             // HACK: Change the scroll mode.  This is SO not
             // using MVVM
 
-            var scrollModes = new Dictionary<string, Action>()
+            scrollModeBox.ItemsSource = Enum.GetValues(typeof(ScrollMode));
+            scrollModeBox.SelectionChanged += (s, a) =>
             {
-                { "stretch",  () => {
+                var scrollMode = (ScrollMode)scrollModeBox.SelectedItem;
+                
+                // Don't let it scroll, make it stretch.
+                if (scrollMode == ScrollMode.Stretch)
+                {
                     image.Stretch = Stretch.Uniform;
                     scrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled;
                     scrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Disabled;
-                }},
-                { "scroll", () => {
-                    image.Stretch = Stretch.UniformToFill;
-                    ChangeScrollStuff();
-                }}
-            };
 
-        scrollModeBox.ItemsSource = scrollModes.Keys;
-            scrollModeBox.SelectionChanged += (s, a) => 
-                scrollModes[(string)scrollModeBox.SelectedValue]();
+                    return;
+                }
+
+                image.Stretch = Stretch.UniformToFill;
+                PickScrollDirection();
+            };
         }
 
         public bool CanPreview(FileSystemInfo file)
@@ -93,7 +96,7 @@ namespace JustTag2.Previewers
         // nothing special we need to do to release the file.
         public async Task Close() => image.Source = null;
 
-        private void ChangeScrollStuff()
+        private void PickScrollDirection()
         {
             // TODO: Better name for this method
 
