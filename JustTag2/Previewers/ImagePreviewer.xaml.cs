@@ -40,25 +40,12 @@ namespace JustTag2.Previewers
 
             // HACK: Change the scroll mode.  This is SO not
             // using MVVM
-
             scrollModeBox.ItemsSource = Enum.GetValues(typeof(ScrollMode));
-            scrollModeBox.SelectionChanged += (s, a) =>
-            {
-                var scrollMode = (ScrollMode)scrollModeBox.SelectedItem;
-                
-                // Don't let it scroll, make it stretch.
-                if (scrollMode == ScrollMode.Stretch)
-                {
-                    image.Stretch = Stretch.Uniform;
-                    scrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled;
-                    scrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Disabled;
-
-                    return;
-                }
-
-                image.Stretch = Stretch.UniformToFill;
-                PickScrollDirection();
-            };
+            scrollModeBox.SelectionChanged += (s, a) => RefreshScrollMode();
+            scrollModeBox.SelectedIndex = 0;    // If we forget to do this, then we get a
+                                                // swallowed exception when we try to access
+                                                // SelectedItem.
+            
         }
 
         public bool CanPreview(FileSystemInfo file)
@@ -83,18 +70,38 @@ namespace JustTag2.Previewers
 
             // Load the bitmap image and close the file handle
             var bitmap = new BitmapImage();
+
             bitmap.BeginInit();
             bitmap.UriSource = new Uri(file.FullName);
             bitmap.CacheOption = BitmapCacheOption.OnLoad;
             bitmap.EndInit();
 
             image.Source = bitmap;
+            RefreshScrollMode();
         }
 
         // The file is loaded completely into memory and then
         // immediately closed in the "Open" method, so there's
         // nothing special we need to do to release the file.
         public async Task Close() => image.Source = null;
+
+        private void RefreshScrollMode()
+        {
+            var scrollMode = (ScrollMode)scrollModeBox.SelectedItem;
+
+            // Don't let it scroll, make it stretch.
+            if (scrollMode == ScrollMode.Stretch)
+            {
+                image.Stretch = Stretch.Uniform;
+                scrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled;
+                scrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Disabled;
+
+                return;
+            }
+
+            image.Stretch = Stretch.UniformToFill;
+            PickScrollDirection();
+        }
 
         private void PickScrollDirection()
         {
