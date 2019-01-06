@@ -6,6 +6,13 @@
              xmlns:local="clr-namespace:JustTag2.Previewers"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style x:Key="buttonStyle" TargetType="Button">
+            <Setter Property="Width" Value="Auto"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+        </Style>
+    </UserControl.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -16,6 +23,7 @@
         <Button 
             Content="&lt;" 
             Grid.Column="0"
+            Style="{StaticResource buttonStyle}"
             Click="prevButton_Click"/>
         
         <Grid x:Name="previewerGrid" Grid.Column="1"/>
@@ -23,6 +31,7 @@
         <Button 
             Content="&gt;" 
             Grid.Column="2"
+            Style="{StaticResource buttonStyle}"
             Click="nextButton_Click"/>
     </Grid>
 </UserControl>
