@@ -40,7 +40,10 @@
 
                 <DataTemplate DataType="{x:Type local:Tag}">
                     <!-- TODO: Add a delete button -->
-                    <lc:EditableLabel 
+                    
+                    
+                    <lc:EditableLabel
+                        x:Name="tagLabel"
                         Text="{Binding Name}"
                         Tag="{Binding Name}"
                         ToolTip="{Binding Desc}"
@@ -58,26 +61,16 @@
 
                             </ContextMenu>
                         </lc:EditableLabel.ContextMenu>
-
-                        <lc:EditableLabel.Style>
-                            <Style TargetType="lc:EditableLabel">
-
-                                <Style.Triggers>
-                                    <Trigger 
-                                        Property="IsMouseOver"
-                                        Value="True">
-                                        
-                                        <Setter
-                                            Property="Background"
-                                            Value="AliceBlue"/>
-                                        
-                                    </Trigger>
-                                </Style.Triggers>
-                                
-                            </Style>
-                        </lc:EditableLabel.Style>
-                        
                     </lc:EditableLabel>
+                    
+                    <DataTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter
+                                TargetName="tagLabel"
+                                Property="Background" 
+                                Value="AliceBlue"/>
+                        </Trigger>
+                    </DataTemplate.Triggers>
                     
                 </DataTemplate>
 
