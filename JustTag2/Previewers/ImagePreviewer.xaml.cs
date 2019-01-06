@@ -44,13 +44,12 @@ namespace JustTag2.Previewers
             {
                 { "stretch",  () => {
                     image.Stretch = Stretch.Uniform;
-                    scrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden;
-                    scrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
+                    scrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled;
+                    scrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Disabled;
                 }},
                 { "scroll", () => {
                     image.Stretch = Stretch.UniformToFill;
-                    scrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
-                    scrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+                    ChangeScrollStuff();
                 }}
             };
 
@@ -93,5 +92,31 @@ namespace JustTag2.Previewers
         // immediately closed in the "Open" method, so there's
         // nothing special we need to do to release the file.
         public async Task Close() => image.Source = null;
+
+        private void ChangeScrollStuff()
+        {
+            // TODO: Better name for this method
+
+            (ScrollBarVisibility h, ScrollBarVisibility v) vis;
+
+            if (image.Source.Width > image.Source.Height)
+            {
+                vis.h = ScrollBarVisibility.Visible;
+                vis.v = ScrollBarVisibility.Disabled;
+            }
+            else if (image.Source.Width < image.Source.Height)
+            {
+                vis.h = ScrollBarVisibility.Disabled;
+                vis.v = ScrollBarVisibility.Visible;
+            }
+            else
+            {
+                vis.h = ScrollBarVisibility.Visible;
+                vis.v = ScrollBarVisibility.Visible;
+            }
+
+            scrollViewer.HorizontalScrollBarVisibility = vis.h;
+            scrollViewer.VerticalScrollBarVisibility = vis.v;
+        }
     }
 }
