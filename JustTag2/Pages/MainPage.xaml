@@ -31,12 +31,15 @@
         </tfb:TabbedFileBrowserControl>
 
         <GridSplitter 
-            Grid.Column="0"
+            Grid.Column="1"
+            HorizontalAlignment="Left"
+            Margin="5"
             Width="5"/>
 
         <previewers:MainPreviewer
             x:Name="previewer"
-            Grid.Column="1"/>
+            Grid.Column="1"
+            Margin="15,5,5,5"/>
 
         <Button
             Content="Edit tags"
