@@ -45,7 +45,11 @@ namespace JustTag2.Previewers
             scrollModeBox.SelectedIndex = 0;    // If we forget to do this, then we get a
                                                 // swallowed exception when we try to access
                                                 // SelectedItem.
-            
+
+            // HACK: Don't make the window shake when the user
+            // scrolls to the end of the image with touch inputs
+            scrollViewer.ManipulationBoundaryFeedback += (s, a) =>
+                a.Handled = true;
         }
 
         public bool CanPreview(FileSystemInfo file)
@@ -95,6 +99,7 @@ namespace JustTag2.Previewers
                 image.Stretch = Stretch.Uniform;
                 scrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled;
                 scrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Disabled;
+                scrollViewer.PanningMode = PanningMode.None;
 
                 return;
             }
@@ -114,6 +119,18 @@ namespace JustTag2.Previewers
 
             scrollViewer.HorizontalScrollBarVisibility = ToVis(width >= height);
             scrollViewer.VerticalScrollBarVisibility   = ToVis(width <= height);
+
+            if (width > height)
+                scrollViewer.PanningMode = PanningMode.HorizontalOnly;
+            else if (width < height)
+                scrollViewer.PanningMode = PanningMode.VerticalOnly;
+            else
+                scrollViewer.PanningMode = PanningMode.Both;
+        }
+
+        private void ScrollViewer_ManipulationBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
+        {
+
         }
     }
 }
