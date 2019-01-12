@@ -23,6 +23,20 @@ namespace UtilsTests
             private int _value = 0;
 
             public event PropertyChangedEventHandler PropertyChanged;
+
+            public bool IsSubscribed()
+            {
+                try
+                {
+                    PropertyChanged(null, new PropertyChangedEventArgs("Value"));
+                }
+                catch (NullReferenceException)
+                {
+                    return false;
+                }
+
+                return true;
+            }
         }
 
         private static bool CheckEventFired<T>(ObservableList<T> list, Action action)
@@ -48,6 +62,16 @@ namespace UtilsTests
             });
 
             Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void AddingItemToListSubscribesToPropertyChangedEvent()
+        {
+            var list = new ObservableList<DummyObservable>();
+            var dummy = new DummyObservable();
+
+            list.Add(dummy);
+            Assert.IsTrue(dummy.IsSubscribed());
         }
 
         [TestMethod]
