@@ -11,7 +11,17 @@ namespace UtilsTests
     {
         private class DummyObservable : INotifyPropertyChanged
         {
-            public int value;
+            public int Value
+            {
+                get => _value;
+                set
+                {
+                    _value = value;
+                    PropertyChanged(this, new PropertyChangedEventArgs("Value"));
+                }
+            }
+            private int _value = 0;
+
             public event PropertyChangedEventHandler PropertyChanged;
         }
 
@@ -35,6 +45,20 @@ namespace UtilsTests
             bool result = CheckEventFired(list, () =>
             {
                 list.Add(0);
+            });
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void ChangingItemPropertyFiresCollectionChangedEvent()
+        {
+            var list = new ObservableList<DummyObservable>();
+            var dummy = new DummyObservable();
+
+            bool result = CheckEventFired(list, () =>
+            {
+                dummy.Value = 10;
             });
 
             Assert.IsTrue(result);
