@@ -23,13 +23,17 @@ namespace JustTag2.Util
 
         private void ObservableList_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            foreach (T item in e.OldItems)
+            var emptyList = new T[] { };
+            var oldItems = e.OldItems ?? emptyList;
+            var newItems = e.NewItems ?? emptyList;
+
+            foreach (T item in oldItems)
             {
                 if (item is INotifyPropertyChanged i)
                     i.PropertyChanged -= Item_PropertyChanged;
             }
 
-            foreach (T item in e.NewItems)
+            foreach (T item in newItems)
             {
                 if (item is INotifyPropertyChanged i)
                     i.PropertyChanged += Item_PropertyChanged;
