@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JustTag2", "JustTag2\JustTa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaggingTests", "TaggingTests\TaggingTests.csproj", "{4E23AC22-A52C-4284-954B-A73F228F7DEE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UtilsTests", "UtilsTests\UtilsTests.csproj", "{61B687A3-065C-4F0D-8EB9-49FC605D91C3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{4E23AC22-A52C-4284-954B-A73F228F7DEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E23AC22-A52C-4284-954B-A73F228F7DEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E23AC22-A52C-4284-954B-A73F228F7DEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61B687A3-065C-4F0D-8EB9-49FC605D91C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61B687A3-065C-4F0D-8EB9-49FC605D91C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61B687A3-065C-4F0D-8EB9-49FC605D91C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61B687A3-065C-4F0D-8EB9-49FC605D91C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
