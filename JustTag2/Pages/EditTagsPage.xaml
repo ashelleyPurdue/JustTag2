@@ -15,6 +15,14 @@
     <Grid>
         <Grid.Resources>
 
+            <DataTemplate x:Key="selectableTag">
+                <Button 
+                    Content="{Binding Name}"
+                    Tag="{Binding Name}"
+                    Click="TagAddButton_Click"
+                    Padding="5"/>
+            </DataTemplate>
+            
             <!-- Make all list views list their items horizontally -->
             <ItemsPanelTemplate x:Key="itemsWrapPanel">
                 <WrapPanel/>
@@ -60,7 +68,9 @@
             <TabControl.ContentTemplate>
                 <DataTemplate>
 
-                    <ListView ItemsSource="{Binding Tags}"/>
+                    <ListView 
+                        ItemsSource="{Binding Tags}"
+                        ItemTemplate="{StaticResource selectableTag}"/>
 
                 </DataTemplate>
             </TabControl.ContentTemplate>
