@@ -123,9 +123,6 @@
     </Compile>
     <Compile Include="TagDatabase.cs" />
     <Compile Include="Tagging\TagUtils.cs" />
-    <Compile Include="TagTextbox.xaml.cs">
-      <DependentUpon>TagTextbox.xaml</DependentUpon>
-    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -163,9 +160,6 @@
     </Page>
     <Page Include="Previewers\VideoPreviewer.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="TagTextbox.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
