@@ -18,34 +18,52 @@
             <Style TargetType="Button">
                 <Setter Property="Margin" Value="10"/>
                 <Setter Property="Width" Value="50"/>
-                <Setter Property="VerticalAlignment"
-                            Value="Bottom"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
             </Style>
         </Grid.Resources>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
 
         <!-- Previewer -->
         <p:MainPreviewer
             x:Name="previewer"
-            Grid.Column="1"
-            Grid.Row="1"
+            Grid.Column="0"
             Grid.RowSpan="2"
             Margin="15,0,0,0"/>
 
-        <!-- OK/Cancel buttons -->
-        <Button 
-            Content="OK"
-            HorizontalAlignment="Right"
+        <!-- Tags list and pallette-->
+        <ListBox
+            ItemsSource="{Binding Tags}"
             Grid.Column="1"
-            Grid.Row="0"
-            Click="OK_Click" Height="20" Margin="10"/>
+            Grid.Row="0"/>
+        <TabControl
+            ItemsSource="{Binding TagDatabase.Categories}"
+            Grid.Column="1"
+            Grid.Row="1"/>
 
-        <Button 
-            Content="Cancel"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Grid.Column="0"
-            Grid.Row="0"
-            Click="Cancel_Click" Height="20" Margin="10"/>
+        <!-- OK/Cancel buttons -->
+        <Grid Grid.ColumnSpan="2">
+            <Button 
+                Content="OK"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Margin="10"
+                Click="OK_Click"/>
 
+            <Button 
+                Content="Cancel"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="10"
+                Click="Cancel_Click"/>
+        </Grid>
     </Grid>
 </Page>

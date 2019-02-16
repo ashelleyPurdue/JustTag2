@@ -16,6 +16,7 @@ using System.Reflection;
 using JustTag2.TagPallette;
 using JustTag2.Tagging;
 using System.ComponentModel;
+using System.Collections.ObjectModel;
 
 namespace JustTag2.Pages
 {
@@ -46,8 +47,8 @@ namespace JustTag2.Pages
             ViewModel = new EditTagsPageViewModel();
             DataContext = ViewModel;
 
-            ViewModel.file = file;
-            ViewModel.tagDatabase = TagDatabase.Load(dbPath);
+            ViewModel.File = file;
+            ViewModel.TagDatabase = PlaceholderTagDatabase.instance;//TagDatabase.Load(dbPath);
 
             // Open the file
             previewer.Source = file;
@@ -55,7 +56,7 @@ namespace JustTag2.Pages
 
         private async void EditTagsPage_MovedBack(object sender, EventArgs e)
         {
-            ViewModel.tagDatabase.Save(dbPath);
+            ViewModel.TagDatabase.Save(dbPath);
             await previewer.Close();
         }
 
@@ -83,8 +84,25 @@ namespace JustTag2.Pages
 
     public class EditTagsPageViewModel : INotifyPropertyChanged
     {
-        public FileSystemInfo file { get; set; }
-        public TagDatabase tagDatabase { get; set; }
+        public FileSystemInfo File
+        {
+            get => file;
+            set
+            {
+                file = value;
+
+                // Load the file's tags
+                Tags.Clear();
+                var tags = TagUtils.GetTags(file);
+
+                foreach (string t in tags)
+                    Tags.Add(t);
+            }
+        }
+        private FileSystemInfo file;
+
+        public TagDatabase TagDatabase { get; set; }
+        public ObservableCollection<string> Tags { get; set; } = new ObservableCollection<string>();
 
         public event PropertyChangedEventHandler PropertyChanged;
     }
