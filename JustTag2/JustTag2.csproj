@@ -121,11 +121,8 @@
     <Compile Include="Previewers\VideoPreviewer.xaml.cs">
       <DependentUpon>VideoPreviewer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TagPallette\TagDatabase.cs" />
+    <Compile Include="TagDatabase.cs" />
     <Compile Include="Tagging\TagUtils.cs" />
-    <Compile Include="TagPallette\TagPalletteView.xaml.cs">
-      <DependentUpon>TagPalletteView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="TagTextbox.xaml.cs">
       <DependentUpon>TagTextbox.xaml</DependentUpon>
     </Compile>
@@ -165,10 +162,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Previewers\VideoPreviewer.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="TagPallette\TagPalletteView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

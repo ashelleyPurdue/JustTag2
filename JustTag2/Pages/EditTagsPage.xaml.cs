@@ -13,7 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.IO;
 using System.Reflection;
-using JustTag2.TagPallette;
 using JustTag2.Tagging;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
