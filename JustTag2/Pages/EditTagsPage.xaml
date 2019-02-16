@@ -15,12 +15,27 @@
     <Grid>
         <Grid.Resources>
 
-            <DataTemplate x:Key="selectableTag">
+            <DataTemplate x:Key="addableTag">
                 <Button 
                     Content="{Binding Name}"
                     Tag="{Binding Name}"
                     Click="TagAddButton_Click"
                     Padding="5"/>
+            </DataTemplate>
+
+            <DataTemplate x:Key="removableTag">
+                <StackPanel Orientation="Horizontal">
+                    
+                    <TextBlock
+                        Text="{Binding}"
+                        Padding="5"/>
+                    <Button
+                        Tag="{Binding}"
+                        Content="X"
+                        Padding="5"
+                        Click="TagRemoveButton_Click"/>
+                    
+                </StackPanel>
             </DataTemplate>
             
             <!-- Make all list views list their items horizontally -->
@@ -56,6 +71,7 @@
         <!-- The current file's tags -->
         <ListView
             ItemsSource="{Binding Tags}"
+            ItemTemplate="{StaticResource removableTag}"
             Grid.Column="1"
             Grid.Row="0"/>
 
@@ -70,7 +86,7 @@
 
                     <ListView 
                         ItemsSource="{Binding Tags}"
-                        ItemTemplate="{StaticResource selectableTag}"/>
+                        ItemTemplate="{StaticResource addableTag}"/>
 
                 </DataTemplate>
             </TabControl.ContentTemplate>

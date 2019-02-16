@@ -54,6 +54,13 @@ namespace JustTag2.Pages
             previewer.Source = file;
         }
 
+
+        // Misc methods
+
+        private string GetSenderTag(object sender) => (string)((Control)sender).Tag;
+
+        // Event handlers
+
         private async void EditTagsPage_MovedBack(object sender, EventArgs e)
         {
             ViewModel.TagDatabase.Save(dbPath);
@@ -62,8 +69,6 @@ namespace JustTag2.Pages
 
         private async void OK_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: Validate the input
-
             await previewer.Close();
             MovedBack?.Invoke(this, null);
         }
@@ -79,6 +84,18 @@ namespace JustTag2.Pages
 
             if (e.Key == Key.Enter && shiftHeld)
                 OK_Click(sender, null);
+        }
+
+        private void TagAddButton_Click(object sender, RoutedEventArgs e)
+        {
+            string tag = GetSenderTag(sender);
+            ViewModel.Tags.Add(tag);
+        }
+
+        private void TagRemoveButton_Click(object sender, RoutedEventArgs e)
+        {
+            string tag = GetSenderTag(sender);
+            ViewModel.Tags.Remove(tag);
         }
     }
 
