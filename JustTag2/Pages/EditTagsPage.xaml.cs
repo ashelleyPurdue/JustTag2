@@ -40,20 +40,17 @@ namespace JustTag2.Pages
         public EditTagsPage(FileSystemInfo file)
         {
             InitializeComponent();
+            MovedBack += EditTagsPage_MovedBack;
+
+            // Fill out the view model
             ViewModel = new EditTagsPageViewModel();
             DataContext = ViewModel;
 
-            MovedBack += EditTagsPage_MovedBack;
-
-            // Select the file
             ViewModel.file = file;
-            previewer.Source = file;
-
-            // Load the tag pallet
             ViewModel.tagDatabase = TagDatabase.Load(dbPath);
 
-            // Populate the tags textbox
-            tagsTextbox.Tags = TagUtils.GetTags(file).ToList();
+            // Open the file
+            previewer.Source = file;
         }
 
         private async void EditTagsPage_MovedBack(object sender, EventArgs e)
@@ -67,7 +64,6 @@ namespace JustTag2.Pages
             // TODO: Validate the input
 
             await previewer.Close();
-            TagUtils.SetTags(ViewModel.file, tagsTextbox.Tags.ToArray());
             MovedBack?.Invoke(this, null);
         }
 

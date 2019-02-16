@@ -14,18 +14,6 @@
       PreviewKeyDown="Page_PreviewKeyDown">
 
     <Grid>
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="60*"/>
-            <ColumnDefinition Width="150*"/>
-        </Grid.ColumnDefinitions>
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-
         <Grid.Resources>
             <Style TargetType="Button">
                 <Setter Property="Margin" Value="10"/>
@@ -35,35 +23,6 @@
             </Style>
         </Grid.Resources>
 
-        <!-- Tag list -->
-        <GroupBox
-            Grid.Column="0"
-            Grid.Row="1"
-            Header="This file's tags"
-            Margin="0,0,0,8">
-
-            <jt:TagTextbox x:Name="tagsTextbox"/>
-
-        </GroupBox>
-
-        <GridSplitter
-            Grid.Column="0"
-            Grid.Row="1"
-            VerticalAlignment="Bottom"
-            HorizontalAlignment="Stretch"
-            Height="5"
-            Margin="0,0,0,3"/>
-        
-        <!-- Tag Pallette -->
-        <GroupBox 
-            Grid.Column="0" 
-            Grid.Row="2"
-            Header="Tag Pallette">
-
-            <tp:TagPalletteView DataContext="{Binding ViewModel.tagDatabase}"/>
-
-        </GroupBox>
-
         <!-- Previewer -->
         <p:MainPreviewer
             x:Name="previewer"
@@ -71,15 +30,6 @@
             Grid.Row="1"
             Grid.RowSpan="2"
             Margin="15,0,0,0"/>
-
-        <GridSplitter
-            Grid.Column="1"
-            Grid.Row="1"
-            Grid.RowSpan="2"
-            VerticalAlignment="Stretch"
-            HorizontalAlignment="Left"
-            Width="5"
-            Margin="5,0,0,0"/>
 
         <!-- OK/Cancel buttons -->
         <Button 
