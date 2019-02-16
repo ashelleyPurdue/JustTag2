@@ -90,13 +90,7 @@ namespace JustTag2.Pages
             set
             {
                 file = value;
-
-                // Load the file's tags
-                Tags.Clear();
-                var tags = TagUtils.GetTags(file);
-
-                foreach (string t in tags)
-                    Tags.Add(t);
+                Tags = new ObservableCollection<string>(TagUtils.GetTags(file));
             }
         }
         private FileSystemInfo file;
