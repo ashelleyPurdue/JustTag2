@@ -39,15 +39,26 @@
             Grid.RowSpan="2"
             Margin="15,0,0,0"/>
 
-        <!-- Tags list and pallette-->
+        <!-- The current file's tags -->
         <ListBox
             ItemsSource="{Binding Tags}"
             Grid.Column="1"
             Grid.Row="0"/>
+
+        <!-- Tag database view -->
         <TabControl
             ItemsSource="{Binding TagDatabase.Categories}"
             Grid.Column="1"
-            Grid.Row="1"/>
+            Grid.Row="1">
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                    
+                    <ListBox
+                        ItemsSource="{Binding Tags}"/>
+                    
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </TabControl>
 
         <!-- OK/Cancel buttons -->
         <Grid Grid.ColumnSpan="2">
