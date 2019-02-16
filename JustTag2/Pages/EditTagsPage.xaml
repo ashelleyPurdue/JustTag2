@@ -61,6 +61,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
+        
         <!-- Previewer -->
         <p:MainPreviewer
             x:Name="previewer"
@@ -68,12 +69,23 @@
             Grid.RowSpan="2"
             Margin="15,0,0,0"/>
 
+        
         <!-- The current file's tags -->
-        <ListView
-            ItemsSource="{Binding Tags}"
-            ItemTemplate="{StaticResource removableTag}"
+        <DockPanel
             Grid.Column="1"
-            Grid.Row="0"/>
+            Grid.Row="0"
+            LastChildFill="True">
+
+            <TextBox
+                DockPanel.Dock="Bottom"
+                PreviewKeyUp="AddTagTextbox_EnterPressed"/>
+
+            <ListView
+                ItemsSource="{Binding Tags}"
+                ItemTemplate="{StaticResource removableTag}"
+                DockPanel.Dock="Top"/>
+        </DockPanel>
+
 
         <!-- Tag database view -->
         <TabControl
@@ -93,6 +105,7 @@
             
         </TabControl>
 
+        
         <!-- OK/Cancel buttons -->
         <Grid Grid.ColumnSpan="2">
 

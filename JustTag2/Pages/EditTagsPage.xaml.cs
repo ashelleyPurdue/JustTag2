@@ -86,6 +86,17 @@ namespace JustTag2.Pages
                 OK_Click(sender, null);
         }
 
+        private void AddTagTextbox_EnterPressed(object sender, KeyEventArgs e)
+        {
+            if (e.Key != Key.Enter)
+                return;
+
+            var textbox = (TextBox)sender;
+
+            ViewModel.Tags.Add(textbox.Text);   // TODO: Validate this input
+            textbox.Text = "";
+        }
+
         private void TagAddButton_Click(object sender, RoutedEventArgs e)
         {
             string tag = GetSenderTag(sender);
@@ -97,6 +108,8 @@ namespace JustTag2.Pages
             string tag = GetSenderTag(sender);
             ViewModel.Tags.Remove(tag);
         }
+
+
     }
 
     public class EditTagsPageViewModel : INotifyPropertyChanged
