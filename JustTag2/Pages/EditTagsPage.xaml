@@ -60,7 +60,7 @@
             Grid.Row="2"
             Header="Tag Pallette">
 
-            <tp:TagPalletteView x:Name="tagPallette"/>
+            <tp:TagPalletteView DataContext="{Binding ViewModel.tagDatabase}"/>
 
         </GroupBox>
 

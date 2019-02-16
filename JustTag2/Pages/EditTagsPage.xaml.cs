@@ -15,6 +15,7 @@ using System.IO;
 using System.Reflection;
 using JustTag2.TagPallette;
 using JustTag2.Tagging;
+using System.ComponentModel;
 
 namespace JustTag2.Pages
 {
@@ -28,7 +29,7 @@ namespace JustTag2.Pages
 
         public event EventHandler MovedBack;
 
-        private FileSystemInfo file;
+        private EditTagsPageViewModel ViewModel;
 
         /// <summary>
         /// 
@@ -39,14 +40,17 @@ namespace JustTag2.Pages
         public EditTagsPage(FileSystemInfo file)
         {
             InitializeComponent();
+            ViewModel = new EditTagsPageViewModel();
+            DataContext = ViewModel;
+
             MovedBack += EditTagsPage_MovedBack;
 
             // Select the file
-            this.file = file;
+            ViewModel.file = file;
             previewer.Source = file;
 
             // Load the tag pallet
-            tagPallette.DataContext = TagDatabase.Load(dbPath);
+            ViewModel.tagDatabase = TagDatabase.Load(dbPath);
 
             // Populate the tags textbox
             tagsTextbox.Tags = TagUtils.GetTags(file).ToList();
@@ -54,7 +58,7 @@ namespace JustTag2.Pages
 
         private async void EditTagsPage_MovedBack(object sender, EventArgs e)
         {
-            tagPallette.ViewModel.Save(dbPath);
+            ViewModel.tagDatabase.Save(dbPath);
             await previewer.Close();
         }
 
@@ -63,7 +67,7 @@ namespace JustTag2.Pages
             // TODO: Validate the input
 
             await previewer.Close();
-            TagUtils.SetTags(file, tagsTextbox.Tags.ToArray());
+            TagUtils.SetTags(ViewModel.file, tagsTextbox.Tags.ToArray());
             MovedBack?.Invoke(this, null);
         }
 
@@ -79,5 +83,13 @@ namespace JustTag2.Pages
             if (e.Key == Key.Enter && shiftHeld)
                 OK_Click(sender, null);
         }
+    }
+
+    public class EditTagsPageViewModel : INotifyPropertyChanged
+    {
+        public FileSystemInfo file { get; set; }
+        public TagDatabase tagDatabase { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }
