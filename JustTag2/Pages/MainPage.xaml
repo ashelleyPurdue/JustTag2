@@ -16,19 +16,14 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <tfb:TabbedFileBrowserControl
-            x:Name="browser"
-            Grid.Column="0">
+        <!-- File Browser -->
+        <DockPanel
+            Grid.Column="0"
+            LastChildFill="True">
 
-            <tfb:TabbedFileBrowserControl.ExtraContextMenuItems>
-
-                <MenuItem
-                    Header="Edit tags"
-                    Click="EditTagsMenuItem_Click"/>
-
-            </tfb:TabbedFileBrowserControl.ExtraContextMenuItems>
-
-        </tfb:TabbedFileBrowserControl>
+            <TextBox DockPanel.Dock="Top"/>
+            <ListView DockPanel.Dock="Top"/>
+        </DockPanel>
 
         <GridSplitter 
             Grid.Column="1"
