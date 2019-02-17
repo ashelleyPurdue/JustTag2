@@ -4,6 +4,14 @@
              xmlns:local="clr-namespace:JustTag2"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+
+        <Style x:Key="touchFriendlyStyle" TargetType="Control">
+            <Setter Property="Padding" Value="5"/>
+        </Style>
+
+        <Style TargetType="TextBox" BasedOn="{StaticResource touchFriendlyStyle}"/>
+        <Style TargetType="Button" BasedOn="{StaticResource touchFriendlyStyle}"/>
+        <Style TargetType="ComboBox" BasedOn="{StaticResource touchFriendlyStyle}"/>
+
     </Application.Resources>
 </Application>
