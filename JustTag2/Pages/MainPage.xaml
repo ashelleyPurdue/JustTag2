@@ -31,12 +31,38 @@
             Grid.Column="0"
             LastChildFill="True">
 
-            <TextBox DockPanel.Dock="Top"/>
-            
+            <Grid DockPanel.Dock="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Refresh button -->
+                <Button
+                    Content="Refresh"
+                    Grid.Column="0"/>
+
+                <!-- Address bar-->
+                <TextBox 
+                    Grid.Column="1"
+                    Margin="0,0,5,0"/>
+
+                <GridSplitter
+                    Grid.Column="1"
+                    HorizontalAlignment="Right"
+                    Width="5"/>
+
+                <!-- Search box -->
+                <TextBox Grid.Column="2"/>
+            </Grid>
+
+            <!-- Visible files -->
             <ListView 
                 ItemsSource="{Binding VisibleFiles}"
                 ItemTemplate="{StaticResource fileItem}"
                 DockPanel.Dock="Top"/>
+            
         </DockPanel>
 
         <GridSplitter 
