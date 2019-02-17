@@ -62,6 +62,21 @@
                     Grid.Column="2"/>
             </Grid>
 
+            <!-- Sort method dropdown -->
+            <DockPanel 
+                DockPanel.Dock="Top"
+                LastChildFill="False">
+                
+                <ComboBox
+                    ItemsSource="{Binding SortMethods.Keys}"
+                    SelectedIndex="{Binding SelectedSortMethodIndex, Mode=TwoWay}"
+                    DockPanel.Dock="Right"/>
+                <TextBlock
+                    Text="Order by: "
+                    DockPanel.Dock="Right"/>
+                
+            </DockPanel>
+            
             <!-- Visible files -->
             <ListView 
                 ItemsSource="{Binding VisibleFiles}"

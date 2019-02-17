@@ -81,6 +81,7 @@ namespace JustTag2.Pages
 
         private static Random randGen = new Random();
 
+        public int SelectedSortMethodIndex { get; set; } = 0;
         public Dictionary<string, SortMethod> SortMethods { get; set; } = new Dictionary<string, SortMethod>
         {
             {"Name", f => f.Name },
@@ -101,11 +102,14 @@ namespace JustTag2.Pages
         public void Refresh()
         {
             var filter = TagUtils.ParseFilterString(FilterString);
+            var sortMethodKey = SortMethods.Keys.ToArray()[SelectedSortMethodIndex];
+            var sortMethod = SortMethods[sortMethodKey];
 
             VisibleFiles = CurrentFolder
                 .EnumerateFileSystemInfos()
                 .Where(filter)
-                .ToArray(); // TODO: Sorting
+                .OrderBy(f => sortMethod(f))
+                .ToArray();
         }
     }
 }
