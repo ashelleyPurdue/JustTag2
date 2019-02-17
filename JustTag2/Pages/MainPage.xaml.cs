@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -21,28 +22,21 @@ namespace JustTag2.Pages
     /// </summary>
     public partial class MainPage : Page
     {
+        private MainPageViewModel ViewModel = new MainPageViewModel();
+
         public MainPage()
         {
             InitializeComponent();
-            browser.ViewModel.ParseFilterString = Tagging.TagUtils.ParseFilterString;
-
-            // Set the sorting options
-            var randGen = new Random();
-            browser.ViewModel.SortMethods = new Dictionary<string, TabbedFileBrowser.SortMethod>()
-            {
-                {"Name", f => f.Name },
-                {"Date", f => f.LastWriteTime },
-                {"Shuffle", f => randGen.Next() }
-            };
+            DataContext = ViewModel;
 
             // TODO: replace this with a databinding in XAML
-            browser.ViewModel.PropertyChanged += (s, a) =>
-                previewer.Source = browser.ViewModel.SelectedFile;
+            ViewModel.PropertyChanged += (s, a) =>
+                previewer.Source = ViewModel.SelectedFile;
         }
 
         private void EditTagsMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            FileSystemInfo file = browser.ViewModel.SelectedFile;
+            FileSystemInfo file = ViewModel.SelectedFile;
             
             var window = Window.GetWindow(this);
             var page = new EditTagsPage(file);
@@ -56,12 +50,31 @@ namespace JustTag2.Pages
             page.MovedBack += (s, a) =>
             {
                 window.Content = this;
-                browser.ViewModel.CurrentTab.Refresh();
+                ViewModel.Refresh();
                 previewer.Source = file;    // re-open the same file(even if it no longer appears in the file list)
             };
 
             // Navigate to the page.
             window.Content = page;
         }
+    }
+
+    public class MainPageViewModel : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
+        public delegate IComparable SortMethod(FileSystemInfo f);
+
+        private static Random randGen = new Random();
+
+        public Dictionary<string, SortMethod> SortMethods { get; set; } = new Dictionary<string, SortMethod>
+        {
+            {"Name", f => f.Name },
+            {"Date", f => f.LastWriteTime },
+            {"Shuffle", f => randGen.Next() }
+        };
+
+        public FileSystemInfo SelectedFile { get; set; }
+
+        public void Refresh() => throw new NotImplementedException();
     }
 }
