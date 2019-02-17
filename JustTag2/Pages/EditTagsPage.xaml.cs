@@ -69,6 +69,7 @@ namespace JustTag2.Pages
         private async void OK_Click(object sender, RoutedEventArgs e)
         {
             await previewer.Close();
+            TagUtils.SetTags(ViewModel.File, ViewModel.Tags.ToArray());
             MovedBack?.Invoke(this, null);
         }
 
