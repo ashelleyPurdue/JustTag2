@@ -24,7 +24,10 @@
             LastChildFill="True">
 
             <TextBox DockPanel.Dock="Top"/>
-            <ListView DockPanel.Dock="Top"/>
+            
+            <ListView 
+                ItemsSource="{Binding VisibleFiles}"
+                DockPanel.Dock="Top"/>
         </DockPanel>
 
         <GridSplitter 

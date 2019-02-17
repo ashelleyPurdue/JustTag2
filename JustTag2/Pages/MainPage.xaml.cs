@@ -29,6 +29,8 @@ namespace JustTag2.Pages
             InitializeComponent();
             DataContext = ViewModel;
 
+            ViewModel.Refresh();
+
             // TODO: replace this with a databinding in XAML
             ViewModel.PropertyChanged += (s, a) =>
                 previewer.Source = ViewModel.SelectedFile;
@@ -73,8 +75,13 @@ namespace JustTag2.Pages
             {"Shuffle", f => randGen.Next() }
         };
 
+        public DirectoryInfo CurrentFolder { get; set; } = new DirectoryInfo(Directory.GetCurrentDirectory());
+        public IEnumerable<FileSystemInfo> VisibleFiles { get; set; }
         public FileSystemInfo SelectedFile { get; set; }
 
-        public void Refresh() => throw new NotImplementedException();
+        public void Refresh()
+        {
+            VisibleFiles = CurrentFolder.EnumerateFileSystemInfos();    // TODO: Filtering and sorting
+        }
     }
 }
