@@ -66,6 +66,7 @@
             <ListView 
                 ItemsSource="{Binding VisibleFiles}"
                 ItemTemplate="{StaticResource fileItem}"
+                SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
                 DockPanel.Dock="Top"/>
             
         </DockPanel>

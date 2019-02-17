@@ -89,8 +89,12 @@ namespace JustTag2.Pages
         };
 
         public DirectoryInfo CurrentFolder { get; set; } = new DirectoryInfo(Directory.GetCurrentDirectory());
-        public IEnumerable<FileSystemInfo> VisibleFiles { get; set; }
-        public FileSystemInfo SelectedFile { get; set; }
+        public FileSystemInfo[] VisibleFiles { get; set; }
+
+        public int SelectedIndex { get; set; }
+        public FileSystemInfo SelectedFile => (SelectedIndex < VisibleFiles.Length && SelectedIndex >= 0)
+            ? VisibleFiles[SelectedIndex]
+            : null;
 
         public string FilterString { get; set; }
 
@@ -100,7 +104,8 @@ namespace JustTag2.Pages
 
             VisibleFiles = CurrentFolder
                 .EnumerateFileSystemInfos()
-                .Where(filter); // TODO: Sorting
+                .Where(filter)
+                .ToArray(); // TODO: Sorting
         }
     }
 }
