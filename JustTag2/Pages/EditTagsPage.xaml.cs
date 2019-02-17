@@ -42,6 +42,8 @@ namespace JustTag2.Pages
             InitializeComponent();
             MovedBack += EditTagsPage_MovedBack;
 
+            addTagTextbox.Focus();
+
             // Fill out the view model
             ViewModel = new EditTagsPageViewModel();
             DataContext = ViewModel;
@@ -108,7 +110,6 @@ namespace JustTag2.Pages
             string tag = GetSenderTag(sender);
             ViewModel.Tags.Remove(tag);
         }
-
 
     }
 

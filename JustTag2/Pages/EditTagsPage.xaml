@@ -75,7 +75,9 @@
             Grid.Row="0"
             LastChildFill="True">
 
+            <!-- Textbox for manual tag entry-->
             <TextBox
+                x:Name="addTagTextbox"
                 DockPanel.Dock="Bottom"
                 PreviewKeyUp="AddTagTextbox_EnterPressed"/>
 
