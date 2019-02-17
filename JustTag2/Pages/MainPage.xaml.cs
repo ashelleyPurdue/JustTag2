@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using JustTag2.Tagging;
 
 namespace JustTag2.Pages
 {
@@ -87,15 +88,19 @@ namespace JustTag2.Pages
             {"Shuffle", f => randGen.Next() }
         };
 
-        public string AddressBar { get; set; }
-
         public DirectoryInfo CurrentFolder { get; set; } = new DirectoryInfo(Directory.GetCurrentDirectory());
         public IEnumerable<FileSystemInfo> VisibleFiles { get; set; }
         public FileSystemInfo SelectedFile { get; set; }
 
+        public string FilterString { get; set; }
+
         public void Refresh()
         {
-            VisibleFiles = CurrentFolder.EnumerateFileSystemInfos();    // TODO: Filtering and sorting
+            var filter = TagUtils.ParseFilterString(FilterString);
+
+            VisibleFiles = CurrentFolder
+                .EnumerateFileSystemInfos()
+                .Where(filter); // TODO: Sorting
         }
     }
 }

@@ -142,7 +142,7 @@ namespace JustTag2.Tagging
         /// Produces a function that returns true if a file matches the given filter string,
         /// or false if it doesn't.
         /// </summary>
-        public static FilterCondition ParseFilterString(string filterString)
+        public static Func<FileSystemInfo, bool> ParseFilterString(string filterString)
         {
             // HACK: If no filter string is present, don't filter at all.
             if (filterString == null)

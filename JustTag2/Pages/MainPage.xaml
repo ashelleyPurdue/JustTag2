@@ -57,7 +57,9 @@
                     Width="5"/>
 
                 <!-- Search box -->
-                <TextBox Grid.Column="2"/>
+                <TextBox
+                    Text="{Binding FilterString}"
+                    Grid.Column="2"/>
             </Grid>
 
             <!-- Visible files -->
