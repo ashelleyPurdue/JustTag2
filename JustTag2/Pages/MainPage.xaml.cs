@@ -72,6 +72,11 @@ namespace JustTag2.Pages
             ViewModel.CurrentFolder = new DirectoryInfo(addressBar.Text);
             ViewModel.Refresh();
         }
+
+        private void Page_EnterPressed(object sender, KeyEventArgs e)
+        {
+            Refresh_Click(sender, null);
+        }
     }
 
     public class MainPageViewModel : INotifyPropertyChanged

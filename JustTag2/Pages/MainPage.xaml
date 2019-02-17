@@ -8,7 +8,8 @@
       xmlns:tfb="clr-namespace:TabbedFileBrowser;assembly=TabbedFileBrowser"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="MainPage">
+      Title="MainPage"
+      KeyDown="Page_EnterPressed">
     <Page.Resources>
 
         <DataTemplate x:Key="fileItem">
