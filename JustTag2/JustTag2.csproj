@@ -79,15 +79,6 @@
     <Reference Include="TabbedFileBrowser, Version=0.0.0.10, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\TabbedFileBrowser.0.0.0.10\lib\net471\TabbedFileBrowser.dll</HintPath>
     </Reference>
-    <Reference Include="Vlc.DotNet.Core, Version=3.0.0.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=MSIL">
-      <HintPath>..\packages\Vlc.DotNet.Core.3.0.0-develop322\lib\net45\Vlc.DotNet.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Vlc.DotNet.Core.Interops, Version=3.0.0.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=MSIL">
-      <HintPath>..\packages\Vlc.DotNet.Core.Interops.3.0.0-develop322\lib\net45\Vlc.DotNet.Core.Interops.dll</HintPath>
-    </Reference>
-    <Reference Include="Vlc.DotNet.Wpf, Version=3.0.0.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=MSIL">
-      <HintPath>..\packages\Vlc.DotNet.Wpf.3.0.0-develop322\lib\net45\Vlc.DotNet.Wpf.dll</HintPath>
-    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -214,11 +205,9 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Fody.3.3.2\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.3.3.2\build\Fody.targets'))" />
     <Error Condition="!Exists('..\packages\PropertyChanged.Fody.2.6.0\build\PropertyChanged.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PropertyChanged.Fody.2.6.0\build\PropertyChanged.Fody.props'))" />
-    <Error Condition="!Exists('..\packages\VideoLAN.LibVLC.Windows.3.0.4\build\VideoLAN.LibVLC.Windows.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\VideoLAN.LibVLC.Windows.3.0.4\build\VideoLAN.LibVLC.Windows.targets'))" />
     <Error Condition="!Exists('..\packages\FFmpeg.Win64.Static.3.3.3.1\build\FFmpeg.Win64.Static.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\FFmpeg.Win64.Static.3.3.3.1\build\FFmpeg.Win64.Static.targets'))" />
     <Error Condition="!Exists('..\packages\FFmpeg.Shared.4.0.2\build\FFmpeg.Shared.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\FFmpeg.Shared.4.0.2\build\FFmpeg.Shared.targets'))" />
   </Target>
-  <Import Project="..\packages\VideoLAN.LibVLC.Windows.3.0.4\build\VideoLAN.LibVLC.Windows.targets" Condition="Exists('..\packages\VideoLAN.LibVLC.Windows.3.0.4\build\VideoLAN.LibVLC.Windows.targets')" />
   <Import Project="..\packages\FFmpeg.Win64.Static.3.3.3.1\build\FFmpeg.Win64.Static.targets" Condition="Exists('..\packages\FFmpeg.Win64.Static.3.3.3.1\build\FFmpeg.Win64.Static.targets')" />
   <Import Project="..\packages\FFmpeg.Shared.4.0.2\build\FFmpeg.Shared.targets" Condition="Exists('..\packages\FFmpeg.Shared.4.0.2\build\FFmpeg.Shared.targets')" />
 </Project>
