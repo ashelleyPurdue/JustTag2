@@ -105,10 +105,18 @@ namespace JustTag2.Pages
             var sortMethodKey = SortMethods.Keys.ToArray()[SelectedSortMethodIndex];
             var sortMethod = SortMethods[sortMethodKey];
 
-            VisibleFiles = CurrentFolder
-                .EnumerateFileSystemInfos()
+            var visibleFiles = CurrentFolder
+                .EnumerateFiles()
                 .Where(filter)
-                .OrderBy(f => sortMethod(f))
+                .OrderBy(f => sortMethod(f));
+
+            var visibleFolders = CurrentFolder
+                .EnumerateDirectories()
+                .Where(filter)
+                .OrderBy(f => sortMethod(f));   // TODO: Do something about this copypasta
+
+            VisibleFiles = visibleFolders
+                .Concat(visibleFiles)
                 .ToArray();
         }
     }
