@@ -111,7 +111,7 @@
 
                     <Style.Triggers>
                         <DataTrigger 
-                            Binding="{Binding ElementName=browser, Path=ViewModel.SelectedFile}"
+                            Binding="{Binding SelectedFile}"
                             Value="{x:Null}">
 
                             <Setter Property="Visibility" Value="Hidden"/>
