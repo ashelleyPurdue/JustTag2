@@ -3,7 +3,6 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:tp="clr-namespace:JustTag2.TagPallette"
       xmlns:local="clr-namespace:JustTag2.Pages"
       xmlns:jt="clr-namespace:JustTag2"
       xmlns:p="clr-namespace:JustTag2.Previewers"
@@ -12,90 +11,122 @@
       Title="EditTagsPage"
       Focusable="True"
       PreviewKeyDown="Page_PreviewKeyDown">
-
     <Grid>
+        <Grid.Resources>
+
+            <DataTemplate x:Key="addableTag">
+                <Button 
+                    Content="{Binding Name}"
+                    Tag="{Binding Name}"
+                    Click="TagAddButton_Click"
+                    Padding="5"/>
+            </DataTemplate>
+
+            <DataTemplate x:Key="removableTag">
+                <StackPanel Orientation="Horizontal">
+                    
+                    <TextBlock
+                        Text="{Binding}"
+                        Padding="5"/>
+                    <Button
+                        Tag="{Binding}"
+                        Content="X"
+                        Padding="5"
+                        Click="TagRemoveButton_Click"/>
+                    
+                </StackPanel>
+            </DataTemplate>
+            
+            <!-- Make all list views list their items horizontally -->
+            <ItemsPanelTemplate x:Key="itemsWrapPanel">
+                <WrapPanel/>
+            </ItemsPanelTemplate>
+
+            <Style TargetType="ListView">
+                <Setter 
+                    Property="ItemsPanel" 
+                    Value="{StaticResource itemsWrapPanel}"/>
+            </Style>
+            
+        </Grid.Resources>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="60*"/>
-            <ColumnDefinition Width="150*"/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Grid.Resources>
-            <Style TargetType="Button">
-                <Setter Property="Margin" Value="10"/>
-                <Setter Property="Width" Value="50"/>
-                <Setter Property="VerticalAlignment"
-                            Value="Bottom"/>
-            </Style>
-        </Grid.Resources>
-
-        <!-- Tag list -->
-        <GroupBox
-            Grid.Column="0"
-            Grid.Row="1"
-            Header="This file's tags"
-            Margin="0,0,0,8">
-
-            <jt:TagTextbox x:Name="tagsTextbox"/>
-
-        </GroupBox>
-
-        <GridSplitter
-            Grid.Column="0"
-            Grid.Row="1"
-            VerticalAlignment="Bottom"
-            HorizontalAlignment="Stretch"
-            Height="5"
-            Margin="0,0,0,3"/>
         
-        <!-- Tag Pallette -->
-        <GroupBox 
-            Grid.Column="0" 
-            Grid.Row="2"
-            Header="Tag Pallette">
-
-            <tp:TagPalletteView x:Name="tagPallette"/>
-
-        </GroupBox>
-
         <!-- Previewer -->
         <p:MainPreviewer
             x:Name="previewer"
-            Grid.Column="1"
-            Grid.Row="1"
+            Grid.Column="0"
             Grid.RowSpan="2"
             Margin="15,0,0,0"/>
 
-        <GridSplitter
+        
+        <!-- The current file's tags -->
+        <DockPanel
             Grid.Column="1"
-            Grid.Row="1"
-            Grid.RowSpan="2"
-            VerticalAlignment="Stretch"
-            HorizontalAlignment="Left"
-            Width="5"
-            Margin="5,0,0,0"/>
+            Grid.Row="0"
+            LastChildFill="True">
 
+            <!-- Textbox for manual tag entry-->
+            <TextBox
+                x:Name="addTagTextbox"
+                DockPanel.Dock="Bottom"
+                PreviewKeyUp="AddTagTextbox_EnterPressed"/>
+
+            <ListView
+                ItemsSource="{Binding Tags}"
+                ItemTemplate="{StaticResource removableTag}"
+                DockPanel.Dock="Top"/>
+        </DockPanel>
+
+
+        <!-- Tag database view -->
+        <TabControl
+            ItemsSource="{Binding TagDatabase.Categories}"
+            Grid.Column="1"
+            Grid.Row="1">
+            
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+
+                    <ListView 
+                        ItemsSource="{Binding Tags}"
+                        ItemTemplate="{StaticResource addableTag}"/>
+
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+            
+        </TabControl>
+
+        
         <!-- OK/Cancel buttons -->
-        <Button 
-            Content="OK"
-            HorizontalAlignment="Right"
-            Grid.Column="1"
-            Grid.Row="0"
-            Click="OK_Click" Height="20" Margin="10"/>
+        <Grid Grid.ColumnSpan="2">
 
-        <Button 
-            Content="Cancel"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Grid.Column="0"
-            Grid.Row="0"
-            Click="Cancel_Click" Height="20" Margin="10"/>
+            <Grid.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Margin" Value="10"/>
+                    <Setter Property="Width" Value="50"/>
+                    <Setter Property="VerticalAlignment" Value="Top"/>
+                </Style>
+            </Grid.Resources>
+            
+            <Button 
+                Content="OK"
+                HorizontalAlignment="Right"
+                Click="OK_Click"/>
 
+            <Button 
+                Content="Cancel"
+                HorizontalAlignment="Left"
+                Click="Cancel_Click"/>
+        </Grid>
     </Grid>
 </Page>

@@ -121,14 +121,8 @@
     <Compile Include="Previewers\VideoPreviewer.xaml.cs">
       <DependentUpon>VideoPreviewer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TagPallette\TagDatabase.cs" />
+    <Compile Include="TagDatabase.cs" />
     <Compile Include="Tagging\TagUtils.cs" />
-    <Compile Include="TagPallette\TagPalletteView.xaml.cs">
-      <DependentUpon>TagPalletteView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="TagTextbox.xaml.cs">
-      <DependentUpon>TagTextbox.xaml</DependentUpon>
-    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -166,13 +160,6 @@
     </Page>
     <Page Include="Previewers\VideoPreviewer.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="TagPallette\TagPalletteView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="TagTextbox.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
@@ -215,6 +202,9 @@
     <VlcWindowsX64IncludeFiles Include="plugins\video_chroma\libi420_rgb_mmx_plugin.dll" Visible="false" />
     <VlcWindowsX64IncludeFiles Include="plugins\video_output\libvmem_plugin.dll" Visible="false" />
     <VlcWindowsX86IncludeFiles Include="@(VlcWindowsX64IncludeFiles)" Visible="false" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="FodyWeavers.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.3.3.2\build\Fody.targets" Condition="Exists('..\packages\Fody.3.3.2\build\Fody.targets')" />

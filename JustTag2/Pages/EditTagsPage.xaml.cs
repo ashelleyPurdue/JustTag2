@@ -13,8 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.IO;
 using System.Reflection;
-using JustTag2.TagPallette;
 using JustTag2.Tagging;
+using System.ComponentModel;
+using System.Collections.ObjectModel;
 
 namespace JustTag2.Pages
 {
@@ -28,7 +29,7 @@ namespace JustTag2.Pages
 
         public event EventHandler MovedBack;
 
-        private FileSystemInfo file;
+        private EditTagsPageViewModel ViewModel;
 
         /// <summary>
         /// 
@@ -41,29 +42,36 @@ namespace JustTag2.Pages
             InitializeComponent();
             MovedBack += EditTagsPage_MovedBack;
 
-            // Select the file
-            this.file = file;
+            addTagTextbox.Focus();
+
+            // Fill out the view model
+            ViewModel = new EditTagsPageViewModel();
+            DataContext = ViewModel;
+
+            ViewModel.File = file;
+            ViewModel.TagDatabase = PlaceholderTagDatabase.instance;//TagDatabase.Load(dbPath);
+
+            // Open the file
             previewer.Source = file;
-
-            // Load the tag pallet
-            tagPallette.DataContext = TagDatabase.Load(dbPath);
-
-            // Populate the tags textbox
-            tagsTextbox.Tags = TagUtils.GetTags(file).ToList();
         }
+
+
+        // Misc methods
+
+        private string GetSenderTag(object sender) => (string)((Control)sender).Tag;
+
+        // Event handlers
 
         private async void EditTagsPage_MovedBack(object sender, EventArgs e)
         {
-            tagPallette.ViewModel.Save(dbPath);
+            ViewModel.TagDatabase.Save(dbPath);
             await previewer.Close();
         }
 
         private async void OK_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: Validate the input
-
             await previewer.Close();
-            TagUtils.SetTags(file, tagsTextbox.Tags.ToArray());
+            TagUtils.SetTags(ViewModel.File, ViewModel.Tags.ToArray());
             MovedBack?.Invoke(this, null);
         }
 
@@ -79,5 +87,48 @@ namespace JustTag2.Pages
             if (e.Key == Key.Enter && shiftHeld)
                 OK_Click(sender, null);
         }
+
+        private void AddTagTextbox_EnterPressed(object sender, KeyEventArgs e)
+        {
+            if (e.Key != Key.Enter)
+                return;
+
+            var textbox = (TextBox)sender;
+
+            ViewModel.Tags.Add(textbox.Text);   // TODO: Validate this input
+            textbox.Text = "";
+        }
+
+        private void TagAddButton_Click(object sender, RoutedEventArgs e)
+        {
+            string tag = GetSenderTag(sender);
+            ViewModel.Tags.Add(tag);
+        }
+
+        private void TagRemoveButton_Click(object sender, RoutedEventArgs e)
+        {
+            string tag = GetSenderTag(sender);
+            ViewModel.Tags.Remove(tag);
+        }
+
+    }
+
+    public class EditTagsPageViewModel : INotifyPropertyChanged
+    {
+        public FileSystemInfo File
+        {
+            get => file;
+            set
+            {
+                file = value;
+                Tags = new ObservableCollection<string>(TagUtils.GetTags(file));
+            }
+        }
+        private FileSystemInfo file;
+
+        public TagDatabase TagDatabase { get; set; }
+        public ObservableCollection<string> Tags { get; set; } = new ObservableCollection<string>();
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

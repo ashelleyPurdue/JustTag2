@@ -1,4 +1,4 @@
-﻿    using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.IO;
 
-namespace JustTag2.TagPallette
+namespace JustTag2
 {
     public class TagDatabase : INotifyPropertyChanged
     {
