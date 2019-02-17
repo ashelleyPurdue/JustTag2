@@ -5,30 +5,87 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:JustTag2.Pages"
       xmlns:previewers="clr-namespace:JustTag2.Previewers"
-        xmlns:tfb="clr-namespace:TabbedFileBrowser;assembly=TabbedFileBrowser"
+      xmlns:tfb="clr-namespace:TabbedFileBrowser;assembly=TabbedFileBrowser"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="MainPage">
+      Title="MainPage"
+      KeyDown="Page_EnterPressed">
+    <Page.Resources>
 
+        <DataTemplate x:Key="fileItem">
+            
+            <TextBlock
+                Text="{Binding Name}"
+                Padding="10"/>
+            
+        </DataTemplate>
+            
+    </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <tfb:TabbedFileBrowserControl
-            x:Name="browser"
-            Grid.Column="0">
+        <!-- File Browser -->
+        <DockPanel
+            Grid.Column="0"
+            LastChildFill="True">
 
-            <tfb:TabbedFileBrowserControl.ExtraContextMenuItems>
+            <Grid DockPanel.Dock="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
 
-                <MenuItem
-                    Header="Edit tags"
-                    Click="EditTagsMenuItem_Click"/>
+                <!-- Refresh button -->
+                <Button
+                    Content="Refresh"
+                    Grid.Column="0"
+                    Click="Refresh_Click"/>
 
-            </tfb:TabbedFileBrowserControl.ExtraContextMenuItems>
+                <!-- Address bar-->
+                <TextBox
+                    x:Name="addressBar"
+                    Text="{Binding CurrentFolder.FullName, Mode=OneWay}"
+                    Grid.Column="1"
+                    Margin="0,0,5,0"/>
 
-        </tfb:TabbedFileBrowserControl>
+                <GridSplitter
+                    Grid.Column="1"
+                    HorizontalAlignment="Right"
+                    Width="5"/>
+
+                <!-- Search box -->
+                <TextBox
+                    Text="{Binding FilterString}"
+                    Grid.Column="2"/>
+            </Grid>
+
+            <!-- Sort method dropdown -->
+            <DockPanel 
+                DockPanel.Dock="Top"
+                LastChildFill="False">
+                
+                <ComboBox
+                    ItemsSource="{Binding SortMethods.Keys}"
+                    SelectedIndex="{Binding SelectedSortMethodIndex, Mode=TwoWay}"
+                    DockPanel.Dock="Right"/>
+                <TextBlock
+                    Text="Order by: "
+                    DockPanel.Dock="Right"/>
+                
+            </DockPanel>
+            
+            <!-- Visible files -->
+            <ListView 
+                ItemsSource="{Binding VisibleFiles}"
+                ItemTemplate="{StaticResource fileItem}"
+                SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+                DockPanel.Dock="Top"/>
+            
+        </DockPanel>
 
         <GridSplitter 
             Grid.Column="1"
@@ -55,7 +112,7 @@
 
                     <Style.Triggers>
                         <DataTrigger 
-                            Binding="{Binding ElementName=browser, Path=ViewModel.SelectedFile}"
+                            Binding="{Binding SelectedFile}"
                             Value="{x:Null}">
 
                             <Setter Property="Visibility" Value="Hidden"/>
