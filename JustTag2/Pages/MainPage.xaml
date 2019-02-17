@@ -41,7 +41,8 @@
                 <!-- Refresh button -->
                 <Button
                     Content="Refresh"
-                    Grid.Column="0"/>
+                    Grid.Column="0"
+                    Click="Refresh_Click"/>
 
                 <!-- Address bar-->
                 <TextBox

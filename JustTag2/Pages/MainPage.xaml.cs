@@ -59,6 +59,18 @@ namespace JustTag2.Pages
             // Navigate to the page.
             window.Content = page;
         }
+
+        private void Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            if (!Directory.Exists(addressBar.Text))
+            {
+                MessageBox.Show("Folder does not exist");
+                return;
+            }
+
+            ViewModel.CurrentFolder = new DirectoryInfo(addressBar.Text);
+            ViewModel.Refresh();
+        }
     }
 
     public class MainPageViewModel : INotifyPropertyChanged
@@ -74,6 +86,8 @@ namespace JustTag2.Pages
             {"Date", f => f.LastWriteTime },
             {"Shuffle", f => randGen.Next() }
         };
+
+        public string AddressBar { get; set; }
 
         public DirectoryInfo CurrentFolder { get; set; } = new DirectoryInfo(Directory.GetCurrentDirectory());
         public IEnumerable<FileSystemInfo> VisibleFiles { get; set; }
