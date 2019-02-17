@@ -99,7 +99,8 @@
 
                     <ListView 
                         ItemsSource="{Binding Tags}"
-                        ItemTemplate="{StaticResource addableTag}"/>
+                        ItemTemplate="{StaticResource addableTag}"
+                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"/>
 
                 </DataTemplate>
             </TabControl.ContentTemplate>
