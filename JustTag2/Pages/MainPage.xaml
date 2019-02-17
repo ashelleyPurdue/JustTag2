@@ -11,6 +11,14 @@
       Title="MainPage">
     <Page.Resources>
 
+        <DataTemplate x:Key="fileItem">
+            
+            <TextBlock
+                Text="{Binding Name}"
+                Padding="10"/>
+            
+        </DataTemplate>
+            
     </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -27,6 +35,7 @@
             
             <ListView 
                 ItemsSource="{Binding VisibleFiles}"
+                ItemTemplate="{StaticResource fileItem}"
                 DockPanel.Dock="Top"/>
         </DockPanel>
 
