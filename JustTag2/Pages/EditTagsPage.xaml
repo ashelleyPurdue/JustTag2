@@ -84,7 +84,8 @@
             <ListView
                 ItemsSource="{Binding Tags}"
                 ItemTemplate="{StaticResource removableTag}"
-                DockPanel.Dock="Top"/>
+                DockPanel.Dock="Top"
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled"/>
         </DockPanel>
 
 
