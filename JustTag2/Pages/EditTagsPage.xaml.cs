@@ -49,7 +49,7 @@ namespace JustTag2.Pages
             DataContext = ViewModel;
 
             ViewModel.File = file;
-            ViewModel.TagDatabase = PlaceholderTagDatabase.instance;//TagDatabase.Load(dbPath);
+            ViewModel.TagDatabase = TagDatabase.Load(dbPath);
 
             // Open the file
             previewer.Source = file;
