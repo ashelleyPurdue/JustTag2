@@ -97,6 +97,7 @@ namespace JustTag2.Pages
 
         public DirectoryInfo CurrentFolder { get; set; } = new DirectoryInfo(Directory.GetCurrentDirectory());
         public FileSystemInfo[] VisibleFiles { get; set; }
+        public bool SortDescending { get; set; } = true;
 
         public int SelectedIndex { get; set; }
         public FileSystemInfo SelectedFile => (SelectedIndex < VisibleFiles.Length && SelectedIndex >= 0)
@@ -111,15 +112,21 @@ namespace JustTag2.Pages
             var sortMethodKey = SortMethods.Keys.ToArray()[SelectedSortMethodIndex];
             var sortMethod = SortMethods[sortMethodKey];
 
-            var visibleFiles = CurrentFolder
+            IEnumerable<FileSystemInfo> visibleFiles = CurrentFolder
                 .EnumerateFiles()
                 .Where(filter)
                 .OrderBy(f => sortMethod(f));
 
-            var visibleFolders = CurrentFolder
+            IEnumerable<FileSystemInfo> visibleFolders = CurrentFolder
                 .EnumerateDirectories()
                 .Where(filter)
                 .OrderBy(f => sortMethod(f));   // TODO: Do something about this copypasta
+
+            if (!SortDescending)
+            {
+                visibleFiles   = visibleFiles.Reverse();
+                visibleFolders = visibleFolders.Reverse();
+            }
 
             VisibleFiles = visibleFolders
                 .Concat(visibleFiles)

@@ -67,7 +67,14 @@
             <DockPanel 
                 DockPanel.Dock="Top"
                 LastChildFill="False">
-                
+
+                <TextBlock
+                    Text="Descending"
+                    DockPanel.Dock="Right"/>
+                <CheckBox 
+                    IsChecked="{Binding SortDescending, Mode=TwoWay}"
+                    DockPanel.Dock="Right"/>
+
                 <ComboBox
                     ItemsSource="{Binding SortMethods.Keys}"
                     SelectedIndex="{Binding SelectedSortMethodIndex, Mode=TwoWay}"
