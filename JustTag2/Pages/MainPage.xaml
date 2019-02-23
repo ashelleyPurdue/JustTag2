@@ -59,7 +59,7 @@
 
                 <!-- Search box -->
                 <TextBox
-                    Text="{Binding FilterString}"
+                    Text="{Binding FilterString, UpdateSourceTrigger=PropertyChanged}"
                     Grid.Column="2"/>
             </Grid>
 

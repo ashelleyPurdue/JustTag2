@@ -75,7 +75,8 @@ namespace JustTag2.Pages
 
         private void Page_EnterPressed(object sender, KeyEventArgs e)
         {
-            Refresh_Click(sender, null);
+            if (e.Key == Key.Enter)
+                Refresh_Click(sender, null);
         }
     }
 
