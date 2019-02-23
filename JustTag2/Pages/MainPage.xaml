@@ -67,21 +67,26 @@
             <DockPanel 
                 DockPanel.Dock="Top"
                 LastChildFill="False">
-
+                
                 <TextBlock
                     Text="Descending"
-                    DockPanel.Dock="Right"/>
+                    DockPanel.Dock="Right"
+                    VerticalAlignment="Center"/>
                 <CheckBox 
                     IsChecked="{Binding SortDescending, Mode=TwoWay}"
-                    DockPanel.Dock="Right"/>
+                    DockPanel.Dock="Right"
+                    VerticalAlignment="Center"/>
 
                 <ComboBox
                     ItemsSource="{Binding SortMethods.Keys}"
                     SelectedIndex="{Binding SelectedSortMethodIndex, Mode=TwoWay}"
-                    DockPanel.Dock="Right"/>
+                    DockPanel.Dock="Right"
+                    VerticalAlignment="Center"
+                    Margin="5"/>
                 <TextBlock
                     Text="Order by: "
-                    DockPanel.Dock="Right"/>
+                    DockPanel.Dock="Right"
+                    VerticalAlignment="Center"/>
                 
             </DockPanel>
             
