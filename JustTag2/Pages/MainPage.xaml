@@ -113,7 +113,8 @@
             Margin="15,5,5,5"
             TouchDown="Previewer_TouchDown"
             TouchUp="Previewer_TouchUp"
-            TouchMove="Previewer_TouchMove"/>
+            TouchMove="Previewer_TouchMove"
+            Background="Transparent"/>
 
         <Button
             Content="Edit tags"
