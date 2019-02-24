@@ -115,17 +115,10 @@ namespace JustTag2.Pages
             const double SWIPE_THRESHOLD = 1000;
 
             if (lastSwipeSpeed > SWIPE_THRESHOLD)
-                index++;
+                ViewModel.SwipeToNextFile(false);
+
             if (lastSwipeSpeed < -SWIPE_THRESHOLD)
-                index--;
-
-            // Make sure the selected index stays within range
-            if (index < 0)
-                index = ViewModel.VisibleFiles.Length - 1;
-            if (index >= ViewModel.VisibleFiles.Length)
-                index = 0;
-
-            ViewModel.SelectedIndex = index;
+                ViewModel.SwipeToNextFile(true);
         }
 
         private void Previewer_TouchMove(object sender, TouchEventArgs e)
@@ -164,23 +157,8 @@ namespace JustTag2.Pages
             if (e.SystemGesture != SystemGesture.Flick)
                 return;
 
-            // Figure out which direction they swiped in
-            bool next = finalStylusPos > initialStylusPos;
-
-            // Do the move
-            int index = ViewModel.SelectedIndex;
-
-            if (next)
-                index++;
-            else
-                index--;
-
-            if (index < 0)
-                index = ViewModel.VisibleFiles.Length - 1;
-            if (index >= ViewModel.VisibleFiles.Length)
-                index = 0;
-
-            ViewModel.SelectedIndex = index;
+            bool previous = finalStylusPos < initialStylusPos;
+            ViewModel.SwipeToNextFile(previous);
         }
 
     }
@@ -210,6 +188,28 @@ namespace JustTag2.Pages
             : null;
 
         public string FilterString { get; set; }
+
+        /// <summary>
+        /// Selects the next file.  If previous is true, moves
+        /// to the previous file instead
+        /// </summary>
+        /// <param name="previous"></param>
+        public void SwipeToNextFile(bool previous)
+        {
+            int index = SelectedIndex;
+
+            if (previous)
+                index--;
+            else
+                index++;
+
+            if (index < 0)
+                index = VisibleFiles.Length - 1;
+            if (index >= VisibleFiles.Length)
+                index = 0;
+
+            SelectedIndex = index;
+        }
 
         public void Refresh()
         {
