@@ -78,6 +78,28 @@ namespace JustTag2.Pages
             if (e.Key == Key.Enter)
                 Refresh_Click(sender, null);
         }
+
+        private void Previewer_ManipulationInertiaStarting(object sender, ManipulationInertiaStartingEventArgs e)
+        {
+            // Move to the next/previous file if the user swiped up or down
+            int index = ViewModel.SelectedIndex;
+
+            const double SWIPE_THRESHOLD = 0.5;
+            Vector velocity = e.InitialVelocities.LinearVelocity;
+
+            if (velocity.Y > SWIPE_THRESHOLD)
+                index++;
+            if (velocity.Y < -SWIPE_THRESHOLD)
+                index--;
+
+            // Make sure the selected index stays within range
+            if (index < 0)
+                index = ViewModel.VisibleFiles.Length - 1;
+            if (index >= ViewModel.VisibleFiles.Length)
+                index = 0;
+
+            ViewModel.SelectedIndex = index;
+        }
     }
 
     public class MainPageViewModel : INotifyPropertyChanged
