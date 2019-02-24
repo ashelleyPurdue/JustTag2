@@ -80,12 +80,20 @@ namespace JustTag2.Pages
         }
 
         private bool isSwiping = false;
+        private TouchDevice mainFinger; // The finger whose speed we'll be measuring.
         private double lastSwipePos;
         private double lastSwipeSpeed = 0;
         private System.Diagnostics.Stopwatch swipeTimer = new System.Diagnostics.Stopwatch();
 
         private void Previewer_TouchDown(object sender, TouchEventArgs e)
         {
+            // Only allow a swipe to start if the user is touching
+            // with two fingers.
+            if (previewer.TouchesOver.Count() < 2)
+                return;
+
+            // Start swiping
+            mainFinger = e.TouchDevice;
             isSwiping = true;
             lastSwipePos = e.GetTouchPoint(previewer).Position.Y;
             swipeTimer.Restart();
@@ -93,12 +101,13 @@ namespace JustTag2.Pages
 
         private void Previewer_TouchUp(object sender, TouchEventArgs e)
         {
+            if (!isSwiping) return;
             isSwiping = false;
 
             // Move to the next/previous file if the user swiped up or down
             int index = ViewModel.SelectedIndex;
 
-            const double SWIPE_THRESHOLD = 1500;
+            const double SWIPE_THRESHOLD = 1000;
 
             if (lastSwipeSpeed > SWIPE_THRESHOLD)
                 index++;
@@ -117,6 +126,7 @@ namespace JustTag2.Pages
         private void Previewer_TouchMove(object sender, TouchEventArgs e)
         {
             if (!isSwiping) return;
+            if (e.TouchDevice != mainFinger) return;
 
             // Update the swipe speed
             double currentPos = e.GetTouchPoint(previewer).Position.Y;
