@@ -114,6 +114,9 @@
             TouchDown="Previewer_TouchDown"
             TouchUp="Previewer_TouchUp"
             TouchMove="Previewer_TouchMove"
+            StylusDown="Previewer_StylusDown"
+            StylusUp="Previewer_StylusUp"
+            StylusSystemGesture="Previewer_StylusSystemGesture"
             Background="Transparent"/>
 
         <Button

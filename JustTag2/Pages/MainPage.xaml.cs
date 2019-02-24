@@ -79,6 +79,7 @@ namespace JustTag2.Pages
                 Refresh_Click(sender, null);
         }
 
+
         private bool isSwiping = false;
         private TouchDevice mainFinger; // The finger whose speed we'll be measuring.
         private double lastSwipePos;
@@ -143,6 +144,45 @@ namespace JustTag2.Pages
             swipeTimer.Restart();
             lastSwipePos = currentPos;
         }
+
+
+        private double initialStylusPos;
+        private double finalStylusPos;
+        private void Previewer_StylusDown(object sender, StylusDownEventArgs e)
+        {
+            initialStylusPos = e.GetPosition(previewer).Y;
+        }
+
+        private void Previewer_StylusUp(object sender, StylusEventArgs e)
+        {
+            finalStylusPos = e.GetPosition(previewer).Y;
+        }
+
+        private void Previewer_StylusSystemGesture(object sender, StylusSystemGestureEventArgs e)
+        {
+            // Move to the previous/next file if they swipe with the stylus
+            if (e.SystemGesture != SystemGesture.Flick)
+                return;
+
+            // Figure out which direction they swiped in
+            bool next = finalStylusPos > initialStylusPos;
+
+            // Do the move
+            int index = ViewModel.SelectedIndex;
+
+            if (next)
+                index++;
+            else
+                index--;
+
+            if (index < 0)
+                index = ViewModel.VisibleFiles.Length - 1;
+            if (index >= ViewModel.VisibleFiles.Length)
+                index = 0;
+
+            ViewModel.SelectedIndex = index;
+        }
+
     }
 
     public class MainPageViewModel : INotifyPropertyChanged
