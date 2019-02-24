@@ -14,7 +14,7 @@
         <ComboBox
             x:Name="scrollModeBox"
             HorizontalAlignment="Left"
-            VerticalAlignment="Bottom"
+            VerticalAlignment="Top"
             Margin="5"/>
     </Grid>
 </UserControl>
