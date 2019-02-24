@@ -78,6 +78,111 @@ namespace JustTag2.Pages
             if (e.Key == Key.Enter)
                 Refresh_Click(sender, null);
         }
+
+
+        private bool isSwiping = false;
+        private TouchDevice mainFinger; // The finger whose speed we'll be measuring.
+        private double lastSwipePos;
+        private double lastSwipeSpeed = 0;
+        private System.Diagnostics.Stopwatch swipeTimer = new System.Diagnostics.Stopwatch();
+
+        private void Previewer_TouchDown(object sender, TouchEventArgs e)
+        {
+            // Cancel a swipe if the user uses more than one finger.
+            // This way the user can safely scroll with 2 fingers without
+            // accidentally swiping.
+            if (previewer.TouchesOver.Count() > 1)
+            {
+                isSwiping = false;
+                return;
+            }
+
+            // Start swiping
+            mainFinger = e.TouchDevice;
+            isSwiping = true;
+            lastSwipePos = e.GetTouchPoint(previewer).Position.Y;
+            swipeTimer.Restart();
+        }
+
+        private void Previewer_TouchUp(object sender, TouchEventArgs e)
+        {
+            if (!isSwiping) return;
+            isSwiping = false;
+
+            // Move to the next/previous file if the user swiped up or down
+            int index = ViewModel.SelectedIndex;
+
+            const double SWIPE_THRESHOLD = 1000;
+
+            if (lastSwipeSpeed > SWIPE_THRESHOLD)
+                index++;
+            if (lastSwipeSpeed < -SWIPE_THRESHOLD)
+                index--;
+
+            // Make sure the selected index stays within range
+            if (index < 0)
+                index = ViewModel.VisibleFiles.Length - 1;
+            if (index >= ViewModel.VisibleFiles.Length)
+                index = 0;
+
+            ViewModel.SelectedIndex = index;
+        }
+
+        private void Previewer_TouchMove(object sender, TouchEventArgs e)
+        {
+            if (!isSwiping) return;
+            if (e.TouchDevice != mainFinger) return;
+
+            // Update the swipe speed
+            double currentPos = e.GetTouchPoint(previewer).Position.Y;
+            double deltaPos = currentPos - lastSwipePos;
+            double deltaTime = swipeTimer.Elapsed.TotalSeconds;
+
+            lastSwipeSpeed = deltaPos / deltaTime;
+
+            // Record things for the next frame
+            swipeTimer.Restart();
+            lastSwipePos = currentPos;
+        }
+
+
+        private double initialStylusPos;
+        private double finalStylusPos;
+        private void Previewer_StylusDown(object sender, StylusDownEventArgs e)
+        {
+            initialStylusPos = e.GetPosition(previewer).Y;
+        }
+
+        private void Previewer_StylusUp(object sender, StylusEventArgs e)
+        {
+            finalStylusPos = e.GetPosition(previewer).Y;
+        }
+
+        private void Previewer_StylusSystemGesture(object sender, StylusSystemGestureEventArgs e)
+        {
+            // Move to the previous/next file if they swipe with the stylus
+            if (e.SystemGesture != SystemGesture.Flick)
+                return;
+
+            // Figure out which direction they swiped in
+            bool next = finalStylusPos > initialStylusPos;
+
+            // Do the move
+            int index = ViewModel.SelectedIndex;
+
+            if (next)
+                index++;
+            else
+                index--;
+
+            if (index < 0)
+                index = ViewModel.VisibleFiles.Length - 1;
+            if (index >= ViewModel.VisibleFiles.Length)
+                index = 0;
+
+            ViewModel.SelectedIndex = index;
+        }
+
     }
 
     public class MainPageViewModel : INotifyPropertyChanged

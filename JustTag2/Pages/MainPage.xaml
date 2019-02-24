@@ -93,7 +93,7 @@
             </DockPanel>
             
             <!-- Visible files -->
-            <ListView 
+            <ListView
                 ItemsSource="{Binding VisibleFiles}"
                 ItemTemplate="{StaticResource fileItem}"
                 SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
@@ -110,7 +110,14 @@
         <previewers:MainPreviewer
             x:Name="previewer"
             Grid.Column="1"
-            Margin="15,5,5,5"/>
+            Margin="15,5,5,5"
+            TouchDown="Previewer_TouchDown"
+            TouchUp="Previewer_TouchUp"
+            TouchMove="Previewer_TouchMove"
+            StylusDown="Previewer_StylusDown"
+            StylusUp="Previewer_StylusUp"
+            StylusSystemGesture="Previewer_StylusSystemGesture"
+            Background="Transparent"/>
 
         <Button
             Content="Edit tags"
