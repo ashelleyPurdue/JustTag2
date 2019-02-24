@@ -40,6 +40,13 @@ namespace JustTag2.Previewers
             // turned out to be more complicated than just doing it in
             // C#.  Simplicity is king.
             RedneckDatabindTimeSlider();
+
+            // Make it loop
+            player.MediaEnded += async (s, a) =>
+            {
+                await player.Seek(TimeSpan.Zero);
+                await player.Play();
+            };
         }
 
         public UserControl Control => this;
@@ -62,8 +69,13 @@ namespace JustTag2.Previewers
             return extensions.Contains(file.Extension.ToLower());
         }
 
-        public Task Open(FileSystemInfo file)   => player.Open(new Uri(file.FullName));
-        public Task Close()                     => player.Close();
+        public async Task Open(FileSystemInfo file)
+        {
+            await player.Open(new Uri(file.FullName));
+            await player.Play();
+        }
+        public Task Close() => player.Close();
+
 
         private void RedneckDatabindTimeSlider()
         {
