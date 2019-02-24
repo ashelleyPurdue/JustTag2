@@ -87,10 +87,14 @@ namespace JustTag2.Pages
 
         private void Previewer_TouchDown(object sender, TouchEventArgs e)
         {
-            // Only allow a swipe to start if the user is touching
-            // with two fingers.
-            if (previewer.TouchesOver.Count() < 2)
+            // Cancel a swipe if the user uses more than one finger.
+            // This way the user can safely scroll with 2 fingers without
+            // accidentally swiping.
+            if (previewer.TouchesOver.Count() > 1)
+            {
+                isSwiping = false;
                 return;
+            }
 
             // Start swiping
             mainFinger = e.TouchDevice;
