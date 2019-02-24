@@ -79,17 +79,30 @@ namespace JustTag2.Pages
                 Refresh_Click(sender, null);
         }
 
-        private void Previewer_ManipulationInertiaStarting(object sender, ManipulationInertiaStartingEventArgs e)
+        private bool isSwiping = false;
+        private double lastSwipePos;
+        private double lastSwipeSpeed = 0;
+        private System.Diagnostics.Stopwatch swipeTimer = new System.Diagnostics.Stopwatch();
+
+        private void Previewer_TouchDown(object sender, TouchEventArgs e)
         {
+            isSwiping = true;
+            lastSwipePos = e.GetTouchPoint(previewer).Position.Y;
+            swipeTimer.Restart();
+        }
+
+        private void Previewer_TouchUp(object sender, TouchEventArgs e)
+        {
+            isSwiping = false;
+
             // Move to the next/previous file if the user swiped up or down
             int index = ViewModel.SelectedIndex;
 
-            const double SWIPE_THRESHOLD = 0.5;
-            Vector velocity = e.InitialVelocities.LinearVelocity;
+            const double SWIPE_THRESHOLD = 1500;
 
-            if (velocity.Y > SWIPE_THRESHOLD)
+            if (lastSwipeSpeed > SWIPE_THRESHOLD)
                 index++;
-            if (velocity.Y < -SWIPE_THRESHOLD)
+            if (lastSwipeSpeed < -SWIPE_THRESHOLD)
                 index--;
 
             // Make sure the selected index stays within range
@@ -99,6 +112,22 @@ namespace JustTag2.Pages
                 index = 0;
 
             ViewModel.SelectedIndex = index;
+        }
+
+        private void Previewer_TouchMove(object sender, TouchEventArgs e)
+        {
+            if (!isSwiping) return;
+
+            // Update the swipe speed
+            double currentPos = e.GetTouchPoint(previewer).Position.Y;
+            double deltaPos = currentPos - lastSwipePos;
+            double deltaTime = swipeTimer.Elapsed.TotalSeconds;
+
+            lastSwipeSpeed = deltaPos / deltaTime;
+
+            // Record things for the next frame
+            swipeTimer.Restart();
+            lastSwipePos = currentPos;
         }
     }
 

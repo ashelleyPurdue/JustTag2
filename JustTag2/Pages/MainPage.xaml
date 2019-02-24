@@ -111,8 +111,9 @@
             x:Name="previewer"
             Grid.Column="1"
             Margin="15,5,5,5"
-            IsManipulationEnabled="True"
-            ManipulationInertiaStarting="Previewer_ManipulationInertiaStarting"/>
+            TouchDown="Previewer_TouchDown"
+            TouchUp="Previewer_TouchUp"
+            TouchMove="Previewer_TouchMove"/>
 
         <Button
             Content="Edit tags"
