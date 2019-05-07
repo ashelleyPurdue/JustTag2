@@ -12,13 +12,20 @@
       KeyDown="Page_EnterPressed">
     <Page.Resources>
 
+        <ContextMenu x:Key="fileContextMenu">
+            <MenuItem Header="Delete"/>
+        </ContextMenu>
+
         <DataTemplate x:Key="fileItem">
-            
             <TextBlock
                 Text="{Binding Name}"
+                HorizontalAlignment="Left"
                 Padding="10"/>
-            
         </DataTemplate>
+
+        <Style x:Key="fileItemContainerStyle" TargetType="Control">
+            <Setter Property="ContextMenu" Value="{StaticResource fileContextMenu}"/>
+        </Style>
             
     </Page.Resources>
     <Grid>
@@ -96,9 +103,10 @@
             <ListView
                 ItemsSource="{Binding VisibleFiles}"
                 ItemTemplate="{StaticResource fileItem}"
+                ItemContainerStyle="{StaticResource fileItemContainerStyle}"
                 SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
                 DockPanel.Dock="Top"/>
-            
+
         </DockPanel>
 
         <GridSplitter 
