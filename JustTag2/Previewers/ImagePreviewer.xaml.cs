@@ -82,6 +82,11 @@ namespace JustTag2.Previewers
 
             image.Source = bitmap;
             RefreshScrollMode();
+
+            // Reset scroll bars so the user doesn't need to scroll back
+            // to the top every time
+            scrollViewer.ScrollToTop();
+            scrollViewer.ScrollToLeftEnd();
         }
 
         // The file is loaded completely into memory and then
