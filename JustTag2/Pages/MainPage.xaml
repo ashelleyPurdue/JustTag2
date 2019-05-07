@@ -13,7 +13,9 @@
     <Page.Resources>
 
         <ContextMenu x:Key="fileContextMenu">
-            <MenuItem Header="Delete"/>
+            <MenuItem 
+                Header="Delete"
+                Click="DeleteFileButton_Click"/>
         </ContextMenu>
 
         <DataTemplate x:Key="fileItem">
@@ -36,6 +38,8 @@
         <Style x:Key="fileItemContainerStyle" TargetType="ListViewItem">
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
             <Setter Property="ContextMenu" Value="{StaticResource fileContextMenu}"/>
+            <Setter Property="Tag" Value="{Binding}"/>
+            <EventSetter Event="ContextMenuOpening" Handler="FileItemRightClicked"/>
         </Style>
             
     </Page.Resources>

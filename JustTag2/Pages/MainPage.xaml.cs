@@ -24,6 +24,7 @@ namespace JustTag2.Pages
     public partial class MainPage : Page
     {
         private MainPageViewModel ViewModel = new MainPageViewModel();
+        private FileSystemInfo rightClickedFile;
 
         public MainPage()
         {
@@ -161,10 +162,26 @@ namespace JustTag2.Pages
             ViewModel.SwipeToNextFile(previous);
         }
 
+        private void FileItemRightClicked(object sender, ContextMenuEventArgs e)
+        {
+            // Find the index of the file 
+            var control = (FrameworkElement)sender;
+            rightClickedFile = (FileSystemInfo)control.Tag;
+        }
+
         private void FileItemTripleDots_Clicked(object sender, RoutedEventArgs e)
         {
             var button = (Button)sender;
             button.ContextMenu.IsOpen = true;
+
+            // Setting IsOpen to true doesn't cause FileItemRightClicked to fire,
+            // so we need to update rightClickedFile here as well.
+            rightClickedFile = (FileSystemInfo)button.Tag;
+        }
+
+        private void DeleteFileButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("You tried to delete " + rightClickedFile.Name);
         }
     }
 
