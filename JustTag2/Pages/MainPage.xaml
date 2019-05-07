@@ -13,7 +13,10 @@
     <Page.Resources>
 
         <ContextMenu x:Key="fileContextMenu">
-            <MenuItem 
+            <MenuItem
+                Header="Edit tags"
+                Click="FileItemContextMenuEditTags_Click"/>
+            <MenuItem
                 Header="Delete"
                 Click="DeleteFileButton_Click"/>
         </ContextMenu>
