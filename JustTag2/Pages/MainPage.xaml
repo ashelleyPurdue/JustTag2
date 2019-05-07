@@ -17,13 +17,24 @@
         </ContextMenu>
 
         <DataTemplate x:Key="fileItem">
-            <TextBlock
-                Text="{Binding Name}"
-                HorizontalAlignment="Left"
-                Padding="10"/>
+            <Grid>
+                <TextBlock
+                    Text="{Binding Name}"
+                    HorizontalAlignment="Left"
+                    Padding="10"/>
+
+                <Button
+                    Content="..."
+                    Tag="{Binding}"
+                    HorizontalAlignment="Right"
+                    ContextMenu="{StaticResource fileContextMenu}"
+                    Click="FileItemTripleDots_Clicked"/>
+            </Grid>
+
         </DataTemplate>
 
-        <Style x:Key="fileItemContainerStyle" TargetType="Control">
+        <Style x:Key="fileItemContainerStyle" TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
             <Setter Property="ContextMenu" Value="{StaticResource fileContextMenu}"/>
         </Style>
             

@@ -161,6 +161,11 @@ namespace JustTag2.Pages
             ViewModel.SwipeToNextFile(previous);
         }
 
+        private void FileItemTripleDots_Clicked(object sender, RoutedEventArgs e)
+        {
+            var button = (Button)sender;
+            button.ContextMenu.IsOpen = true;
+        }
     }
 
     public class MainPageViewModel : INotifyPropertyChanged
