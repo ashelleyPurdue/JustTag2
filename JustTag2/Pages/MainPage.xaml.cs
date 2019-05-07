@@ -24,6 +24,7 @@ namespace JustTag2.Pages
     public partial class MainPage : Page
     {
         private MainPageViewModel ViewModel = new MainPageViewModel();
+        private FileSystemInfo rightClickedFile;
 
         public MainPage()
         {
@@ -37,10 +38,8 @@ namespace JustTag2.Pages
                 previewer.Source = ViewModel.SelectedFile;
         }
 
-        private void EditTagsMenuItem_Click(object sender, RoutedEventArgs e)
+        private void OpenEditTagsPage(FileSystemInfo file)
         {
-            FileSystemInfo file = ViewModel.SelectedFile;
-            
             var window = Window.GetWindow(this);
             var page = new EditTagsPage(file);
 
@@ -57,9 +56,11 @@ namespace JustTag2.Pages
                 previewer.Source = file;    // re-open the same file(even if it no longer appears in the file list)
             };
 
-            // Navigate to the page.
             window.Content = page;
         }
+
+        private void EditTagsMenuItem_Click(object sender, RoutedEventArgs e)
+            => OpenEditTagsPage(ViewModel.SelectedFile);
 
         private void Refresh_Click(object sender, RoutedEventArgs e)
         {
@@ -161,6 +162,46 @@ namespace JustTag2.Pages
             ViewModel.SwipeToNextFile(previous);
         }
 
+        private void FileItemRightClicked(object sender, ContextMenuEventArgs e)
+        {
+            // Find the index of the file 
+            var control = (FrameworkElement)sender;
+            rightClickedFile = (FileSystemInfo)control.Tag;
+        }
+
+        private void FileItemTripleDots_Clicked(object sender, RoutedEventArgs e)
+        {
+            var button = (Button)sender;
+            button.ContextMenu.IsOpen = true;
+
+            // Setting IsOpen to true doesn't cause FileItemRightClicked to fire,
+            // so we need to update rightClickedFile here as well.
+            rightClickedFile = (FileSystemInfo)button.Tag;
+        }
+
+        private void DeleteFileButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show
+            (
+                $"Are you sure you want to PERMANENTLY delete {rightClickedFile.Name}?",
+                "You sure about that?",
+                MessageBoxButton.YesNo
+            );
+
+            if (result != MessageBoxResult.Yes)
+                return;
+
+            switch (rightClickedFile)
+            {
+                case DirectoryInfo d: d.Delete(true); break;
+                case FileInfo f: f.Delete(); break;
+            }
+
+            ViewModel.Refresh();
+        }
+
+        private void FileItemContextMenuEditTags_Click(object sender, RoutedEventArgs e)
+            => OpenEditTagsPage(rightClickedFile);
     }
 
     public class MainPageViewModel : INotifyPropertyChanged
