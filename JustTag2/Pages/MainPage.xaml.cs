@@ -181,7 +181,23 @@ namespace JustTag2.Pages
 
         private void DeleteFileButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("You tried to delete " + rightClickedFile.Name);
+            MessageBoxResult result = MessageBox.Show
+            (
+                $"Are you sure you want to PERMANENTLY delete {rightClickedFile.Name}?",
+                "You sure about that?",
+                MessageBoxButton.YesNo
+            );
+
+            if (result != MessageBoxResult.Yes)
+                return;
+
+            switch (rightClickedFile)
+            {
+                case DirectoryInfo d: d.Delete(true); break;
+                case FileInfo f: f.Delete(); break;
+            }
+
+            ViewModel.Refresh();
         }
     }
 
