@@ -22,7 +22,12 @@
         </ContextMenu>
 
         <DataTemplate x:Key="fileItem">
-            <Grid ToolTip="{Binding Name}">
+            <Grid 
+                ToolTip="{Binding Name}"
+                MouseDown="FileItem_DoubleClicked"
+                Tag="{Binding}" 
+                Background="Transparent">
+                
                 <TextBlock
                     Text="{Binding Name}"
                     HorizontalAlignment="Left"

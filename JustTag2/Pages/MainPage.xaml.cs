@@ -202,6 +202,25 @@ namespace JustTag2.Pages
 
         private void FileItemContextMenuEditTags_Click(object sender, RoutedEventArgs e)
             => OpenEditTagsPage(rightClickedFile);
+
+        private void FileItem_DoubleClicked(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount < 2)
+                return;
+
+            FileSystemInfo item = (sender as FrameworkElement).Tag as FileSystemInfo;
+
+            switch(item)
+            {
+                case FileInfo file:
+                    // TODO: Open the file with its default program.
+                    break;
+                case DirectoryInfo dir:
+                    ViewModel.CurrentFolder = dir;
+                    ViewModel.Refresh();
+                    break;
+            }
+        }
     }
 
     public class MainPageViewModel : INotifyPropertyChanged
