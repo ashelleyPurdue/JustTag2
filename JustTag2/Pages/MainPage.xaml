@@ -22,7 +22,7 @@
         </ContextMenu>
 
         <DataTemplate x:Key="fileItem">
-            <Grid>
+            <Grid ToolTip="{Binding Name}">
                 <TextBlock
                     Text="{Binding Name}"
                     HorizontalAlignment="Left"
