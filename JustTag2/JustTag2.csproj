@@ -89,6 +89,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\NavigationBar.xaml.cs">
+      <DependentUpon>NavigationBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SortMethodDropdown.xaml.cs">
+      <DependentUpon>SortMethodDropdown.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\VisibleFilesList.xaml.cs">
+      <DependentUpon>VisibleFilesList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FileSystemInfoExtensions.cs" />
     <Compile Include="Pages\EditTagsPage.xaml.cs">
       <DependentUpon>EditTagsPage.xaml</DependentUpon>
@@ -114,6 +123,18 @@
     </Compile>
     <Compile Include="TagDatabase.cs" />
     <Compile Include="Tagging\TagUtils.cs" />
+    <Page Include="Controls\NavigationBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SortMethodDropdown.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\VisibleFilesList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

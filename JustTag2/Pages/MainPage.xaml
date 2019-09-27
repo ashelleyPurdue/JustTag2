@@ -4,53 +4,12 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:JustTag2.Pages"
+      xmlns:ctrls="clr-namespace:JustTag2.Controls"
       xmlns:previewers="clr-namespace:JustTag2.Previewers"
       xmlns:tfb="clr-namespace:TabbedFileBrowser;assembly=TabbedFileBrowser"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="MainPage"
-      KeyDown="Page_EnterPressed">
-    <Page.Resources>
-
-        <ContextMenu x:Key="fileContextMenu">
-            <MenuItem
-                Header="Edit tags"
-                Click="FileItemContextMenuEditTags_Click"/>
-            <MenuItem
-                Header="Delete"
-                Click="DeleteFileButton_Click"/>
-        </ContextMenu>
-
-        <DataTemplate x:Key="fileItem">
-            <Grid 
-                ToolTip="{Binding Name}"
-                MouseDown="FileItem_DoubleClicked"
-                Tag="{Binding}" 
-                Background="Transparent">
-                
-                <TextBlock
-                    Text="{Binding Name}"
-                    HorizontalAlignment="Left"
-                    Padding="10"/>
-
-                <Button
-                    Content="..."
-                    Tag="{Binding}"
-                    HorizontalAlignment="Right"
-                    ContextMenu="{StaticResource fileContextMenu}"
-                    Click="FileItemTripleDots_Clicked"/>
-            </Grid>
-
-        </DataTemplate>
-
-        <Style x:Key="fileItemContainerStyle" TargetType="ListViewItem">
-            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-            <Setter Property="ContextMenu" Value="{StaticResource fileContextMenu}"/>
-            <Setter Property="Tag" Value="{Binding}"/>
-            <EventSetter Event="ContextMenuOpening" Handler="FileItemRightClicked"/>
-        </Style>
-            
-    </Page.Resources>
+      Title="MainPage">
     <Grid>
 
         <previewers:MainPreviewer
@@ -100,73 +59,17 @@
                 HorizontalAlignment="Left"
                 LastChildFill="True">
 
-                <Grid 
+                <ctrls:NavigationBar
                     DockPanel.Dock="Top"
-                    Margin="5,10,0,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-
-                    <!-- Refresh button -->
-                    <Button
-                        Content="Refresh"
-                        Grid.Column="0"
-                        Click="Refresh_Click"/>
-
-                    <!-- Address bar-->
-                    <TextBox
-                        x:Name="addressBar"
-                        Text="{Binding CurrentFolder.FullName, Mode=OneWay}"
-                        Grid.Column="1"
-                        Margin="0,0,5,0"/>
-
-                    <GridSplitter
-                        Grid.Column="1"
-                        HorizontalAlignment="Right"
-                        Width="5"/>
-
-                    <!-- Search box -->
-                    <TextBox
-                        Text="{Binding FilterString, UpdateSourceTrigger=PropertyChanged}"
-                        Grid.Column="2"/>
-                </Grid>
+                    Margin="5,10,0,0"/>
 
                 <!-- Sort method dropdown -->
-                <DockPanel
-                    DockPanel.Dock="Top"
-                    LastChildFill="False">
-
-                    <TextBlock
-                        Text="Descending"
-                        DockPanel.Dock="Right"
-                        VerticalAlignment="Center"/>
-                    <CheckBox 
-                        IsChecked="{Binding SortDescending, Mode=TwoWay}"
-                        DockPanel.Dock="Right"
-                        VerticalAlignment="Center"/>
-
-                    <ComboBox
-                        ItemsSource="{Binding SortMethods.Keys}"
-                        SelectedIndex="{Binding SelectedSortMethodIndex, Mode=TwoWay}"
-                        DockPanel.Dock="Right"
-                        VerticalAlignment="Center"
-                        Margin="5"/>
-                    <TextBlock
-                        Text="Order by: "
-                        DockPanel.Dock="Right"
-                        VerticalAlignment="Center"/>
-
-                </DockPanel>
+                <ctrls:SortMethodDropdown
+                    DockPanel.Dock="Top"/>
 
                 <!-- Visible files -->
-                <ListView
-                    ItemsSource="{Binding VisibleFiles}"
-                    ItemTemplate="{StaticResource fileItem}"
-                    ItemContainerStyle="{StaticResource fileItemContainerStyle}"
-                    SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
-                    DockPanel.Dock="Top"/>
+                <ctrls:VisibleFilesList
+                    EditTagsClicked="VisibleFilesList_EditTagsClicked"/>
 
             </DockPanel>
         </Expander>
