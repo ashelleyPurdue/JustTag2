@@ -98,6 +98,7 @@
     <Compile Include="Controls\VisibleFilesList.xaml.cs">
       <DependentUpon>VisibleFilesList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\PercentConverter.cs" />
     <Compile Include="FileSystemInfoExtensions.cs" />
     <Compile Include="Pages\EditTagsPage.xaml.cs">
       <DependentUpon>EditTagsPage.xaml</DependentUpon>

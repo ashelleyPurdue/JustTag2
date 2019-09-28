@@ -6,11 +6,17 @@
       xmlns:local="clr-namespace:JustTag2.Pages"
       xmlns:ctrls="clr-namespace:JustTag2.Controls"
       xmlns:previewers="clr-namespace:JustTag2.Previewers"
-      xmlns:tfb="clr-namespace:TabbedFileBrowser;assembly=TabbedFileBrowser"
+      xmlns:cnvs="clr-namespace:JustTag2.Converters"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MainPage">
-    <Grid>
+    
+    <Page.Resources>
+        <cnvs:PercentConverter x:Key="percentConverter"/>
+        
+    </Page.Resources>
+    
+    <Grid x:Name="grid">
 
         <previewers:MainPreviewer
             x:Name="previewer"
@@ -55,8 +61,14 @@
         <Expander ExpandDirection="Right">
             
             <DockPanel
-                Width="400"
                 HorizontalAlignment="Left"
+                Width=
+                "{
+                    Binding Width,
+                    ElementName=grid,
+                    Converter={StaticResource percentConverter},
+                    ConverterParameter='0.5'
+                }"
                 LastChildFill="True">
 
                 <ctrls:NavigationBar
