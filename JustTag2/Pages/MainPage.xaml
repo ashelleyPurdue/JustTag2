@@ -18,9 +18,14 @@
     
     <Grid x:Name="grid">
 
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
         <previewers:MainPreviewer
             x:Name="previewer"
-            Grid.Column="0"
+            Grid.Column="1"
             Margin="15,5,5,5"
             TouchDown="Previewer_TouchDown"
             TouchUp="Previewer_TouchUp"
@@ -58,7 +63,9 @@
         </Button>
 
         <!-- File Browser -->
-        <Expander ExpandDirection="Right">
+        <Expander
+            Grid.Column="0"
+            ExpandDirection="Right">
             
             <DockPanel
                 HorizontalAlignment="Left"
