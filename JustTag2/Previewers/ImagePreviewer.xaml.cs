@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
 
-namespace JustTag2.Previewers
+namespace JustTag2.Views
 {
     /// <summary>
     /// Interaction logic for ImagePreviewer.xaml

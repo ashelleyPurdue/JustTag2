@@ -14,9 +14,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
 
-using JustTag2.Pages;
+using JustTag2.Views;
 
-namespace JustTag2.Controls
+namespace JustTag2.Views
 {
     /// <summary>
     /// Interaction logic for NavigationBar.xaml

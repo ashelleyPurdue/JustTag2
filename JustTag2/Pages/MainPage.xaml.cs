@@ -16,7 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using JustTag2.Tagging;
 
-namespace JustTag2.Pages
+namespace JustTag2.Views
 {
     /// <summary>
     /// Interaction logic for MainPage.xaml

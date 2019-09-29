@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 using System.IO;
 using System.ComponentModel;
 
-namespace JustTag2.Previewers
+namespace JustTag2.Views
 {
     /// <summary>
     /// Interaction logic for MainPreviewer.xaml

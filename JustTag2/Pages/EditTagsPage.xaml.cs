@@ -17,7 +17,7 @@ using JustTag2.Tagging;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 
-namespace JustTag2.Pages
+namespace JustTag2.Views
 {
     /// <summary>
     /// Interaction logic for EditTagsPage.xaml

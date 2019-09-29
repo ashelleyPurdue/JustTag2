@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace JustTag2.Converters
+namespace JustTag2.Views
 {
     public class PercentConverter : IValueConverter
     {

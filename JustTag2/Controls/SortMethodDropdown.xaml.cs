@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace JustTag2.Controls
+namespace JustTag2.Views
 {
     /// <summary>
     /// Interaction logic for SortMethodDropdown.xaml

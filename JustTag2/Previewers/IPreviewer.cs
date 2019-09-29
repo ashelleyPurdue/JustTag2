@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Windows.Controls;
 
-namespace JustTag2.Previewers
+namespace JustTag2.Views
 {
     public interface IPreviewer
     {

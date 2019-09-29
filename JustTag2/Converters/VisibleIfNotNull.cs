@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace JustTag2.Converters
+namespace JustTag2.Views
 {
     public class VisibleIfNotNull : LambdaConverter<object, Visibility>
     {

@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using JustTag2.Pages;
+using JustTag2.Views;
 
 namespace JustTag2
 {

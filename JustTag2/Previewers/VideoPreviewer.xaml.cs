@@ -15,7 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 
-namespace JustTag2.Previewers
+namespace JustTag2.Views
 {
     /// <summary>
     /// Interaction logic for VideoPreviewer.xaml
