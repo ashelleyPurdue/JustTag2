@@ -68,7 +68,7 @@ namespace JustTag2.Views
             return imageFormats.Contains(file.Extension.ToLower());
         }
 
-        public async Task Open(FileSystemInfo file)
+        public Task Open(FileSystemInfo file)
         {
             // TODO: Consider doing this in another thread?
 
@@ -87,12 +87,18 @@ namespace JustTag2.Views
             // to the top every time
             scrollViewer.ScrollToTop();
             scrollViewer.ScrollToLeftEnd();
+
+            return Task.CompletedTask;
         }
 
         // The file is loaded completely into memory and then
         // immediately closed in the "Open" method, so there's
         // nothing special we need to do to release the file.
-        public async Task Close() => image.Source = null;
+        public Task Close()
+        {
+            image.Source = null;
+            return Task.CompletedTask;
+        }
 
         private void RefreshScrollMode()
         {
