@@ -13,7 +13,7 @@
     
     <Page.Resources>
         <cnvs:PercentConverter x:Key="percentConverter"/>
-        
+        <cnvs:VisibleIfNotNull x:Key="visibleIfNotNull"/>
     </Page.Resources>
     
     <Grid x:Name="grid">
@@ -41,26 +41,8 @@
             HorizontalAlignment="Right"
             VerticalAlignment="Top"
             Margin="10"
-            Click="EditTagsMenuItem_Click">
-
-            <!-- Make the button only visible if selected file isn't null -->
-            <Button.Style>
-                <Style TargetType="Button">
-
-                    <Style.Triggers>
-                        <DataTrigger 
-                            Binding="{Binding SelectedFile}"
-                            Value="{x:Null}">
-
-                            <Setter Property="Visibility" Value="Hidden"/>
-
-                        </DataTrigger>
-                    </Style.Triggers>
-
-                    <Setter Property="Visibility" Value="Visible"/>
-                </Style>
-            </Button.Style>
-        </Button>
+            Click="EditTagsMenuItem_Click"
+            Visibility="{Binding SelectedFile, Converter={StaticResource visibleIfNotNull}}"/>
 
         <!-- File Browser -->
         <Expander
