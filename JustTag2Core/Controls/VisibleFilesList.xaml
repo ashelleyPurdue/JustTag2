@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="JustTag2.Views.VisibleFilesList"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:JustTag2.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        
+        <ContextMenu x:Key="fileContextMenu">
+            <MenuItem
+                Header="Edit tags"
+                Click="FileItemContextMenuEditTags_Click"/>
+            <MenuItem
+                Header="Delete"
+                Click="DeleteFileButton_Click"/>
+        </ContextMenu>
+
+        <DataTemplate x:Key="fileItem">
+            <Grid 
+                ToolTip="{Binding Name}"
+                MouseDown="FileItem_DoubleClicked"
+                Tag="{Binding}" 
+                Background="Transparent">
+
+                <TextBlock
+                    Text="{Binding Name}"
+                    HorizontalAlignment="Left"
+                    Padding="10"/>
+
+                <Button
+                    Content="..."
+                    Tag="{Binding}"
+                    HorizontalAlignment="Right"
+                    ContextMenu="{StaticResource fileContextMenu}"
+                    Click="FileItemTripleDots_Clicked"/>
+            </Grid>
+
+        </DataTemplate>
+
+        <Style x:Key="fileItemContainerStyle" TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="ContextMenu" Value="{StaticResource fileContextMenu}"/>
+            <Setter Property="Tag" Value="{Binding}"/>
+            <EventSetter Event="ContextMenuOpening" Handler="FileItemRightClicked"/>
+        </Style>
+
+    </UserControl.Resources>
+    <ListView
+        ItemsSource="{Binding VisibleFiles}"
+        ItemTemplate="{StaticResource fileItem}"
+        ItemContainerStyle="{StaticResource fileItemContainerStyle}"
+        SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+        DockPanel.Dock="Top"/>
+</UserControl>
