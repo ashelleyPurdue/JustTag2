@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\JustTag2Core\JustTag2Core.csproj" />
+    <ProjectReference Include="..\JustTag2\JustTag2.csproj" />
   </ItemGroup>
 
 </Project>

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29306.81
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JustTag2Core", "JustTag2Core\JustTag2Core.csproj", "{25D6D7EA-4509-452A-BD5D-395A00237F3E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JustTag2", "JustTag2\JustTag2.csproj", "{25D6D7EA-4509-452A-BD5D-395A00237F3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaggingTestsCore", "TaggingTestsCore\TaggingTestsCore.csproj", "{1CC6745B-72FD-4FA3-9266-6195E3C43439}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaggingTests", "TaggingTests\TaggingTests.csproj", "{1CC6745B-72FD-4FA3-9266-6195E3C43439}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
