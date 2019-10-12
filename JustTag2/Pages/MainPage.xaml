@@ -45,34 +45,33 @@
             Visibility="{Binding SelectedFile, Converter={StaticResource visibleIfNotNull}}"/>
 
         <!-- File Browser -->
+        <!-- It's in a ResizablePanel within an expander, so that way-->
+        <!-- the user can expand it, while also being able to resize it while it's expanded-->
         <Expander
             Grid.Column="0"
             ExpandDirection="Right">
-            
-            <DockPanel
+
+            <local:ResizablePanel 
+                DraggedWidth="100"
                 HorizontalAlignment="Left"
-                Width=
-                "{
-                    Binding Width,
-                    ElementName=grid,
-                    Converter={StaticResource percentConverter},
-                    ConverterParameter='0.5'
-                }"
-                LastChildFill="True">
+                ResizeRight="True">
+                
+                <DockPanel LastChildFill="True">
 
-                <local:NavigationBar
-                    DockPanel.Dock="Top"
-                    Margin="5,10,0,0"/>
+                    <local:NavigationBar
+                        DockPanel.Dock="Top"
+                        Margin="5,10,0,0"/>
 
-                <!-- Sort method dropdown -->
-                <local:SortMethodDropdown
-                    DockPanel.Dock="Top"/>
+                    <!-- Sort method dropdown -->
+                    <local:SortMethodDropdown
+                        DockPanel.Dock="Top"/>
 
-                <!-- Visible files -->
-                <local:VisibleFilesList
-                    EditTagsClicked="VisibleFilesList_EditTagsClicked"/>
+                    <!-- Visible files -->
+                    <local:VisibleFilesList
+                        EditTagsClicked="VisibleFilesList_EditTagsClicked"/>
 
-            </DockPanel>
+                </DockPanel>
+            </local:ResizablePanel>
         </Expander>
 
     </Grid>
