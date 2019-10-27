@@ -51,6 +51,15 @@
             Grid.Column="1"
             ExpandDirection="Left">
 
+            <!-- Make the header horizontal -->
+            <Expander.Header>
+                <TextBlock Text="Files">
+                    <TextBlock.LayoutTransform>
+                        <RotateTransform Angle="90"/>
+                    </TextBlock.LayoutTransform>
+                </TextBlock>
+            </Expander.Header>
+            
             <local:ResizablePanel 
                 DraggedWidth="100"
                 HorizontalAlignment="Right"
