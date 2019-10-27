@@ -45,13 +45,25 @@ namespace JustTag2
         public int SelectedIndex
         {
             get => _selectedIndex;
-            set => this.SetAndRaise(ref _selectedIndex, value, "SelectedIndex", "SelectedFile");
+            set => this.SetAndRaise
+            (
+                ref _selectedIndex, 
+                value, 
+                "SelectedIndex", 
+                "SelectedFile",
+                "SelectedFileTags"
+            );
         }
         private int _selectedIndex;
 
         public FileSystemInfo SelectedFile => (SelectedIndex < VisibleFiles.Length && SelectedIndex >= 0)
             ? VisibleFiles[SelectedIndex]
             : null;
+
+        public IEnumerable<string>? SelectedFileTags => 
+            (SelectedFile != null)
+                ? TagUtils.GetTags(SelectedFile)
+                : null;
 
         public string FilterString
         {
