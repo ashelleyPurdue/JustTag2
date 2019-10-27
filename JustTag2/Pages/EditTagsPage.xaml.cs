@@ -31,6 +31,7 @@ namespace JustTag2.Views
         public event EventHandler MovedBack;
 
         private EditTagsPageViewModel ViewModel;
+        private ITaggingService TagUtils;
 
         /// <summary>
         /// 
@@ -38,15 +39,17 @@ namespace JustTag2.Views
         /// <param name="file"> The file whose tags are being edited.</param>
         /// <param name="beforeSaving"> Callback to be ran before saving any changes </param>
         /// <param name="afterSaving"> Callback to be ran after saving any changes </param>
-        public EditTagsPage(FileSystemInfo file)
+        public EditTagsPage(FileSystemInfo file, ITaggingService taggingService)
         {
+            TagUtils = taggingService;
+
             InitializeComponent();
             MovedBack += EditTagsPage_MovedBack;
 
             addTagTextbox.Focus();
 
             // Fill out the view model
-            ViewModel = new EditTagsPageViewModel();
+            ViewModel = new EditTagsPageViewModel(taggingService);
             DataContext = ViewModel;
 
             ViewModel.File = file;
@@ -116,6 +119,8 @@ namespace JustTag2.Views
 
     public class EditTagsPageViewModel : INotifyPropertyChanged
     {
+        private ITaggingService TagUtils;
+
         public FileSystemInfo File
         {
             get => file;
@@ -126,6 +131,11 @@ namespace JustTag2.Views
             }
         }
         private FileSystemInfo file;
+
+        public EditTagsPageViewModel(ITaggingService taggingService)
+        {
+            TagUtils = taggingService;
+        }
 
         [NotifyChanged] public TagDatabase TagDatabase { get; set; }
         [NotifyChanged] public ObservableCollection<string> Tags { get; set; } = new ObservableCollection<string>();

@@ -13,6 +13,7 @@ namespace JustTag2
         public delegate IComparable SortMethod(FileSystemInfo f);
 
         private static Random randGen = new Random();
+        private readonly ITaggingService TagUtils;
 
         public int SelectedSortMethodIndex { get; set; } = 0;
         public Dictionary<string, SortMethod> SortMethods { get; set; } = new Dictionary<string, SortMethod>
@@ -71,6 +72,11 @@ namespace JustTag2
             set => this.SetAndRaise(ref _filterString, value, "FilterString");
         }
         private string _filterString;
+
+        public MainPageViewModel(ITaggingService taggingService) : base()
+        {
+            TagUtils = taggingService;
+        }
 
         /// <summary>
         /// Selects the next file.  If previous is true, moves

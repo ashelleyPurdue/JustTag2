@@ -24,11 +24,15 @@ namespace JustTag2.Views
     /// </summary>
     public partial class MainPage : Page
     {
-        private MainPageViewModel ViewModel = new MainPageViewModel();
+        private ITaggingService taggingService;
+        private MainPageViewModel ViewModel;
 
-        public MainPage()
+        public MainPage(ITaggingService taggingService)
         {
+            this.taggingService = taggingService;
+
             InitializeComponent();
+            ViewModel = new MainPageViewModel(taggingService);
             DataContext = ViewModel;
 
             ViewModel.Refresh();
@@ -44,7 +48,7 @@ namespace JustTag2.Views
         private void OpenEditTagsPage(FileSystemInfo file)
         {
             var window = Window.GetWindow(this);
-            var page = new EditTagsPage(file);
+            var page = new EditTagsPage(file, taggingService);
 
             // Make sure the file is temporarily closed while the tags are
             // edited, so we don't get a file-in-use error when saving.

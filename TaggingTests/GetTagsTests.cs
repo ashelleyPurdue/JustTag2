@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.IO;
+using JustTag2;
 using JustTag2.Tagging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -9,6 +10,8 @@ namespace TaggingTests
     [TestClass]
     public class GetTagsTests
     {
+        private static ITaggingService TagUtils = new LegacyTaggingService();
+
         public static void AssertTags(FileSystemInfo file, string[] expectedTags)
         {
             var actualTags = TagUtils.GetTags(file);

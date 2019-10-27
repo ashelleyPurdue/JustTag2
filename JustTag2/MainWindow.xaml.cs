@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using JustTag2.Tagging;
 using JustTag2.Views;
 
 namespace JustTag2
@@ -22,7 +23,7 @@ namespace JustTag2
     /// </summary>
     public partial class MainWindow : Window
     {
-        private MainPage mainPage = new MainPage();
+        private MainPage mainPage = new MainPage(new LegacyTaggingService());
 
         public MainWindow()
         {

@@ -13,6 +13,9 @@ namespace TaggingTests
         private const string TEMPLATE_PATH = "../../../TestFolderTemplate";
         private const string TEST_PATH = "./TestFolder";
 
+        private static ITaggingService TagUtils = new LegacyTaggingService();
+
+
         private static void AssertTagsChanged(string path, string expectedFileName, params string[] tags)
         {
             path = Path.Combine(TEST_PATH, path);
@@ -24,8 +27,8 @@ namespace TaggingTests
             Assert.AreEqual(expectedFileName, file.Name);
 
             // Assert that the tags are correct.
-            string[] expectedTags = tags;
-            string[] actualTags = TagUtils.GetTags(file);
+            var expectedTags = tags;
+            var actualTags = TagUtils.GetTags(file);
 
             Assert.IsTrue(expectedTags.SequenceEqual(actualTags));
         }

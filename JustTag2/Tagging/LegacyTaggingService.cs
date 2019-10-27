@@ -8,10 +8,10 @@ using System.IO;
 
 namespace JustTag2.Tagging
 {
-    public static class TagUtils
+    public class LegacyTaggingService : ITaggingService
     {
         private static Regex tagAreaRegex;
-        static TagUtils()
+        static LegacyTaggingService()
         {
             const string STUFF_INSIDE_BRACKETS = @"\[.*\]";
             const string FILE_EXTENSION = @"\..*$";
@@ -25,14 +25,14 @@ namespace JustTag2.Tagging
         /// <summary>
         /// Returns the tags on the given file or folder
         /// </summary>
-        public static string[] GetTags(FileSystemInfo file) => file switch
+        public IEnumerable<string> GetTags(FileSystemInfo file) => file switch
         {
             DirectoryInfo d => GetTags(d),
             FileInfo f => GetTags(f),
             _ => throw new Exception("Received a FileSystemInfo that is neither a directory nor a file.  WTF?")
         };
 
-        private static string[] GetTags(FileInfo file)
+        private IEnumerable<string> GetTags(FileInfo file)
         {
             string fname = file.Name;
 
@@ -60,7 +60,7 @@ namespace JustTag2.Tagging
             return tagArea.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
         }
 
-        private static string[] GetTags(DirectoryInfo folder)
+        private IEnumerable<string> GetTags(DirectoryInfo folder)
         {
             // If no .jtfoldertags exists, then there are no tags.
             string jtfoldertagsPath = Path.Combine(folder.FullName, ".jtfoldertags");
@@ -76,7 +76,7 @@ namespace JustTag2.Tagging
         /// Sets the tags on the given file or folder.
         /// Returns a new FileSystemInfo with the updated tags.
         /// </summary>
-        public static FileSystemInfo SetTags(FileSystemInfo file, string[] tags)
+        public FileSystemInfo SetTags(FileSystemInfo file, IEnumerable<string> tags)
         {
             if (file is FileInfo f)
                 return SetTags(f, tags);
@@ -87,7 +87,7 @@ namespace JustTag2.Tagging
             throw new Exception("Did you create a new class that derives from FileSystemInfo?  WHY WOULD YOU DO THAT???");
         }
 
-        private static FileSystemInfo SetTags(FileInfo file, string[] tags)
+        private FileSystemInfo SetTags(FileInfo file, IEnumerable<string> tags)
         {
             // TODO: Find a nicer way to do this.
 
@@ -106,16 +106,7 @@ namespace JustTag2.Tagging
             // Create the tag area
             var tagArea = new StringBuilder();
             tagArea.Append('[');
-
-            for (int i = 0; i < tags.Length; i++)
-            {
-                tagArea.Append(tags[i]);
-
-                // Add a space, if it isn't the last tag
-                if (i + 1 < tags.Length)
-                    tagArea.Append(' ');
-            }
-
+            tagArea.AppendJoin(' ', tags);
             tagArea.Append(']');
 
             // Put 'em all together to get the new file name
@@ -126,63 +117,12 @@ namespace JustTag2.Tagging
             return file;
         }
 
-        private static FileSystemInfo SetTags(DirectoryInfo dir, string[] tags)
+        private FileSystemInfo SetTags(DirectoryInfo dir, IEnumerable<string> tags)
         {
             string jtfoldertags = Path.Combine(dir.FullName, ".jtfoldertags");
             File.WriteAllLines(jtfoldertags, tags);
 
             return dir;
-        }
-
-        /// <summary>
-        /// Produces a function that returns true if a file matches the given filter string,
-        /// or false if it doesn't.
-        /// </summary>
-        public static Func<FileSystemInfo, bool> ParseFilterString(string filterString)
-        {
-            // HACK: If no filter string is present, don't filter at all.
-            if (filterString == null)
-                return (f => true);
-
-            // HACK: Show only untagged files if the string is ":untagged:"
-            if (filterString == ":untagged:")
-                return (f => GetTags(f).Length == 0);
-
-            // Build a list of tags that are required/forbidden.
-            // Forbidden tags have a '-' in front of them.
-            string[] terms = filterString.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-
-            var requiredTags  = new List<string>();
-            var forbiddenTags = new List<string>();
-
-            foreach (string s in terms)
-            {
-                if (s[0] == '-')
-                    forbiddenTags.Add(s.TrimStart('-'));
-                else
-                    requiredTags.Add(s);
-            }
-
-            return (FileSystemInfo f) =>
-            {
-                string[] tags = GetTags(f);
-
-                // Fail if any of the required tags are missing,
-                foreach (string t in requiredTags)
-                {
-                    if (!tags.Contains(t))
-                        return false;
-                }
-
-                // Fail if any of the forbidden tags are present
-                foreach (string t in tags)
-                {
-                    if (forbiddenTags.Contains(t))
-                        return false;
-                }
-
-                return true;
-            };
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using JustTag2;
 using JustTag2.Tagging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -8,6 +9,8 @@ namespace TaggingTests
     [TestClass]
     public class FilterTests
     {
+        private static ITaggingService TagUtils = new LegacyTaggingService();
+
         private static void AssertMatches(string fileName, string filter, bool shouldMatch = true)
         {
             var file = new FileInfo(fileName);
