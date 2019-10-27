@@ -50,12 +50,16 @@ namespace JustTag2
             return propertyChangedHandlers[propertyName];
         }
 
+        protected void Raise(params string[] properties)
+        {
+            foreach (string p in properties)
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(p));
+        }
+
         protected void SetAndRaise<T>(ref T backingField, T value, params string[] properties)
         {
             backingField = value;
-
-            foreach (string p in properties)
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(p));
+            Raise(properties);
         }
     }
 }
