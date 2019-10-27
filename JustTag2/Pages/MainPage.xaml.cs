@@ -34,8 +34,11 @@ namespace JustTag2.Views
             ViewModel.Refresh();
 
             // TODO: replace this with a databinding in XAML
-            ViewModel.PropertyChanged += (s, a) =>
-                previewer.Source = ViewModel.SelectedFile;
+
+            ViewModel.OnPropertyChanged("SelectedFile", () =>
+            {
+                previewer.Source = ViewModel.File;
+            });
         }
 
         private void OpenEditTagsPage(FileSystemInfo file)
