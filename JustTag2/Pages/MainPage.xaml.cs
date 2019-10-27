@@ -37,7 +37,7 @@ namespace JustTag2.Views
 
             ViewModel.OnPropertyChanged("SelectedFile", () =>
             {
-                previewer.Source = ViewModel.File;
+                previewer.Source = ViewModel.SelectedFile;
             });
         }
 

@@ -25,15 +25,12 @@ namespace JustTag2.Tagging
         /// <summary>
         /// Returns the tags on the given file or folder
         /// </summary>
-        public static string[] GetTags(FileSystemInfo file)
+        public static string[] GetTags(FileSystemInfo file) => file switch
         {
-            if (file is DirectoryInfo d)
-                return GetTags(d);
-            else if (file is FileInfo f)
-                return GetTags(f);
-            else
-                throw new Exception("Received a FileSystemInfo that is neither a directory nor a file.  WTF?");
-        }
+            DirectoryInfo d => GetTags(d),
+            FileInfo f => GetTags(f),
+            _ => throw new Exception("Received a FileSystemInfo that is neither a directory nor a file.  WTF?")
+        };
 
         private static string[] GetTags(FileInfo file)
         {
