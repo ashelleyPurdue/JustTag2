@@ -106,24 +106,27 @@ namespace JustTag2
             var sortMethodKey = SortMethods.Keys.ToArray()[SelectedSortMethodIndex];
             var sortMethod = SortMethods[sortMethodKey];
 
-            IEnumerable<FileSystemInfo> visibleFiles = CurrentFolder
-                .EnumerateFiles()
-                .Where(filter)
+            var visibleItems = TagUtils
+                .GetMatchingFiles(CurrentFolder, filter)
                 .OrderBy(f => sortMethod(f));
 
-            IEnumerable<FileSystemInfo> visibleFolders = CurrentFolder
-                .EnumerateDirectories()
-                .Where(filter)
-                .OrderBy(f => sortMethod(f));   // TODO: Do something about this copypasta
+            // Separate them into files and folders, so that way we can list
+            // all the folder before the files
+            var filesOnly = visibleItems
+                .Where(f => f is FileInfo);
+
+            var foldersOnly = visibleItems
+                .Where(f => f is DirectoryInfo);
 
             if (!SortDescending)
             {
-                visibleFiles = visibleFiles.Reverse();
-                visibleFolders = visibleFolders.Reverse();
+                filesOnly   = filesOnly.Reverse();
+                foldersOnly = foldersOnly.Reverse();
             }
 
-            VisibleFiles = visibleFolders
-                .Concat(visibleFiles)
+            // Recombine the lists, putting the folders first.
+            VisibleFiles = foldersOnly
+                .Concat(filesOnly)
                 .ToArray();
         }
     }

@@ -16,7 +16,7 @@ namespace TaggingTests
             var file = new FileInfo(fileName);
             var matchFunc = TagUtils.ParseFilterString(filter);
 
-            Assert.AreEqual(shouldMatch, matchFunc(file));
+            Assert.AreEqual(shouldMatch, matchFunc(TagUtils.GetTags(file)));
         }
 
         [TestMethod] public void HasFoo()        => AssertMatches("file[foo].txt", "foo");
