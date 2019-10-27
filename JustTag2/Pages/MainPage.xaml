@@ -22,7 +22,7 @@
             <ColumnDefinition />
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        
+
         <local:MainPreviewer
             x:Name="previewer"
             Grid.Column="0"
@@ -35,14 +35,28 @@
             StylusSystemGesture="Previewer_StylusSystemGesture"
             Background="Transparent"/>
 
-        <Button
-            Content="Edit tags"
+        <!-- Tags viewer -->
+        <Expander
+            Header="Tags"
             Grid.Column="0"
             HorizontalAlignment="Left"
             VerticalAlignment="Bottom"
-            Margin="10"
-            Click="EditTagsMenuItem_Click"
-            Visibility="{Binding SelectedFile, Converter={StaticResource visibleIfNotNull}}"/>
+            Visibility="{Binding SelectedFile, Converter={StaticResource visibleIfNotNull}}">
+
+            <DockPanel LastChildFill="True">
+                
+                <ListView
+                    ItemsSource="{Binding SelectedFileTags}"
+                    DockPanel.Dock="Bottom"/>
+                
+                <Button
+                    Content="Edit"
+                    Click="EditTagsMenuItem_Click"
+                    DockPanel.Dock="Bottom"/>
+                
+            </DockPanel>
+            
+        </Expander>
 
         <!-- File Browser -->
         <!-- It's in a ResizablePanel within an expander, so that way-->
