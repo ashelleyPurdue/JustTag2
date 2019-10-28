@@ -43,6 +43,16 @@ namespace JustTag2
             }
         }
 
+        /// <summary>
+        /// Gets the parent directory of the given FileSystemInfo
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public static DirectoryInfo ParentDirectory(this FileSystemInfo file) => file switch
+        {
+            FileInfo f => f.Directory,
+            _ => new DirectoryInfo(file.ParentFolderPath())
+        };
 
         // Helper methods
 
