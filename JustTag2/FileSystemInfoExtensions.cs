@@ -10,7 +10,7 @@ namespace JustTag2
     // TODO: This file is duplicated accross JustTag2 and TabbedFileBrowser
     // Need to find a way to share it.
     /// <summary>
-    /// Fuck you, Microsoft.
+    /// Thanks, Microsoft. >:(
     /// </summary>
     public static class FileSystemInfoExtensions
     {
