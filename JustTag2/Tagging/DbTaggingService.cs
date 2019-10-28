@@ -4,12 +4,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-using System.Data.SQLite;
-
 namespace JustTag2.Tagging
 {
     public class DbTaggingService : ITaggingService
     {
+        private static readonly string[] EMPTY_TAGS = new string[] { };
         private const string DB_FNAME = ".jtfiletags";
 
         public IEnumerable<string> GetTags(FileSystemInfo file)
@@ -17,10 +16,16 @@ namespace JustTag2.Tagging
             string dbPath = Path.Combine(file.ParentFolderPath(), DB_FNAME);
 
             if (!File.Exists(dbPath))
-                return new string[] { };
+                return EMPTY_TAGS;
 
             // TODO: If the database file is in the cache, reuse it
             // TODO: If the database file is not in the cache, parse it
+            var tagDict = ParseDb(dbPath);
+
+            if (!tagDict.ContainsKey(file.Name))
+                return EMPTY_TAGS;
+
+            return tagDict[file.Name];
         }
 
         public FileSystemInfo SetTags(FileSystemInfo file, IEnumerable<string> tags)
