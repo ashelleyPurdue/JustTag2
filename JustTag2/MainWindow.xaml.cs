@@ -23,7 +23,7 @@ namespace JustTag2
     /// </summary>
     public partial class MainWindow : Window
     {
-        private MainPage mainPage = new MainPage(new LegacyTaggingService());
+        private MainPage mainPage = new MainPage(new JsonTaggingService());
 
         public MainWindow()
         {
