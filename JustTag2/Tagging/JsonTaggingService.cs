@@ -75,6 +75,10 @@ namespace JustTag2.Tagging
                 return new Dictionary<string, string[]>();
 
             string text = File.ReadAllText(dbPath);
+
+            if (text == "")
+                return new Dictionary<string, string[]>();
+
             return JsonConvert.DeserializeObject<Dictionary<string, string[]>>(text);
         }
 
