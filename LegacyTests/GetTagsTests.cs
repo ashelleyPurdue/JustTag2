@@ -5,7 +5,7 @@ using JustTag2;
 using JustTag2.Tagging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace TaggingTests
+namespace LegacyTests
 {
     [TestClass]
     public class GetTagsTests
