@@ -38,5 +38,42 @@ namespace JustTag2.Tests
 
             Assert.True(expectedTags.SequenceEqual(actualTags));
         }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData("{}")]
+        [InlineData(@"{""foo.txt"": []}")]
+        [InlineData(@"{""foo.txt"": [""fizz""]}")]
+        public void Written_Tags_Can_Be_Read_Back(string tagFileStartingContents)
+        {
+            string[] expectedTags = new[]
+            {
+                "foo",
+                "bar",
+                "baz"
+            };
+            string writtenText = tagFileStartingContents;
+
+            var fs = new MockFileSystem();
+            fs.MockFile
+                .Setup(f => f.Exists(It.IsAny<string>()))
+                .Returns(() => writtenText != null);    // File exists if writtenText isn't null
+            fs.MockFile
+                .Setup(f => f.ReadAllText(It.IsAny<string>()))
+                .Returns(() => writtenText);
+            fs.MockFile
+                .Setup(f => f.WriteAllText(It.IsAny<string>(), It.IsAny<string>()))
+                .Callback<string, string>((path, text) =>
+                {
+                    writtenText = text;
+                });
+
+            var tagService = new JsonTaggingService(fs);
+            tagService.SetTags(new FileInfo("foo.txt"), expectedTags);
+
+            var actualTags = tagService.GetTags(new FileInfo("foo.txt"));
+            Assert.True(expectedTags.SequenceEqual(actualTags));
+        }
     }
 }
