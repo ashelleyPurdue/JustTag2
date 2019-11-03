@@ -75,5 +75,27 @@ namespace JustTag2.Tests
             var actualTags = tagService.GetTags(new FileInfo("foo.txt"));
             Assert.True(expectedTags.SequenceEqual(actualTags));
         }
+    
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData("{}")]
+        [InlineData(@"{""foo.txt"": []}")]
+        [InlineData(@"{""bar.txt"": [""fizz"", ""buzz""]}")]
+        public void Foo_Dot_Txt_Should_Have_No_Tags(string tagFileContents)
+        {
+            var fs = new MockFileSystem();
+            fs.MockFile
+                .Setup(f => f.ReadAllText(It.IsAny<string>()))
+                .Returns(tagFileContents);
+            fs.MockFile
+                .Setup(f => f.Exists(It.IsAny<string>()))
+                .Returns(tagFileContents != null);
+
+            var tagService = new JsonTaggingService(fs);
+            var tags = tagService.GetTags(new FileInfo("foo.txt"));
+
+            Assert.Equal(tags.Count(), 0);
+        }
     }
 }
