@@ -23,10 +23,19 @@ namespace JustTag2
     /// </summary>
     public partial class MainWindow : Window
     {
-        private MainPage mainPage = new MainPage(new JsonTaggingService());
+        private MainPage mainPage;
 
         public MainWindow()
         {
+            // Configure dependency injection
+            mainPage = new MainPage
+            (
+                taggingService: new JsonTaggingService
+                (
+                    fs: new System.IO.Abstractions.FileSystem()
+                )
+            );
+
             InitializeComponent();
             this.Content = mainPage;
         }

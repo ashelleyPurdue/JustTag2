@@ -1,9 +1,9 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text;
 using System.Linq;
+using System.IO.Abstractions;
 
 using Newtonsoft.Json;
 
@@ -14,7 +14,16 @@ namespace JustTag2.Tagging
         private static readonly string[] EMPTY_TAGS = new string[] { };
         private const string DB_FNAME = ".jtfiletags";
 
-        public IEnumerable<string> GetTags(FileSystemInfo file)
+        private readonly IFileSystem _fs;
+        private IFile File => _fs.File;
+        private IPath Path => _fs.Path;
+
+        public JsonTaggingService(IFileSystem fs)
+        {
+            _fs = fs;
+        }
+
+        public IEnumerable<string> GetTags(System.IO.FileSystemInfo file)
         {
             string dbPath = GetDbPath(file);
 
@@ -29,7 +38,7 @@ namespace JustTag2.Tagging
             return tagDict[file.Name];
         }
 
-        public FileSystemInfo SetTags(FileSystemInfo file, IEnumerable<string> tags)
+        public System.IO.FileSystemInfo SetTags(System.IO.FileSystemInfo file, IEnumerable<string> tags)
         {
             string dbPath = GetDbPath(file);
 
@@ -49,7 +58,7 @@ namespace JustTag2.Tagging
             return file;
         }
 
-        private string GetDbPath(FileSystemInfo file) 
+        private string GetDbPath(System.IO.FileSystemInfo file) 
             => Path.Combine(file.ParentFolderPath(), DB_FNAME);
 
         /// <summary>
