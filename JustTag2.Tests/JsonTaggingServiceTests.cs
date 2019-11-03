@@ -97,5 +97,33 @@ namespace JustTag2.Tests
 
             Assert.Equal(tags.Count(), 0);
         }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData("{}")]
+        [InlineData(@"{""foo.txt"": []}")]
+        [InlineData(@"{""bar.txt"": [""fizz"", ""buzz""]}")]
+        public void Foo_Dot_Txt_Should_Be_Considered_Untagged(string tagFileContents)
+        {
+            var fs = new MockFileSystem();
+            fs.MockFile
+                .Setup(f => f.ReadAllText(It.IsAny<string>()))
+                .Returns(tagFileContents);
+            fs.MockFile
+                .Setup(f => f.Exists(It.IsAny<string>()))
+                .Returns(tagFileContents != null);
+
+            ITaggingService tagService = new JsonTaggingService(fs);
+            TagFilter untaggedFilter = tagService.ParseFilterString(":untagged:");
+
+            var matchingFiles = tagService.GetMatchingFiles
+            (
+                new DirectoryInfo("someKindaFolder"),
+                untaggedFilter
+            );
+
+            Assert.Contains(matchingFiles, f => f.Name == "foo.txt");
+        }
     }
 }
