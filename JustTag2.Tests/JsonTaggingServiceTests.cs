@@ -6,6 +6,7 @@ using System.Linq;
 
 using JustTag2.Tagging;
 
+using TestingHelpers = System.IO.Abstractions.TestingHelpers;
 using Moq;
 using Xunit;
 
@@ -106,13 +107,14 @@ namespace JustTag2.Tests
         [InlineData(@"{""bar.txt"": [""fizz"", ""buzz""]}")]
         public void Foo_Dot_Txt_Should_Be_Considered_Untagged(string tagFileContents)
         {
-            var fs = new MockFileSystem();
-            fs.MockFile
-                .Setup(f => f.ReadAllText(It.IsAny<string>()))
-                .Returns(tagFileContents);
-            fs.MockFile
-                .Setup(f => f.Exists(It.IsAny<string>()))
-                .Returns(tagFileContents != null);
+            var fs = new TestingHelpers.MockFileSystem
+            (
+                new Dictionary<string, TestingHelpers.MockFileData>()
+                {
+                    {"someKindaFolder/foo.txt", new TestingHelpers.MockFileData("") },
+                    {"someKindaFolder/.jtfiletags", new TestingHelpers.MockFileData(tagFileContents) }
+                }
+            );
 
             ITaggingService tagService = new JsonTaggingService(fs);
             TagFilter untaggedFilter = tagService.ParseFilterString(":untagged:");
