@@ -58,6 +58,23 @@ namespace JustTag2.Tagging
             return file;
         }
 
+        public IEnumerable<System.IO.FileSystemInfo> GetMatchingFiles(System.IO.DirectoryInfo dir, TagFilter filter)
+        {
+            IDirectoryInfo dirInfo = _fs.DirectoryInfo.FromDirectoryName(dir.FullName);
+            return dirInfo
+                .EnumerateFileSystemInfos()
+                .Select(UnAbstract)
+                .Select(f => (file: f, tags: GetTags(f)))
+                .Where(pair => filter(pair.tags))
+                .Select(pair => pair.file);
+        }
+
+        private System.IO.FileSystemInfo UnAbstract(IFileSystemInfo f) => f switch
+        {
+            IDirectoryInfo d => new System.IO.DirectoryInfo(f.FullName) as System.IO.FileSystemInfo,
+            _ => new System.IO.FileInfo(f.FullName)
+        };
+
         private string GetDbPath(System.IO.FileSystemInfo file) 
             => Path.Combine(file.ParentFolderPath(), DB_FNAME);
 
