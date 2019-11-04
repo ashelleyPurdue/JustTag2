@@ -6,8 +6,9 @@ using System.Linq;
 
 using JustTag2.Tagging;
 
-using TestingHelpers = System.IO.Abstractions.TestingHelpers;
 using Moq;
+using System.IO.Abstractions;
+using System.IO.Abstractions.TestingHelpers;
 using Xunit;
 
 namespace JustTag2.Tests
@@ -24,18 +25,20 @@ namespace JustTag2.Tests
                 }
             ";
 
-            var fs = new MockFileSystem();
-            fs.MockFile
-                .Setup(f => f.ReadAllText(It.IsAny<string>()))
-                .Returns(jsonContent);
-            fs.MockFile
-                .Setup(f => f.Exists(It.IsAny<string>()))
-                .Returns(true);
+            var fs = new MockFileSystem
+            (
+                new Dictionary<string, MockFileData>()
+                {
+                    {"C:/.jtfiletags", new MockFileData(jsonContent) },
+                    {"C:/1000.txt", "" }
+                }
+            );
+            fs.Directory.SetCurrentDirectory("C");
 
             var tagService = new JsonTaggingService(fs);
 
             var expectedTags = new[] { "foo", "bar", "baz" };
-            var actualTags = tagService.GetTags(new FileInfo("1000.txt"));
+            var actualTags = tagService.GetTags(new FileInfo("C:/1000.txt"));
 
             Assert.True(expectedTags.SequenceEqual(actualTags));
         }
@@ -54,26 +57,22 @@ namespace JustTag2.Tests
                 "bar",
                 "baz"
             };
-            string writtenText = tagFileStartingContents;
 
-            var fs = new MockFileSystem();
-            fs.MockFile
-                .Setup(f => f.Exists(It.IsAny<string>()))
-                .Returns(() => writtenText != null);    // File exists if writtenText isn't null
-            fs.MockFile
-                .Setup(f => f.ReadAllText(It.IsAny<string>()))
-                .Returns(() => writtenText);
-            fs.MockFile
-                .Setup(f => f.WriteAllText(It.IsAny<string>(), It.IsAny<string>()))
-                .Callback<string, string>((path, text) =>
-                {
-                    writtenText = text;
-                });
+            var existingFiles = new Dictionary<string, MockFileData>()
+            {
+                {"C:/foo.txt", new MockFileData("") }
+            };
+
+            if (tagFileStartingContents != null)
+                existingFiles.Add("C:/.jtfiletags", new MockFileData(tagFileStartingContents));
+
+            var fs = new MockFileSystem(existingFiles);
+            fs.Directory.SetCurrentDirectory("C:/");
 
             var tagService = new JsonTaggingService(fs);
-            tagService.SetTags(new FileInfo("foo.txt"), expectedTags);
+            tagService.SetTags(new FileInfo("C:/foo.txt"), expectedTags);
 
-            var actualTags = tagService.GetTags(new FileInfo("foo.txt"));
+            var actualTags = tagService.GetTags(new FileInfo("C:/foo.txt"));
             Assert.True(expectedTags.SequenceEqual(actualTags));
         }
     
@@ -85,14 +84,14 @@ namespace JustTag2.Tests
         [InlineData(@"{""bar.txt"": [""fizz"", ""buzz""]}")]
         public void Foo_Dot_Txt_Should_Have_No_Tags(string tagFileContents)
         {
-            var fs = new MockFileSystem();
-            fs.MockFile
-                .Setup(f => f.ReadAllText(It.IsAny<string>()))
-                .Returns(tagFileContents);
-            fs.MockFile
-                .Setup(f => f.Exists(It.IsAny<string>()))
-                .Returns(tagFileContents != null);
+            var existingFiles = new Dictionary<string, MockFileData>()
+            {
+                { "C:/foo.txt", new MockFileData("") }
+            };
+            if (tagFileContents != null)
+                existingFiles.Add("C:/.jtfiletags", tagFileContents);
 
+            var fs = new MockFileSystem(existingFiles);
             var tagService = new JsonTaggingService(fs);
             var tags = tagService.GetTags(new FileInfo("foo.txt"));
 
@@ -107,12 +106,12 @@ namespace JustTag2.Tests
         [InlineData(@"{""bar.txt"": [""fizz"", ""buzz""]}")]
         public void Foo_Dot_Txt_Should_Be_Considered_Untagged(string tagFileContents)
         {
-            var fs = new TestingHelpers.MockFileSystem
+            var fs = new MockFileSystem
             (
-                new Dictionary<string, TestingHelpers.MockFileData>()
+                new Dictionary<string, MockFileData>()
                 {
-                    {"someKindaFolder/foo.txt", new TestingHelpers.MockFileData("") },
-                    {"someKindaFolder/.jtfiletags", new TestingHelpers.MockFileData(tagFileContents) }
+                    {"C:/foo.txt", new MockFileData("") },
+                    {"C:/.jtfiletags", new MockFileData(tagFileContents) }
                 }
             );
 
@@ -121,11 +120,11 @@ namespace JustTag2.Tests
 
             var matchingFiles = tagService.GetMatchingFiles
             (
-                new DirectoryInfo("someKindaFolder"),
+                new DirectoryInfo("C:"),
                 untaggedFilter
             );
 
-            Assert.Contains(matchingFiles, f => f.Name == "foo.txt");
+            Assert.Contains(matchingFiles, f => f.Name == "C:/foo.txt");
         }
     }
 }
