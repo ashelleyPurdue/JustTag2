@@ -120,11 +120,11 @@ namespace JustTag2.Tests
 
             var matchingFiles = tagService.GetMatchingFiles
             (
-                new DirectoryInfo("C:"),
+                new DirectoryInfo("C:/"),
                 untaggedFilter
             );
 
-            Assert.Contains(matchingFiles, f => f.Name == "C:/foo.txt");
+            Assert.Contains(matchingFiles, f => f.Name == "foo.txt");
         }
     }
 }
