@@ -54,9 +54,11 @@ namespace JustTag2.Tagging
                 tagDict[file.Name] = tags.ToArray();
             else
                 tagDict.Add(file.Name, tags.ToArray());
+            // HACK: By pure luck, tagDict points to the same object as
+            // _cachedDb.  This means we don't need to do any extra work
+            // to update it in the cache--tagDict.Add does it for us.
 
-            // This is very inefficient; it's O(n), where n is the number of files.
-            // TODO: Find a way to make it so we only write the line that was changed.
+            // TODO: WriteDb is very inefficient; it's O(n), where n is the number of files
             WriteDb(dbPath, tagDict);
             return file;
         }
