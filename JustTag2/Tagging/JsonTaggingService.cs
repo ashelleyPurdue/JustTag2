@@ -18,6 +18,9 @@ namespace JustTag2.Tagging
         private IFile File => _fs.File;
         private IPath Path => _fs.Path;
 
+        private string? _cachedDbPath;
+        private Dictionary<string, string[]>? _cachedDb;
+
         public JsonTaggingService(IFileSystem fs)
         {
             _fs = fs;
@@ -86,17 +89,24 @@ namespace JustTag2.Tagging
         /// <returns></returns>
         private Dictionary<string, string[]> ParseDb(string dbPath)
         {
-            // TODO: If the file is already cached, reuse it.
-
+            // If the file doesn't exist, we can just use a blank dictionary
             if (!File.Exists(dbPath))
                 return new Dictionary<string, string[]>();
 
+            // If the file is already cached, reuse it.
+            if (_cachedDbPath == dbPath && _cachedDb != null)
+                return _cachedDb;
+
+            // It's not cached, so load it and save it in the cache
+            // before returning it.
+            _cachedDbPath = dbPath;
             string text = File.ReadAllText(dbPath);
-
             if (text == "")
-                return new Dictionary<string, string[]>();
+                _cachedDb = new Dictionary<string, string[]>();
+            else
+                _cachedDb = JsonConvert.DeserializeObject<Dictionary<string, string[]>>(text);
 
-            return JsonConvert.DeserializeObject<Dictionary<string, string[]>>(text);
+            return _cachedDb;
         }
 
         private void WriteDb(string dbPath, Dictionary<string, string[]> tagDict)
