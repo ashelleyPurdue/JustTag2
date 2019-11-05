@@ -103,14 +103,14 @@ namespace JustTag2.Tests
         [InlineData(@"{""bar.txt"": [""fizz"", ""buzz""]}")]
         public void Foo_Dot_Txt_Should_Be_Considered_Untagged(string tagFileContents)
         {
-            var fs = new MockFileSystem
-            (
-                new Dictionary<string, MockFileData>()
-                {
-                    {"C:/foo.txt", new MockFileData("") },
-                    {"C:/.jtfiletags", new MockFileData(tagFileContents) }
-                }
-            );
+            var existingFiles = new Dictionary<string, MockFileData>()
+            {
+                {"C:/foo.txt", new MockFileData("") }
+            };
+            if (tagFileContents != null)
+                existingFiles.Add("C:/.jtfiletags", tagFileContents);
+
+            var fs = new MockFileSystem(existingFiles);
 
             ITaggingService tagService = new JsonTaggingService(fs);
             TagFilter untaggedFilter = tagService.ParseFilterString(":untagged:");
