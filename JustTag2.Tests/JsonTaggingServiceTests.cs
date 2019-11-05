@@ -123,5 +123,24 @@ namespace JustTag2.Tests
 
             Assert.Contains(matchingFiles, f => f.Name == "foo.txt");
         }
+
+        [Fact]
+        public void GetMatchingFiles_Does_Not_Include_Nonexistant_Files_Even_If_They_Are_In_The_Db()
+        {
+            var fs = new MockFileSystem
+            (
+                new Dictionary<string, MockFileData>()
+                {
+                    {"C:/.jtfiletags", @"{""foo.txt"": [""fizz"", ""buzz""]}" },
+                    // Notice: We are not creating C:/foo.txt
+                }
+            );
+
+            ITaggingService tagService = new JsonTaggingService(fs);
+            TagFilter filter = tagService.ParseFilterString("fizz buzz");
+
+            var matchingFiles = tagService.GetMatchingFiles(new DirectoryInfo("C:/"), filter);
+            Assert.DoesNotContain(matchingFiles, f => f.Name == "foo.txt");
+        }
     }
 }
