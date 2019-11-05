@@ -33,7 +33,6 @@ namespace JustTag2.Tests
                     {"C:/1000.txt", "" }
                 }
             );
-            fs.Directory.SetCurrentDirectory("C");
 
             var tagService = new JsonTaggingService(fs);
 
@@ -67,8 +66,6 @@ namespace JustTag2.Tests
                 existingFiles.Add("C:/.jtfiletags", new MockFileData(tagFileStartingContents));
 
             var fs = new MockFileSystem(existingFiles);
-            fs.Directory.SetCurrentDirectory("C:/");
-
             var tagService = new JsonTaggingService(fs);
             tagService.SetTags(new FileInfo("C:/foo.txt"), expectedTags);
 
@@ -93,9 +90,9 @@ namespace JustTag2.Tests
 
             var fs = new MockFileSystem(existingFiles);
             var tagService = new JsonTaggingService(fs);
-            var tags = tagService.GetTags(new FileInfo("foo.txt"));
+            var tags = tagService.GetTags(new FileInfo("C:/foo.txt"));
 
-            Assert.Equal(tags.Count(), 0);
+            Assert.Empty(tags);
         }
 
         [Theory]
