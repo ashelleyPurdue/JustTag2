@@ -29,8 +29,8 @@ namespace JustTag2.Tests
             (
                 new Dictionary<string, MockFileData>()
                 {
-                    {"C:/.jtfiletags", new MockFileData(jsonContent) },
-                    {"C:/1000.txt", "" }
+                    {"C:/.jtfiletags", jsonContent},
+                    {"C:/1000.txt", ""}
                 }
             );
 
@@ -59,11 +59,11 @@ namespace JustTag2.Tests
 
             var existingFiles = new Dictionary<string, MockFileData>()
             {
-                {"C:/foo.txt", new MockFileData("") }
+                {"C:/foo.txt", ""}
             };
 
             if (tagFileStartingContents != null)
-                existingFiles.Add("C:/.jtfiletags", new MockFileData(tagFileStartingContents));
+                existingFiles.Add("C:/.jtfiletags", tagFileStartingContents);
 
             var fs = new MockFileSystem(existingFiles);
             var tagService = new JsonTaggingService(fs);
@@ -83,7 +83,7 @@ namespace JustTag2.Tests
         {
             var existingFiles = new Dictionary<string, MockFileData>()
             {
-                { "C:/foo.txt", new MockFileData("") }
+                { "C:/foo.txt", "" }
             };
             if (tagFileContents != null)
                 existingFiles.Add("C:/.jtfiletags", tagFileContents);
@@ -105,7 +105,7 @@ namespace JustTag2.Tests
         {
             var existingFiles = new Dictionary<string, MockFileData>()
             {
-                {"C:/foo.txt", new MockFileData("") }
+                {"C:/foo.txt", "" }
             };
             if (tagFileContents != null)
                 existingFiles.Add("C:/.jtfiletags", tagFileContents);
