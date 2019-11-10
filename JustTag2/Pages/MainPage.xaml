@@ -75,7 +75,7 @@
             </Expander.Header>
             
             <local:ResizablePanel 
-                DraggedWidth="100"
+                DraggedWidth="300"
                 HorizontalAlignment="Right"
                 ResizeLeft="True">
                 
