@@ -13,7 +13,7 @@ namespace JustTag2
         public delegate IComparable SortMethod(FileSystemInfo f);
 
         private static Random randGen = new Random();
-        private readonly ITaggingService TagUtils;
+        private readonly ITaggingService _taggingService;
 
         public int SelectedSortMethodIndex { get; set; } = 0;
         public Dictionary<string, SortMethod> SortMethods { get; set; } = new Dictionary<string, SortMethod>
@@ -63,7 +63,7 @@ namespace JustTag2
 
         public IEnumerable<string>? SelectedFileTags => 
             (SelectedFile != null)
-                ? TagUtils.GetTags(SelectedFile)
+                ? _taggingService.GetTags(SelectedFile)
                 : null;
 
         public string FilterString
@@ -75,7 +75,7 @@ namespace JustTag2
 
         public MainPageViewModel(ITaggingService taggingService) : base()
         {
-            TagUtils = taggingService;
+            _taggingService = taggingService;
         }
 
         /// <summary>
@@ -102,11 +102,11 @@ namespace JustTag2
 
         public void Refresh()
         {
-            var filter = TagUtils.ParseFilterString(FilterString);
+            var filter = _taggingService.ParseFilterString(FilterString);
             var sortMethodKey = SortMethods.Keys.ToArray()[SelectedSortMethodIndex];
             var sortMethod = SortMethods[sortMethodKey];
 
-            var visibleItems = TagUtils
+            var visibleItems = _taggingService
                 .GetMatchingFiles(CurrentFolder, filter)
                 .OrderBy(f => sortMethod(f));
 

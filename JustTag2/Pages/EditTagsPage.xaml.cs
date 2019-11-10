@@ -31,7 +31,7 @@ namespace JustTag2.Views
         public event EventHandler MovedBack;
 
         private EditTagsPageViewModel ViewModel;
-        private ITaggingService TagUtils;
+        private readonly ITaggingService _taggingService;
 
         /// <summary>
         /// 
@@ -41,7 +41,7 @@ namespace JustTag2.Views
         /// <param name="afterSaving"> Callback to be ran after saving any changes </param>
         public EditTagsPage(FileSystemInfo file, ITaggingService taggingService)
         {
-            TagUtils = taggingService;
+            _taggingService = taggingService;
 
             InitializeComponent();
             MovedBack += EditTagsPage_MovedBack;
@@ -75,7 +75,7 @@ namespace JustTag2.Views
         private async void OK_Click(object sender, RoutedEventArgs e)
         {
             await previewer.Close();
-            TagUtils.SetTags(ViewModel.File, ViewModel.Tags.ToArray());
+            _taggingService.SetTags(ViewModel.File, ViewModel.Tags.ToArray());
             MovedBack?.Invoke(this, null);
         }
 
@@ -119,7 +119,7 @@ namespace JustTag2.Views
 
     public class EditTagsPageViewModel : INotifyPropertyChanged
     {
-        private ITaggingService TagUtils;
+        private readonly ITaggingService _taggingService;
 
         public FileSystemInfo File
         {
@@ -127,14 +127,14 @@ namespace JustTag2.Views
             set
             {
                 file = value;
-                Tags = new ObservableCollection<string>(TagUtils.GetTags(file));
+                Tags = new ObservableCollection<string>(_taggingService.GetTags(file));
             }
         }
         private FileSystemInfo file;
 
         public EditTagsPageViewModel(ITaggingService taggingService)
         {
-            TagUtils = taggingService;
+            _taggingService = taggingService;
         }
 
         [NotifyChanged] public TagDatabase TagDatabase { get; set; }
