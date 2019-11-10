@@ -68,6 +68,7 @@ namespace JustTag2.Tagging
             IDirectoryInfo dirInfo = _fs.DirectoryInfo.FromDirectoryName(dir.FullName);
             return dirInfo
                 .EnumerateFileSystemInfos()
+                .Where(f => f.Name != ".jtfiletags")
                 .Select(UnAbstract)
                 .Select(f => (file: f, tags: GetTags(f)))
                 .Where(pair => filter(pair.tags))

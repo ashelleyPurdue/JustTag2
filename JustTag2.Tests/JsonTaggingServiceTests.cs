@@ -142,5 +142,22 @@ namespace JustTag2.Tests
             var matchingFiles = tagService.GetMatchingFiles(new DirectoryInfo("C:/"), filter);
             Assert.DoesNotContain(matchingFiles, f => f.Name == "foo.txt");
         }
+
+        [Fact]
+        public void GetMatchingFiles_Does_Not_Include_Jtfiletags()
+        {
+            var fs = new MockFileSystem
+            (
+                new Dictionary<string, MockFileData>()
+                {
+                    {"C:/.jtfiletags", "" }
+                }
+            );
+
+            ITaggingService tagService = new JsonTaggingService(fs);
+            var matchingFiles = tagService.GetMatchingFiles(new DirectoryInfo("C:/"), f => true);
+
+            Assert.DoesNotContain(matchingFiles, f => f.Name == ".jtfiletags");
+        }
     }
 }
