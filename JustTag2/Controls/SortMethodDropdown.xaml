@@ -8,14 +8,10 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <DockPanel LastChildFill="False">
-        
-        <TextBlock
-            Text="Descending"
-            DockPanel.Dock="Right"
-            VerticalAlignment="Center"/>
-        
+
         <CheckBox 
             IsChecked="{Binding SortDescending, Mode=TwoWay}"
+            Content="Descending"
             DockPanel.Dock="Right"
             VerticalAlignment="Center"/>
 
